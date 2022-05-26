@@ -2,8 +2,6 @@ package com.java.controller;
 
 import java.io.IOException;
 
-import javax.mail.MessagingException;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -30,18 +28,17 @@ public class SignUpController {
 	
 	@PostMapping("/user")
 	public  ResponseEntity<?> signup(@RequestBody RegisterRequest registerRequest) throws Exception {
-		authService.signup(registerRequest);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(authService.signup(registerRequest),HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/user/google")
-	public ResponseEntity<?> signupGoogle(@RequestBody TokenDto dto) throws IOException, MessagingException{
+	public ResponseEntity<?> signupGoogle(@RequestBody TokenDto dto) throws IOException{
 		userService.signUpWithSocialMediaGoogle(dto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/user/facebook")
-	public ResponseEntity<?> signupFacebook(@RequestBody TokenDto dto) throws IOException, MessagingException{
+	public ResponseEntity<?> signupFacebook(@RequestBody TokenDto dto) throws IOException{
 		userService.signUpWithSocialMediaFacebook(dto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 		

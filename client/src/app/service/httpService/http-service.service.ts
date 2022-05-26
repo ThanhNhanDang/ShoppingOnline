@@ -18,192 +18,196 @@ export class HttpServiceService {
   itemCartWhenDelete = 0;
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type' : 'application/json'
+      'Content-Type': 'application/json'
     })
   };
   message = "";
   baseUrl = environment.baseUrl;
+  emailUrl = environment.urlEmail;
   private subjectItemCartWhenDelete = new Subject<any>();
   private subject = new Subject<any>();
   private subjectWishList = new Subject<any>();
   private loginSubject = new Subject<any>();
   private subjectProduct = new Subject<any>();
-  private  subjectBottomBarForLogin = new Subject<any>();
+  private subjectBottomBarForLogin = new Subject<any>();
   private resetBottomBarWhenCheckout = new Subject<any>();
-  private  subjectItemWhenMiniCartDelete = new Subject<any>();
-  private  subjectItemWhenMiniWishlistDelete = new Subject<any>();
+  private subjectItemWhenMiniCartDelete = new Subject<any>();
+  private subjectItemWhenMiniWishlistDelete = new Subject<any>();
   private subjectUpdateMiniCart = new Subject<any>();
-  constructor(private titleService: Title,private http : HttpClient, private httpClient: HttpClient, private appCookie:AppCookieService, private router: Router) {
+  constructor(private titleService: Title, private http: HttpClient, private httpClient: HttpClient, private appCookie: AppCookieService, private router: Router) {
   }
-  
+
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
   }
-  postRequest(url:String, param:{}){
+  postRequest(url: String, param: {}) {
     return this.http.post<any>(this.baseUrl + url, param, this.httpOptions)
   }
-  loginRequest(url:String, param:{}): Observable<AuthenticationResponse>{
+  postRequestEmail(url: String, param: {}) {
+    return this.http.post<any>(this.emailUrl + url, param, this.httpOptions)
+  }
+  loginRequest(url: String, param: {}): Observable<AuthenticationResponse> {
     return this.http.post<AuthenticationResponse>(this.baseUrl + url, param, this.httpOptions);
   }
 
-  putRequest(url:String, param:{}){
+  putRequest(url: String, param: {}) {
     return this.http.put<any>(this.baseUrl + url, param, this.httpOptions)
   }
-  deleteRequest(url:String, param:{}){
+  deleteRequest(url: String, param: {}) {
     return this.http.delete<any>(this.baseUrl + url, param)
   }
-  getRequest(url:String, param:{}){
+  getRequest(url: String, param: {}) {
     return this.http.get<any>(this.baseUrl + url, param)
-    .pipe(
-      catchError(this.handleError.bind(this))
-    );
+      .pipe(
+        catchError(this.handleError.bind(this))
+      );
   }
 
-  getAllProduct(url:String, param:{}){
+  getAllProduct(url: String, param: {}) {
     return this.http.get<Array<ProductPayload>>(this.baseUrl + url, param)
-   
+
   }
-  private handleError(error :any):any{
-    if(error.error instanceof ErrorEvent){
+  private handleError(error: any): any {
+    if (error.error instanceof ErrorEvent) {
       console.error("An error occurred: " + error.error.message);
     }
-    else{
+    else {
       return throwError("Something went wrong.. while connecting with server");
     }
   }
-  register(registerPayload: ResgisterPayload){
-      return this.httpClient.post<any>(this.baseUrl + "/signup/user", registerPayload);
+  register(registerPayload: ResgisterPayload) {
+    return this.httpClient.post<any>(this.baseUrl + "/signup/user", registerPayload);
   }
 
-  setLoginData(data: UserProfile){
+  setLoginData(data: UserProfile) {
     localStorage.setItem("login_obj", JSON.stringify(data));
   }
-  
-  getLocalStorageItem(key:string){
+
+  getLocalStorageItem(key: string) {
     return localStorage.getItem(key) || '{}';
   }
-  getLoginDataByKey(key: string){
-   let data = JSON.parse(localStorage.getItem("login_obj") || '{}') ;
-   if(data.hasOwnProperty(key)){
-    return  data[key];
-   }
-   return null;
+  getLoginDataByKey(key: string) {
+    let data = JSON.parse(localStorage.getItem("login_obj") || '{}');
+    if (data.hasOwnProperty(key)) {
+      return data[key];
+    }
+    return null;
   }
 
-  sendClickSubject(){
+  sendClickSubject() {
     this.subject.next();
   }
-  getSubject():Observable<any>{
+  getSubject(): Observable<any> {
     return this.subject.asObservable();
   }
-  
-  sendSubjectWishList(){
+
+  sendSubjectWishList() {
     this.subjectWishList.next();
   }
-  getSubjectWishList():Observable<any>{
+  getSubjectWishList(): Observable<any> {
     return this.subjectWishList.asObservable();
   }
-  sendBottomBarWhenCheckout(){
+  sendBottomBarWhenCheckout() {
     this.resetBottomBarWhenCheckout.next();
   }
-  getBottomBarWhenCheckout():Observable<any>{
+  getBottomBarWhenCheckout(): Observable<any> {
     return this.resetBottomBarWhenCheckout.asObservable();
   }
 
-  sendSubjectItemCartWhenDelete(){
+  sendSubjectItemCartWhenDelete() {
     this.subjectItemCartWhenDelete.next();
   }
-  getSubjectItemCartWhenDelete():Observable<any>{
+  getSubjectItemCartWhenDelete(): Observable<any> {
     return this.subjectItemCartWhenDelete.asObservable();
   }
-  sendSubjectBottomBarForLogin(){
+  sendSubjectBottomBarForLogin() {
     this.subjectBottomBarForLogin.next();
   }
-  getSubjectBottomBarForLogin():Observable<any>{
+  getSubjectBottomBarForLogin(): Observable<any> {
     return this.subjectBottomBarForLogin.asObservable();
   }
-  sendClickSubjecProduct(){
+  sendClickSubjecProduct() {
     this.subjectProduct.next();
   }
-  getSubjectProduct():Observable<any>{
+  getSubjectProduct(): Observable<any> {
     return this.subjectProduct.asObservable();
   }
 
-  getLoginToken(){
+  getLoginToken() {
     return this.appCookie.get("authenticationToken")
   }
-    logout(){
-      this.appCookie.remove("authenticationToken")
-      localStorage.setItem("login_obj","");
-      localStorage.setItem("productId","");
-      localStorage.setItem("search key", "");
-      this.sendSubjectBottomBarForLogin();
+  logout() {
+    this.appCookie.remove("authenticationToken")
+    localStorage.setItem("login_obj", "");
+    localStorage.setItem("productId", "");
+    localStorage.setItem("search key", "");
+    this.sendSubjectBottomBarForLogin();
+  }
+  isLogin() {
+    if (this.getLoginToken() != "" && String(this.getLoginToken())?.length > 10) {
+      return false
     }
-    isLogin(){
-      if(this.getLoginToken() != "" && String(this.getLoginToken())?.length > 10){
-        return false
-      }
-      return true;
-    }
+    return true;
+  }
 
-  setItemCartWhenDelete(itemCartWhenDelete: number){
+  setItemCartWhenDelete(itemCartWhenDelete: number) {
     this.itemCartWhenDelete = itemCartWhenDelete;
   }
-  
-  getItemCartWhenDelete(){
+
+  getItemCartWhenDelete() {
     return this.itemCartWhenDelete;
   }
 
-  sendSubjectItemWhenMiniCartDelete(){
+  sendSubjectItemWhenMiniCartDelete() {
     this.subjectItemWhenMiniCartDelete.next();
   }
-  getSubjectItemWhenMiniCartDelete():Observable<any>{
+  getSubjectItemWhenMiniCartDelete(): Observable<any> {
     return this.subjectItemWhenMiniCartDelete.asObservable();
   }
 
-  sendSubjectItemWhenMiniWishlistDelete(){
+  sendSubjectItemWhenMiniWishlistDelete() {
     this.subjectItemWhenMiniWishlistDelete.next();
   }
-  getSubjectItemWhenMiniWishlistDelete():Observable<any>{
+  getSubjectItemWhenMiniWishlistDelete(): Observable<any> {
     return this.subjectItemWhenMiniWishlistDelete.asObservable();
   }
-  sendSubjectUpdateMiniCart(){
+  sendSubjectUpdateMiniCart() {
     this.subjectUpdateMiniCart.next();
   }
-  getSubjectUpdateMiniCart():Observable<any>{
+  getSubjectUpdateMiniCart(): Observable<any> {
     return this.subjectUpdateMiniCart.asObservable();
   }
 
-  clickDetailProduct(productId:string){
+  clickDetailProduct(productId: string) {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/product-detail'],{queryParams:{'key':productId}});
-    }); 
+      this.router.navigate(['/product-detail'], { queryParams: { 'key': productId } });
+    });
   }
 
-  pushFileToStorage(url: string,file: File){
+  pushFileToStorage(url: string, file: File) {
     const formdata: FormData = new FormData();
     formdata.append('file', file);
-    return this.http.post(this.baseUrl+url, formdata)
+    return this.http.post(this.baseUrl + url, formdata)
   }
 
-  sendLoginSucject(){
+  sendLoginSucject() {
     this.loginSubject.next();
   }
-  getLoginSucject(){
+  getLoginSucject() {
     return this.loginSubject.asObservable();
   }
 
-  checkLogin(){
-    if(this.isLogin() == true ){
+  checkLogin() {
+    if (this.isLogin() == true) {
       this.sendLoginSucject();
       return false;
     }
     return true;
   }
-  setUpdate(userProfile:UserProfile){
-    this.setLoginData (userProfile);
+  setUpdate(userProfile: UserProfile) {
+    this.setLoginData(userProfile);
     localStorage.setItem("search key", "");
-    alert("Successfully" );
+    alert("Successfully");
     this.sendClickSubject();
   }
 }

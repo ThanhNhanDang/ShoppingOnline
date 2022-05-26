@@ -15,19 +15,16 @@ public class SecurityConstants {
 
 	public static String passSecret;
 	public static String googleClientId;
-	public static String siteUrl;
 	
 	public SecurityConstants(
 			@Value("${app.tokenSecret}") String tokenSecret, 
 			@Value("${app.passSecret}") String passSecret,
-			@Value("${google.ClientId}") String googleClientId,
-			@Value("${app.siteUrl}") String siteUrl
+			@Value("${google.ClientId}") String googleClientId
 			) {
 		
 		SecurityConstants.tokenSecret = tokenSecret;
 		SecurityConstants.passSecret = passSecret;
 		SecurityConstants.googleClientId = googleClientId;
-		SecurityConstants.siteUrl = siteUrl;
 	}
 	
 }

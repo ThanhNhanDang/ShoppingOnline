@@ -1,22 +1,17 @@
 package com.java.service.impl;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -53,14 +48,13 @@ public class UserServiceImpl implements UserService{
 	private RoleRepository roleRepo;
 	private FileService fileService;
 	private Clock cl = Clock.systemDefaultZone();
-	private JavaMailSender emailSender;
 	
-	public UserServiceImpl(AuthenticationManager authenticationManager,UserRepository userRepo, RoleRepository roleRepo, FileService fileService, JavaMailSender emailSender) {
+	public UserServiceImpl(AuthenticationManager authenticationManager,UserRepository userRepo, RoleRepository roleRepo, FileService fileService) {
 		this.authenticationManager = authenticationManager;
 		this.userRepo = userRepo;
 		this.roleRepo = roleRepo;
 		this.fileService = fileService;
-		this.emailSender = emailSender;
+	
 	}
 
 	@Override
@@ -100,7 +94,7 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	@Modifying
 	@Override
-	public void saveReturn(UserDto dto) throws Exception {
+	public User saveReturn(UserDto dto) throws Exception {
 		if (userRepo.checkEmail(dto.getEmail()) != null)
 			throw new Exception("Email already in use");
 		User entity = new User();
@@ -119,30 +113,8 @@ public class UserServiceImpl implements UserService{
 		entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
 		if(userRepo.save(entity) == null)
 			throw new Exception("Unable to register an account, please contact the administrator for assistance.");
-		this.sendVerificationEmail(entity);
-		
+		return entity;
 	}
-	@Override
-	public void sendVerificationEmail(User entity) throws UnsupportedEncodingException, MessagingException {
-		String subject = "Please verify your registration";
-		String senderName = "Online Pretty Girl Shop";
-		String content = "<b><p>Dear "  + entity.getName() + ",</p></b>";
-		content += 	"<p>Please click the link below to verify to your registration: </p>";
-		String verifyUrl = SecurityConstants.siteUrl + "?email="+entity.getEmail()+"&code=" + entity.getLogin_token();
-		content +=	"<h3><a href='"+verifyUrl+"'>VERIFY</a></h3>";
-		
-		content +=	"<p>Thank you<br>The Online Pretty Girl Shop</p>";
-		
-		MimeMessage message = emailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message);
-		helper.setFrom("yesthanhnhan16@gmail.com", senderName);
-		helper.setTo(entity.getEmail());
-		helper.setSubject(subject);
-		helper.setText(content, true);
-		emailSender.send(message);
-	}
-	
-	
 	
 	@Override
 	public UserDto findByEmail(String email) throws Exception {
@@ -303,7 +275,7 @@ public class UserServiceImpl implements UserService{
 			throw new IOException("Unable to register an account, please contact the administrator for assistance.");
 	}
 
-	public void signUpFacebook(org.springframework.social.facebook.api.User user) throws IOException, MessagingException {
+	public void signUpFacebook(org.springframework.social.facebook.api.User user) throws IOException {
 		if (userRepo.checkEmail(user.getEmail()) != null)
 			throw new IOException("Email already in use");
 		User entity = new User();
@@ -321,7 +293,6 @@ public class UserServiceImpl implements UserService{
 		entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
 		if(userRepo.save(entity) == null)
 			throw new IOException("Unable to register an account, please contact the administrator for assistance.");
-		this.sendVerificationEmail(entity);
 	}
 	
 	
@@ -334,7 +305,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void signUpWithSocialMediaFacebook(TokenDto dto) throws IOException, MessagingException{
+	public void signUpWithSocialMediaFacebook(TokenDto dto) throws IOException{
 		org.springframework.social.facebook.api.User user = this.signInFacebook(dto);
 		this.signUpFacebook(user);
 	}

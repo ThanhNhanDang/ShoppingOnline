@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
-  baseUrl: "http://localhost:8081/api",
-  urlServe: "http//localhost:8081/",
+  baseUrl: "https://thanhnhandev.herokuapp.com/api",
+  urlServe: "https//thanhnhandev.herokuapp.com/",
+  urlEmail: "https://doan1thanhnhanvituong.herokuapp.com",
   title: "E Store"
 };

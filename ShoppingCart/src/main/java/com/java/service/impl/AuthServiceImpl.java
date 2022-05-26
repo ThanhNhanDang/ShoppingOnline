@@ -58,14 +58,14 @@ public class AuthServiceImpl implements AuthService {
 			UserDto userProfile = service.findByEmail(dto.getEmail());
 			return new AuthenticationResponse(token, userProfile);
 		} catch (Exception e) {
-			throw new Exception("Incorrect email or password");
+			throw new Exception(e.getMessage());
 		}
 		
 			
 			
 	}
 	@Override
-	public void signup(RegisterRequest dto) throws Exception {
+	public com.java.entity.User signup(RegisterRequest dto) throws Exception {
 		UserDto userDto = new UserDto();
 		userDto.setEmail(dto.getEmail());
 		userDto.setPassword(dto.getPassword());
@@ -73,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
 		userDto.setMobile(dto.getMobile());
 		userDto.setGender(dto.getGender());
 		userDto.setLogin_token(RandomString.make(64));
-		service.saveReturn(userDto);
+		return service.saveReturn(userDto);
 		
 	}
 	
