@@ -1,0 +1,12 @@
+<div class="brand">
+    <div class="container-fluid">
+        <ngx-slick-carousel
+                           
+        [config]="slideConfig">
+        
+        <div ngxSlickItem *ngFor="let url of urlImgs" class="brand-item"><img src="{{url}}" alt=""></div>  
+            
+        </ngx-slick-carousel>
+       
+    </div>
+</div>

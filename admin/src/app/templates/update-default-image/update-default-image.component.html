@@ -1,0 +1,83 @@
+<div class="container tm-mt-big tm-mb-big">
+  <div class="row">
+    <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+      <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="tm-block-title d-inline-block">Change Default Image</h2>
+          </div>
+        </div>
+
+        <div class="row tm-edit-product-row">
+          <div class="col-xl-6 col-lg-6 col-md-12">
+            <div class="tm-product-img-edit mx-auto">
+              <img
+                [src]="imgURLUser"
+                alt="User image"
+                class="img-fluid d-block mx-auto"
+              />
+            </div>
+            <div class="custom-file mt-3 mb-3">
+              <input
+                id="fileInput"
+                accept="image/*"
+                #file
+                (change)="onFileChangedUser(file.files)"
+                type="file"
+                style="display: none"
+              />
+              <input
+                type="button"
+                class="btn btn-primary btn-block mx-auto"
+                value="CHANGE THE USER DEFAULT IMAGE NOW"
+                onclick="document.getElementById('fileInput').click();"
+              />
+            </div>
+            <div class="custom-file mt-3 mb-3">
+              <input
+                type="button"
+                (click)="changeUser()"
+                class="btn btn-secondary btn-block mx-auto"
+                value="CHANGE NOW"
+              />
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+            <div class="tm-product-img-edit mx-auto">
+              <img
+                [src]="imgURLProduct"
+                alt="Product image"
+                class="img-fluid d-block mx-auto"
+              />
+            </div>
+            <div class="custom-file mt-3 mb-3">
+              <input
+                id="fileInput1"
+                accept="image/*"
+                #file1
+                (change)="onFileChangedProduct(file1.files)"
+                type="file"
+                style="display: none"
+              />
+              <input
+                type="button"
+                class="btn btn-primary btn-block mx-auto"
+                value="CHANGE THE PRODUCT DEFAULT IMAGE NOW"
+                onclick="document.getElementById('fileInput1').click();"
+              />
+            </div>
+            <div class="custom-file mt-3 mb-3">
+              <input
+                type="button"
+                (click)="changeProduct()"
+                class="btn btn-secondary btn-block mx-auto"
+                value="CHANGE NOW"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

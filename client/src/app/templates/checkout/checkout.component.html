@@ -1,0 +1,96 @@
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item active">Checkout</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Checkout Start -->
+<div class="checkout">
+    <div class="container-fluid"> 
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="checkout-inner">
+                    <div class="billing-address">
+                        <h2>Shipping Address</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Full Name</label>
+                                <input  value="{{fullname}}"class="form-control" type="text" placeholder="Full Name" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Gender</label>
+                                <input value="{{gender}}" class="form-control" type="text" placeholder="Gender" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label>E-mail</label>
+                                <input value="{{email}}" class="form-control" type="text" placeholder="E-mail" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Mobile No</label>
+                                <input value="{{mobile}}" class="form-control" type="text" placeholder="Mobile No">
+                            </div>
+                            <div class="col-md-12">
+                                <label>Delivery Address</label>
+                                <input [(ngModel)]="address" class="form-control" type="text" placeholder="Delivery Address">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Provinces</label>
+                                <select [(ngModel)]="selectedProvince" (change)="onChangeProvince()"  class="form-control" >
+                                    <option [value]="item.id" *ngFor="let item of provinces">{{item.name}}</option>
+                                    
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Districts</label>
+                                <select [(ngModel)]="selectedDistrict" (change)="onChangeDistrict()"   class="form-control" >
+                                    <option [value]="item.id" *ngFor="let item of districts">{{item.name}}</option>
+                                    
+                                </select>
+                            </div> <div class="col-md-4">
+                                <label>Wards</label>
+                                <select [(ngModel)]="selectedWards"   class="form-control">
+                                    <option [value]="item.id" *ngFor="let item of wards">{{item.name}}</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="checkout-inner">
+                    <div class="checkout-summary">
+                        <h1>Cart Total</h1>
+                        <button routerLink="/cart"class="btn btn-mycart">My Cart</button>
+                        <p class="sub-total">Sub Total<span>${{subTotal}}</span></p>
+                        <p class="ship-cost">Shipping Cost<span>${{shippingCost}}</span></p>
+                        <h2>Grand Total<span>${{grandTotal}}</span></h2>
+                    </div>
+
+                    <div class="checkout-payment">
+                        <div class="payment-methods">
+                            <h1>Payment Methods</h1>
+                            <div *ngFor="let item of paymentMethods" class="payment-method">
+                                <div class="custom-control custom-radio">
+                                    <input (click)="clickPaymentMethod(item.name)" type="radio" class="custom-control-input" id="payment-{{item.id}}" name="payment">
+                                    <label class="custom-control-label" for="payment-{{item.id}}">{{item.name}}</label>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <div class="checkout-btn">
+                            <button (click)="clickPlaceOrder()">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Checkout End -->

@@ -1,0 +1,26 @@
+
+<div class="tm-bg-primary-dark tm-block tm-block-products">
+    <h2 class="tm-block-title">Product Categories</h2>
+    <div class="tm-product-table-container">
+      <table class="table tm-table-small tm-product-table">
+        <tbody>
+          <tr *ngFor="let item of categories">
+            <td class="tm-product-name">{{item.name}}</td>
+            <td class="text-center">
+              <a href="javaScript:void(0)" (click)="delete(item)" class="tm-product-delete-link">
+                <i class="far fa-trash-alt tm-product-delete-icon"></i>
+              </a>
+            </td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+    <!-- table container -->
+    <button routerLink="/category/add" class="btn btn-primary btn-block text-uppercase mb-3">
+      Add new category
+    </button>
+    <button routerLink="/category/edit" class="btn btn-primary btn-block text-uppercase mb-3">
+      Update category
+    </button>
+</div>

@@ -1,0 +1,52 @@
+<div class="container tm-mt-big tm-mb-big">
+  <div class="row">
+    <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+      <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+        <div class="row">
+          <div class="col-12">
+            <h2 class="tm-block-title d-inline-block">Edit Product</h2>
+          </div>
+        </div>
+        <div class="tm-product-table-container">
+        
+          <table class="table tm-table-small tm-product-table">
+            <thead>
+              <tr>
+                <th scope="col">NAME</th>
+                <th scope="col">Class Fa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of categories">
+                <td class="tm-product-name">
+                  <input
+                    type="text"
+                    [(ngModel)]="item.name"
+                    class="form-control validate"
+                  />
+                </td>
+                <td class="text-center">
+                  <input
+                    type="text"
+                    [(ngModel)]="item.classFa"
+                    class="form-control validate"
+                  />
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          <hr>
+        </div>
+        <div class="col-12">
+            <button
+              (click)="update()"
+              class="btn btn-primary btn-block text-uppercase"
+            >
+              Update Now
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

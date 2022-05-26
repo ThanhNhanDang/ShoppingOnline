@@ -1,0 +1,30 @@
+<div class="review">
+    <div class="container-fluid">
+        <ngx-slick-carousel class="row align-items-center normal-slider"
+                           
+        [config]="slideConfig">
+        <div ngxSlickItem *ngFor="let review of reviews" class="col-md-6">
+                <div class="review-slider-item">
+                    <div class="review-img">
+                        <img src="{{review.urlImg}}" alt="Image">
+                    </div>
+                    <div class="review-text">
+                        <h2>{{review.name}}</h2>
+                        <h3>{{review.job}}</h3>
+                        <div class="ratting">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                        <p>
+                            {{review.review}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </ngx-slick-carousel>
+    </div>
+</div>

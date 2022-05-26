@@ -1,0 +1,14 @@
+<div class="sidebar-widget brands">
+  <h2 class="title">Category</h2>
+
+  <ul *ngFor="let category of categories | async">
+    <li>
+      <a
+        [ngClass]="{ 'active-nav': selectedItem == category.id }"
+        (click)="class(category)"
+        href="javascript:void(0)"
+        >{{ category.name }} </a
+      ><span [ngClass]="{ 'span': selectedItem == category.id }">({{ category.quantity }})</span>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,16 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+
+   opacity: 0;
+
+}
+
+.details{
+   color: yellow;
+   background:black;
+}
+
+.details:hover{
+   color: black;
+   background:yellow;
+}

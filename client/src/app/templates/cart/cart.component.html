@@ -1,0 +1,97 @@
+ <!-- Breadcrumb Start -->
+ <div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a routerLink="/home" routerLinkActive="active">Home</a>
+              </li>
+              <li class="breadcrumb-item" >
+                <a routerLink="/products" routerLinkActive="active">Products</a>
+              </li>
+            <li class="breadcrumb-item active">Cart</li>
+        </ul>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+ 
+ <!-- Cart Start -->    
+ <div  class="cart-page">
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-page-inner">
+                
+                    <div  *ngIf="checkIsEmpty" class="cart-content">
+                        <h2>{{message}}</h2>
+                    </div>
+                    <div class="table-responsive my-custom-scrollbar"  *ngIf="!checkIsEmpty">
+                        <table class="table table-bordered " >
+                            <thead class="thead-dark table-fixed">
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Remove</th>
+                                    <th scope="col">Update</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-middle">
+                                <tr *ngFor="let item of cart" >
+                                    <td>
+                                        <div class="img">
+                                            <a (click)="clickDetail(item.product_id)" href="javaScript:void(0)"><img src="{{baseUrl+item.urlImg}}" alt="Image"></a>
+                                            <a (click)="clickDetail(item.product_id)" href="javaScript:void(0)">{{item.productName}}</a>
+                                        </div>
+                                    </td>
+                                    <td>${{item.pricePerItem}}</td>
+                                    <td>
+                                      <div class="qty">
+                                            <button class="btn-minus" (click)="handleMinus(item)"><i class="fa fa-minus"></i></button>
+                                            <input type="number" min="1" [ngModel]="item.quantity" (ngModelChange)="onInputChanged(item, $event)">
+                                            <button class="btn-plus" (click)="handlePlus(item)"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td>${{item.price}}</td>
+                                    <td><button (click)="deleteCart(item)"><i class="fa fa-trash"></i></button></td>
+                                    <td>
+                                        <button (click)="updateItem(item)" ><i class="fa fa-edit"></i></button>
+                                    </td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="coupon">
+                                <input type="text" placeholder="Coupon Code">
+                                <button>Apply Code</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="cart-summary">
+                                <div class="cart-content">
+                                    <h1>Cart Summary</h1>
+                                    <p>Sub Total<span>${{subTotal}} USD</span></p>
+                                    <p>Shipping Cost<span>${{shippingCost}} USD</span></p>
+                                    <h2>Grand Total<span>${{grandTotal}} USD</span></h2>
+                                </div>
+                                <div class="cart-btn">
+                                    <button (click)="updateAll(cart)">Update All</button>
+                                    <button routerLink="/checkout" routerLinkActive="active">Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart End -->

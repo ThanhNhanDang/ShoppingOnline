@@ -1,0 +1,444 @@
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+  <div class="container-fluid">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/home" href="javaScript:void(0)">Home</a>
+      </li>
+      <li class="breadcrumb-item active">My Account</li>
+    </ul>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- My Account Start -->
+<div class="my-account">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <div
+          class="nav flex-column nav-pills"
+          role="tablist"
+          aria-orientation="vertical"
+        >
+          <a
+            class="nav-link active"
+            id="dashboard-nav"
+            data-toggle="pill"
+            href="#dashboard-tab"
+            role="tab"
+            ><i class="fa fa-tachometer-alt"></i>Dashboard</a
+          >
+          <a
+            class="nav-link"
+            id="orders-nav"
+            data-toggle="pill"
+            href="#orders-tab"
+            role="tab"
+            ><i class="fa fa-shopping-bag"></i>Orders</a
+          >
+          <a
+            class="nav-link"
+            id="payment-nav"
+            data-toggle="pill"
+            href="#payment-tab"
+            role="tab"
+            ><i class="fa fa-credit-card"></i>Payment Method</a
+          >
+          <a
+            class="nav-link"
+            id="address-nav"
+            data-toggle="pill"
+            href="#address-tab"
+            role="tab"
+            ><i class="fa fa-map-marker-alt"></i>address</a
+          >
+          <a
+            class="nav-link"
+            id="account-nav"
+            data-toggle="pill"
+            href="#account-tab"
+            role="tab"
+            ><i class="fa fa-user"></i>Account Details</a
+          >
+          <a class="nav-link" routerLink="/home" (click)="logout()"
+            ><i class="fa fa-sign-out-alt"></i>Logout</a
+          >
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="tab-content">
+          <div
+            class="tab-pane fade"
+            id="orders-tab"
+            role="tabpanel"
+            aria-labelledby="orders-nav"
+          >
+            <div class="table-responsive my-custom-scrollbar">
+              <table class="table table-bordered">
+                <thead class="thead-dark table-fixed">
+                  <tr>
+                    <th>Product</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of orders">
+                    <td>{{ order.productName }}</td>
+                    <td>{{ order.orderDate }}</td>
+                    <td>${{ order.price }}</td>
+                    <td>x{{ order.quantity }}</td>
+                    <td>Approved</td>
+                    <td>
+                      <button
+                        routerLink="/product-detail"
+                        (click)="clickDetail(order.productId)"
+                        class="btn"
+                      >
+                        View
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade show active"
+            id="dashboard-tab"
+            role="tabpanel"
+            aria-labelledby="dashboard-nav"
+          >
+            <app-user *ngIf="active"></app-user>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="payment-tab"
+            role="tabpanel"
+            aria-labelledby="payment-nav"
+          >
+            <h4>Payment Method</h4>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
+              condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at
+              dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla
+              tristique viverra nisl, sit amet bibendum ante suscipit non.
+              Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam
+              eros. Aliquam et sapien eget arcu rhoncus scelerisque.
+            </p>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="address-tab"
+            role="tabpanel"
+            aria-labelledby="address-nav"
+          >
+            <h4>Address</h4>
+            <div class="row">
+              <div class="col-md-6">
+                <h5>Payment Address</h5>
+                <p>123 Payment Street, Los Angeles, CA</p>
+                <p>Mobile: 012-345-6789</p>
+                <button class="btn">Edit Address</button>
+              </div>
+              <div class="col-md-6">
+                <h5>Shipping Address</h5>
+                <p>123 Shipping Street, Los Angeles, CA</p>
+                <p>Mobile: 012-345-6789</p>
+                <button class="btn">Edit Address</button>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="account-tab"
+            role="tabpanel"
+            aria-labelledby="account-nav"
+          >
+            <h4>Account Details</h4>
+            <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group mb-3">
+                  <label>Full Name</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Full Name"
+                    [(ngModel)]="userPayload.name"
+                  />
+                </div>
+                <div class="form-group mb-3">
+                  <label>Mobile</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Mobile"
+                    [(ngModel)]="userPayload.mobile"
+                  />
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12">
+                <div class="form-group mb-3">
+                  <label>Gender</label>
+                  <select
+                    class="form-control form-control-lg"
+                    [(ngModel)]="userPayload.gender"
+                  >
+                    <option
+                      [value]="gender.value"
+                      *ngFor="let gender of genders"
+                    >
+                      {{ gender.value }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group mb-3">
+                  <label>Email</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Email"
+                    [ngModel]="userPayload.email"
+                    readonly
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <label>Address</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Address"
+                  [(ngModel)]="userPayload.address"
+                />
+              </div>
+              <div class="col-md-12">
+                <label>Delivery Address</label>
+                <select
+                  class="form-control"
+                  [(ngModel)]="userPayload.deliveryAddressId"
+                >
+                  <option
+                    [value]="delivery.id"
+                    *ngFor="let delivery of deliveryAddress"
+                  >
+                    {{ delivery.address }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-12">
+                <button class="btn form-control" (click)="editDelivery()">
+                  Update Delivery Address
+                  <i
+                    class="arrow"
+                    [ngClass]="{
+                      down: !checkEditDelivery,
+                      up: checkEditDelivery
+                    }"
+                  ></i>
+                </button>
+              </div>
+
+              <div
+                *ngIf="checkEditDelivery"
+                class="col-md-12 my-custom-scrollbar"
+              >
+                <div *ngFor="let delivery of deliveryAddress">
+                  <label class="label">Delivery Address</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Delivery Address"
+                    [(ngModel)]="delivery.address"
+                  />
+                  <div class="col-md-4">
+                    <div>
+                      <select
+                        [(ngModel)]="delivery.provinceId"
+                        (change)="onChangeProvince(delivery)"
+                        class="form-control"
+                      >
+                        <option
+                          [value]="item.id"
+                          *ngFor="let item of provinces"
+                        >
+                          {{ item.name }}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <select
+                      [(ngModel)]="delivery.districtId"
+                      (change)="onChangeDistrict(delivery)"
+                      class="form-control"
+                    >
+                      <option
+                        [value]="item.id"
+                        *ngFor="let item of delivery.districts"
+                      >
+                        {{ item.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <select [(ngModel)]="delivery.wardId" class="form-control">
+                      <option
+                        [value]="item.id"
+                        *ngFor="let item of delivery.wards"
+                      >
+                        {{ item.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <button
+                    class="col-md-6 btn form-group update"
+                    (click)="updateDeliveryAddress(delivery)"
+                  >
+                    Update Now
+                  </button>
+                  <button
+                    class="col-md-6 btn form-group delete"
+                    (click)="deleteDeliveryAddress(delivery)"
+                  >
+                    Delete Now
+                  </button>
+
+                  <hr />
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                <div class="tm-product-img-edit mx-auto">
+                  <img
+                    [src]="avatar"
+                    alt="Avatar"
+                    class="img-fluid d-block mx-auto"
+                  />
+                </div>
+                <div class="custom-file mt-3 mb-3">
+                  <input
+                    id="fileInput"
+                    accept="image/*"
+                    #file
+                    (change)="onFileChanged(file.files)"
+                    type="file"
+                    style="display: none"
+                  />
+                  <input
+                    type="button"
+                    class="btn btn-primary btn-block mx-auto"
+                    value="CHANGE IMAGE NOW"
+                    onclick="document.getElementById('fileInput').click();"
+                  />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <button class="btn form-control" (click)="updateMyAccount()">
+                  Update Account
+                </button>
+                <br /><br />
+              </div>
+              <label class="container"
+                >Password change
+                <input
+                  type="checkbox"
+                  name="isActive"
+                  [(ngModel)]="checkPasswordChange"
+                />
+                <span class="checkmark"></span>
+              </label>
+              <form [formGroup]="form">
+                <div class="row" *ngIf="checkPasswordChange">
+                  <div class="col-md-12">
+                    <label>Current password</label>
+                    <div
+                      class="error"
+                      *ngIf="
+                        form.get('oldPassword')?.hasError('required') &&
+                        form.get('oldPassword')?.touched
+                      "
+                    >
+                      <small *ngIf="f.oldPassword?.errors?.required"
+                        >Current password is required</small
+                      >
+                      <small *ngIf="form.get('oldPassword')?.errors?.minlength"
+                        >Current password must be letaset 6 character</small
+                      >
+                    </div>
+
+                    <input
+                      class="form-control"
+                      type="password"
+                      placeholder="Current Password"
+                      formControlName="oldPassword"
+                      [(ngModel)]="changePass.oldPassword"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label>New Password</label>
+                    <div
+                      class="error"
+                      *ngIf="
+                        form.get('password')?.hasError('required') &&
+                        form.get('password')?.touched
+                      "
+                    >
+                      <small *ngIf="f.password?.errors?.required"
+                        >Password is required</small
+                      >
+                      <small *ngIf="form.get('password')?.hasError('minLength')"
+                        >Password must be letaset 6 character</small
+                      >
+                    </div>
+                    <input
+                      class="form-control"
+                      type="password"
+                      placeholder="New Password"
+                      [(ngModel)]="changePass.password"
+                      formControlName="password"
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label>Confirm Password</label>
+                    <div
+                    *ngIf="!mustMath"
+                      class="error"
+                    >
+                      <small
+                        >Confirm password doesn't match</small
+                      >
+                    </div>
+                    <input
+                      class="form-control"
+                      type="password"
+                      placeholder="Confirm Password"
+                      formControlName="confirmPassword"
+                      [(ngModel)]="changePass.confirmPassword"
+                    />
+                  </div>
+                  <div class="col-md-12">
+                    <button
+                    [disabled]="!form.valid"
+                      (click)="changePassword()"
+                      type="submit"
+                      class="btn form-control"
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- My Account End -->
+  </div>
+</div>

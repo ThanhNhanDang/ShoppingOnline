@@ -1,0 +1,30 @@
+
+        <div class="col-md-12">
+            <div class="table-responsive my-custom-scrollbar">
+                <div class="my-custom-scrollbar">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark table-fixed">
+                            <tr>
+                                <th>Product</th>
+                                <th>Date</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let order of orders">
+                            
+                                <td>{{order.productName}}</td>
+                                <td>{{order.orderDate}}</td>
+                                <td>${{order.price}}</td>
+                                <td>x{{order.quantity}}</td>
+                                <td>Approved</td>
+                                <td><button routerLink="/product-detail"(click)="clickDetail(order.productId)"  class="btn">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>

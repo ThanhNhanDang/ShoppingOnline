@@ -1,0 +1,54 @@
+
+<div class="nav">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark" >
+            <a href="#" class="navbar-brand">MENU</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav mr-auto">
+                    <a routerLink="/home" routerLinkActive="active" class="nav-item nav-link">Home</a>
+                    <a routerLink="/products"  routerLinkActive="active" class="nav-item nav-link">Products</a>
+                    <a routerLink="/cart"  *ngIf="!http.isLogin()" routerLinkActive="active" class="nav-item nav-link">Cart</a>
+                    <a routerLink="/checkout"  *ngIf="!http.isLogin()" routerLinkActive="active"  class="nav-item nav-link">Checkout</a>
+                    
+                    <a routerLink="/wish-list"  *ngIf="!http.isLogin()" routerLinkActive="active"  class="nav-item nav-link">Wishlist</a>
+                 
+                    <a routerLink="/contact-us"  routerLinkActive="active" class="nav-item nav-link">Contact Us</a>
+                      
+                    <a routerLink="/login"*ngIf="http.isLogin()" routerLinkActive="active"  class="nav-item nav-link">Login</a>
+                    <a routerLink="/register" *ngIf="http.isLogin()" routerLinkActive="active" class="nav-item nav-link">Register</a>
+                    
+                    <div  *ngIf="!http.isLogin()"class="nav-link dropdown_avatar">
+                        <img  [src]="baseUrl+avatar" alt="Avatar" class="avatar">
+                        <a  class="name" ng-model="name"> {{name}} </a>
+                        <div class="dropdown_avatar-content">
+                            <div class="text-center card-box">
+                                <div class="member-card pt-2 pb-2">
+                                    
+                                    <div class="thumb-lg member-thumb mx-auto"><img [src]="baseUrl+avatar" class="rounded-circle img-thumbnail" alt="Avatar"></div>
+                                    <a  class="dropdown_avatar_name"ng-model="name">{{name}} </a>
+                                    <p class="text-muted"ng-model="email">{{email}} </p>
+                                    <ul class="social-links list-inline">
+                                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Instagram"><i class="fab fa-instagram"></i></a></li>
+                                    </ul>
+                                    <button *ngIf="admin" type="button" routerLink="/admin" class="btn mt-3 btn-rounded waves-effect w-md waves-light">Administrator</button>
+                                    <button type="button" routerLink="/my-account" class="btn mt-3 btn-rounded waves-effect w-md waves-light">Manager My Account</button>
+                                    <a routerLink="/cart" class="dropdown-item dropdown_avatar_menu">My Cart</a>
+                                    <a routerLink="/my-order" class="dropdown-item dropdown_avatar_menu">My Orders</a>
+                                    <a routerLink="/wish-list" class="dropdown-item dropdown_avatar_menu">My Wishlist & Followed Stores</a>
+                                    <a routerLink="/my-reviews" class="dropdown-item dropdown_avatar_menu">My Reviews</a>
+                                    <a routerLink="/home" (click)="logout()"class="dropdown-item dropdown_avatar_menu">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

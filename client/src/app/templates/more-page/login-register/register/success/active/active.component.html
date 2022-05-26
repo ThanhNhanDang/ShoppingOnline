@@ -1,0 +1,9 @@
+<div class="m" *ngIf="checkIsEmail">
+  <b>Congratulations!<p>Your account has been activated.</p></b><br>
+  <b class="b2" routerLink="/login">LOG IN NOW</b>
+</div>
+
+<div class="m" *ngIf="!checkIsEmail">
+    <b>ERROR!<br>Message error: </b>
+    <b class="b2">{{error}}</b>
+</div>

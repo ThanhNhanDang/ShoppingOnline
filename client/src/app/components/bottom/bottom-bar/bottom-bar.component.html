@@ -1,0 +1,158 @@
+<div class="bottom-bar">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-3">
+        <div class="logo">
+          <a routerLink="/home" routerLinkActive="active">
+            <img src="assets/img/logo.png" alt="Logo" />
+          </a>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <app-search></app-search>
+      </div>
+      <div *ngIf="!http.isLogin()" class="col-md-3">
+        <div class="user">
+          <div class="dropdown">
+            <button type="button" class="btn" data-toggle="dropdown">
+              <i class="fa fa-heart" aria-hidden="true"></i> Wishlist
+              <span class="badge badge-pill badge-danger">{{
+                wishListItem
+              }}</span>
+            </button>
+
+            <div class="dropdown-menu">
+              <div class="row total-header-section">
+                <div class="col-lg-6 col-sm-6 col-6">
+                  <i class="fa fa-heart" aria-hidden="true"></i>
+                  <span class="badge badge-pill badge-danger">{{
+                    wishListItem
+                  }}</span>
+                </div>
+              </div>
+
+              <div class="my-custom-scrollbar">
+                <h5 class="cart-content" *ngIf="checkIsEmptyWishlist">
+                  {{ messageWishlist }}
+                </h5>
+                <div class="row cart-detail" *ngFor="let item of wishList">
+                  <div
+                    (click)="clickDetailProduct(item.productId)"
+                    class="col-lg-4 col-sm-4 col-4 cart-detail-img"
+                  >
+                    <img src="{{ baseUrl + item.urlImg }}" />
+                  </div>
+                  <div class="col-lg-5 col-sm-5 col-5 cart-detail-product">
+                    <p
+                      (click)="clickDetailProduct(item.productId)"
+                      alt="adadadsad"
+                    >
+                      {{ item.productName }}
+                    </p>
+                    <span class="price text-info">
+                      ${{ item.pricePerItem }}</span
+                    >
+                    <span class="count"> Quantity:{{ item.quantity }}</span>
+                  </div>
+                  <div class="col-lg-2 col-sm-2 col-2 cart-detail-remove">
+                    <button class="btn" (click)="deleteWishlist(item)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                    <button
+                      class="btn"
+                      (click)="clickDetailProduct(item.productId)"
+                    >
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                  <button
+                    routerLink="/wish-list"
+                    class="btn btn-primary btn-block"
+                  >
+                    Go to your wishlist
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown">
+            <button type="button" class="btn" data-toggle="dropdown">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart
+              <span class="badge badge-pill badge-danger">{{ cartItem }}</span>
+            </button>
+            <div class="dropdown-menu">
+              <div class="row total-header-section">
+                <div class="col-lg-6 col-sm-6 col-6">
+                  <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                  <span class="badge badge-pill badge-danger">{{
+                    cartItem
+                  }}</span>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
+                  <p>
+                    Total: <span class="text-info">${{ subTotal }}</span>
+                  </p>
+                </div>
+              </div>
+
+              <div class="my-custom-scrollbar">
+                <h5 class="cart-content" *ngIf="checkIsEmptyCart">
+                  {{ messageCart }}
+                </h5>
+                <div class="row cart-detail" *ngFor="let item of cart">
+                  <div
+                    (click)="clickDetailProduct(item.product_id)"
+                    class="col-lg-4 col-sm-4 col-4 cart-detail-img"
+                  >
+                    <img src="{{ baseUrl + item.urlImg }}" />
+                  </div>
+                  <div class="col-lg-5 col-sm-5 col-5 cart-detail-product">
+                    <p
+                      (click)="clickDetailProduct(item.product_id)"
+                      alt="adadadsad"
+                    >
+                      {{ item.productName }}
+                    </p>
+                    <span class="price text-info">
+                      ${{ item.pricePerItem }}</span
+                    >
+                    <span class="count"> Quantity:{{ item.quantity }}</span>
+                  </div>
+                  <div class="col-lg-2 col-sm-2 col-2 cart-detail-remove">
+                    <button class="btn" (click)="deleteCart(item)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                    <button
+                      class="btn"
+                      (click)="clickDetailProduct(item.product_id)"
+                    >
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
+                  <button
+                    routerLink="/checkout"
+                    class="btn btn-primary btn-block"
+                  >
+                    Checkout
+                  </button>
+                  <button routerLink="/cart" class="btn-cart btn-block">
+                    Go to your cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<ngx-slick-carousel class="header-slider normal-slider"              
+[config]="slideConfig">
+<div ngxSlickItem *ngFor="let urlImg of urlImgs">
+    <div class="header-slider-item">
+        <img src="{{urlImg}}" alt="Slider Image" />
+    </div>
+</div>
+</ngx-slick-carousel>

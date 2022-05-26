@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="row tm-content-row">
+    <div class="col-12 tm-block-col">
+      <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+        <div class="row tm-content-row">
+          <div class="col-md-8">
+            <h2 class="tm-block-title">List of Accounts</h2>
+          </div>
+          <div class="col-md-4 b">
+            <b routerLink="/accounts/add"><i class="fas fa-plus"></i>
+              Add New Account
+            </b>
+          </div>
+        </div>
+
+        <p class="text-white">Accounts</p>
+        <div class="row tm-content-row">
+          <div class="col-md-4">
+            <select
+              [(ngModel)]="key2"
+              class="custom-select"
+              (change)="search2()"
+            >
+              <option value="Select account">Select account</option>
+              <option *ngFor="let item of roles" [value]="item.description">
+                {{ item.description }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group has-search">
+              <span class="search fa fa-search form-control-feedback"></span>
+              <input
+                type="text"
+                [(ngModel)]="key"
+                (input)="search()"
+                class="form-control"
+                placeholder="Search.."
+                name="search"
+              />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <h2
+            class="form-control"
+            style="color: rgb(207, 206, 206);padding-top: 12px;"
+            >Result: {{result}} </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row tm-content-row">
+    <div class="col-12 tm-block-col">
+      <div class="my-custom-scrollbar">
+        <table class="table">
+          <thead class="table-fixed">
+            <tr>
+              <th scope="col">USER</th>
+              <th scope="col">STATUS</th>
+              <th scope="col">ROLE</th>
+              <th scope="col">PHONE</th>
+              <th scope="col">GENDER</th>
+              <th scope="col">EDIT</th>
+              <th scope="col">REMOVE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>
+                <div class="user-info">
+                  <div class="user-info__img dropdown">
+                    <img [src]="baseUrl + user.image_url" alt="User Img" />
+                    <div class="__img dropdown-content">
+                      <img [src]="baseUrl + user.image_url" alt="User Img" />
+                    </div>
+                  </div>
+                  <div class="user-info__basic">
+                    <h4 class="mb-0 name" (click)="account(user.id)">
+                      {{ user.name }}
+                    </h4>
+                    <h5 class="mb-0 name" (click)="account(user.id)">
+                      {{ user.email }}
+                    </h5>
+                  </div>
+                </div>
+              </td>
+              <td
+                [ngClass]="{
+                  active: user.is_email_verfied,
+                  inactive: !user.is_email_verfied
+                }"
+              >
+                <i
+                  (click)="clickActive(user)"
+                  class="fas"
+                  [ngClass]="{
+                    'fa-check-circle': user.is_email_verfied,
+                    'fa-circle': !user.is_email_verfied
+                  }"
+                ></i>
+              </td>
+              <td
+                [ngClass]="{
+                  admin: user.role_id == 1,
+                  user: user.role_id == 2
+                }"
+              >
+                <b>{{ user.nameRole }}</b>
+              </td>
+              <td>
+                <b>{{ user.mobile }}</b>
+              </td>
+              <td>{{ user.gender }}</td>
+              <td>
+                <i class="fa fa-edit edit" (click)="account(user.id)"></i>
+              </td>
+              <td><i class="fa fa-trash trash" (click)="delete(user)"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<div class="body">
+  <div class="container">
+    <div class="content">
+      <form [formGroup]="form">
+        <div class="user-details">
+          <div class="input-box">
+            <input
+              type="text"
+              formControlName="firstName"
+              placeholder="Enter your first name"
+              required
+            />
+
+            <div class="underline"></div>
+            <small
+              *ngIf="f.firstName?.invalid && f.firstName?.touched"
+              class="error"
+              >First name is required</small
+            >
+          </div>
+          <div class="input-box">
+            <input
+              type="text"
+              formControlName="lastName"
+              placeholder="Enter your last name"
+              required
+            />
+            <div class="underline"></div>
+            <small
+              *ngIf="f.lastName?.invalid && f.lastName?.touched"
+              class="error"
+              >Last name is required</small
+            >
+          </div>
+          <div class="input-box">
+            <input
+              type="email"
+              formControlName="emailAddress"
+              placeholder="Enter your email"
+              required
+            />
+            <div class="underline"></div>
+            <div
+              *ngIf="f.emailAddress?.invalid && f.emailAddress?.touched"
+              class="error"
+            >
+              <small *ngIf="f.emailAddress?.errors?.required"
+                >Email is required</small
+              >
+              <small *ngIf="f.emailAddress?.errors?.email"
+                >Email must be a valid email Address</small
+              >
+            </div>
+          </div>
+          <div class="input-box">
+            <input
+              type="text"
+              formControlName="mobileNumber"
+              placeholder="Enter your mobile number"
+              required
+            />
+            <div class="underline"></div>
+            <div
+              class="error"
+              *ngIf="f.mobileNumber?.invalid && f.mobileNumber?.touched"
+            >
+              <small *ngIf="f.mobileNumber?.errors?.required"
+                >Mobile number is required</small
+              >
+              <small *ngIf="f.mobileNumber?.errors?.pattern"
+                >Minimum length 10,numbers are only allowed</small
+              >
+            </div>
+          </div>
+          <div class="input-box">
+            <input
+              type="password"
+              formControlName="password"
+              placeholder="Enter your password"
+              required
+            />
+            <div class="underline"></div>
+            <div
+              class="error"
+              *ngIf="f.password?.invalid && f.password?.touched"
+            >
+              <small *ngIf="f.password?.errors?.required"
+                >Password is required</small
+              >
+              <small *ngIf="f.password?.errors?.minlength"
+                >Password must be letaset 6 character</small
+              >
+            </div>
+          </div>
+          <div class="input-box">
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              placeholder="Confirm your password"
+              required
+            />
+            <div class="underline"></div>
+            <div
+              *ngIf="f.confirmPassword?.touched && f.confirmPassword?.invalid"
+              class="error"
+            >
+              <small *ngIf="f.confirmPassword?.errors?.MustMatch"
+                >Confirm password doesn't match</small
+              >
+            </div>
+          </div>
+        </div>
+        <div class="gender-details">
+          <span class="gender-title">Gender: </span>
+          <select
+            class="form-control form-control-lg"
+            [(ngModel)]="selected"
+            formControlName="genderSelect"
+          >
+            <option [value]="gender.value" *ngFor="let gender of genders">
+              {{ gender.value }}
+            </option>
+          </select>
+        </div>
+        <div class="button">
+          <input
+            (click)="clickSub()"
+            [disabled]="!form.valid"
+            type="submit"
+            value="Register"
+          />
+        </div>
+      </form>
+      <div class="option">or</div>
+      <div class="google">
+        <button (click)="signInWithGoogle()">
+          <i class="fab fa-google"></i> Register With Google
+        </button>
+      </div>
+      <div class="facebook">
+        <button (click)="signInWithFB()">
+          <i class="fab fa-facebook-f"></i> Register With Facebook
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

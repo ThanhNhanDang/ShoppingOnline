@@ -1,0 +1,95 @@
+<div class="container">
+    <div class="row tm-content-row">
+      <div class="col-12 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row tm-content-row">
+            <div class="col-md-4">
+              <h2 class="tm-block-title">List of Ward</h2>
+            </div>
+  
+            <div class="col-md-4 b">
+              <b (click)="reportExcel()"
+                ><i class="fas fa-file-excel"></i>
+                Report to Excel
+              </b>
+            </div>
+            <div class="col-md-4 b">
+              <b routerLink="/wards/add"
+                ><i class="fas fa-plus"></i>
+                Add New Ward
+              </b>
+            </div>
+          </div>
+  
+          <p class="text-white">Wards</p>
+          <div class="row tm-content-row">
+            <div class="col-md-4">
+                <select
+                  [(ngModel)]="key2"
+                  class="custom-select"
+                  (change)="getWardsByDistrict()"
+                >
+                  <option *ngFor="let item of districts" [value]="item.id">
+                    {{ item.name }}
+                  </option>
+                </select>
+              </div>
+            <div class="col-md-4">
+              <div class="form-group has-search">
+                <span class="search fa fa-search form-control-feedback"></span>
+                <input
+                  type="text"
+                  [(ngModel)]="key"
+                  (input)="search()"
+                  class="form-control"
+                  placeholder="Search.."
+                  name="search"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h2
+                class="form-control"
+                style="color: rgb(207, 206, 206); padding-top: 12px"
+              >
+                Result: {{ result }}
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row tm-content-row">
+      <div class="col-12 tm-block-col">
+        <div class="my-custom-scrollbar">
+          <table class="table" id="excel-table">
+            <thead class="table-fixed">
+              <tr>
+                <th scope="col">NAME</th>
+                <th scope="col">TYPE</th>
+                <th scope="col">DISTRICT ID</th>
+                <th scope="col">EDIT</th>
+                <th scope="col">REMOVE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ward of wards">
+                <td>
+                  <b (click)="edit(ward.id)">{{ ward.name }}</b>
+                </td>
+                <td (click)="edit(ward.id)">{{ ward.type }}</td>
+                <td (click)="edit(ward.id)">{{ ward.districtId }}</td>
+                <td>
+                  <i class="fa fa-edit edit" (click)="edit(ward.id)"></i>
+                </td>
+                <td>
+                  <i class="fa fa-trash trash" (click)="delete(ward)"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  

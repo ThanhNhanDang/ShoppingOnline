@@ -1,0 +1,197 @@
+ <!-- Breadcrumb Start -->
+ <div class="breadcrumb-wrap">
+    <div class="container-fluid">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/home" href="javaScript:void(0)">Home</a></li>
+            <li class="breadcrumb-item"><a routerLink="/products" href="javaScript:void(0)">Products</a></li>
+            <li class="breadcrumb-item active">Product Detail</li>
+            <li class="breadcrumb-item"><a href="javaScript:void(0)" (click)="backClicked()">Go Back <i class="fa fa-undo"></i></a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Breadcrumb End -->
+ <!-- Product Detail Start -->
+  <div class="product-detail">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="product-detail-top">
+                    <div class="row align-items-center">
+                        <div class="col-md-5">
+                            <ngx-slick-carousel class="normal-slider slide-1"
+                            [config]="slideConfig">
+                                <div ngxSlickItem *ngFor="let slide of productDetailUrlImg">
+                                        <img src="{{baseUrl+slide.urlImg }}" alt="Product Image" width="100%" height="450px">
+                                </div>
+                             
+                                </ngx-slick-carousel>
+                                <ngx-slick-carousel class="normal-slider slide-2"
+                                        [config]="slideConfigNav">
+                                            <div ngxSlickItem *ngFor="let slide of productDetailUrlImg">
+                                            <div class="slider-nav-img"><img src="{{baseUrl+ slide.urlImg }}" alt="Product Image" width="100%" height="100px"></div>    
+                                            </div>
+                                
+                                </ngx-slick-carousel>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="product-content">
+                                <div class="title"><h2>{{product.name}}</h2></div>
+                                <div class="ratting">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    
+                                </div>
+                                <div class="price">
+                                    <h4>Price:</h4>
+                                    <p>${{totalPrice}} <span>${{discountPrice}}</span></p>
+                                </div>
+                                <div class="price">
+                                    <h4>Sold:</h4>
+                                    <p>{{product.unitSold}}</p>
+                                </div>
+                                <div class="price">
+                                    <h4>In Stock:</h4>
+                                    <p>{{product.inStock}}</p>
+                                </div>
+                                <div class="quantity">
+                                    <h4>Quantity:</h4>
+                                    <div class="qty">
+                                        <button class="btn-minus" (click)="handleMinus()"><i class="fa fa-minus"></i></button>
+                                        <input type="number" min="1" [ngModel]="quantity" (ngModelChange)="onInputChanged($event)">
+                                        <button class="btn-plus" (click)="handlePlus()"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </div>
+                                <div class="p-size">
+                                    <h4>Category:</h4>
+                                    <div class="btn-group btn-group-sm">
+                                        <h5>{{product.categoryName}}</h5>
+                                    </div> 
+                                </div>
+                                <div class="action">
+                                    <a class="btn"(click)="clickAddCart(product)" href="javascript:void(0)"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
+                                    <a class="btn" (click)="buyNow(product)"><i class="fa fa-shopping-bag"></i>Buy Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row product-detail-bottom">
+                    <div class="col-lg-12">
+                        <ul class="nav nav-pills nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="pill" href="#description">Description</a>
+                            </li>
+                         
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#reviews">Reviews ({{totalReview}})</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="description" class="container tab-pane active">
+                                <h4>Product Description</h4>
+                                <p>
+                                    {{product.description}}
+                                </p>
+                                <iframe width="100%" height="500px" src="https://www.youtube.com/embed/y_M9gnZ7MKs" frameborder="0" allowfullscreen>
+                                </iframe>
+                                <p class="p">
+                                    {{product.name}}
+                                </p>
+                            </div>
+                           
+                            <div id="reviews" class="container tab-pane fade">
+                                <div class="reviews-submit">
+                                    <h4>Give your Review:</h4>
+                                    <div class="ratting">
+                                        <i  *ngFor="let item of ratting; let i=index" class="fa" (click)="change(i)" [ngClass]="{'fa-star': item}"></i>
+                                        <i  *ngFor="let item of ratting; let i=index" class="far" (click)="change(i)" [ngClass]="{'fa-star': !item}"></i>
+                                        
+                                    </div>
+                                    
+                                        <div class="row form">
+                                            
+                                            <div class="col-sm-12">
+                                                <textarea placeholder="Review" [(ngModel)]="review"></textarea>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <button (click)="sendMessage()">Submit</button>
+                                            </div>
+                                        </div>
+                                  
+                                    <hr>    
+                                </div>
+                                <div class="reviews-submitted" *ngFor="let review of reviews">
+                                    <div class="reviewer">
+                                        <img src="{{baseUrl+review.urlImg}}" alt="{{review.userName}}" class="avatar">{{review.userName}} - <span>{{review.reviewDateCustom}}</span></div>
+                                    <div class="ratting">
+                                        <i *ngFor="let item of review.starReview" class="fa"  [ngClass]="{'fa-star': item}"></i>
+                                        <i *ngFor="let item of review.starReview" class="far" [ngClass]="{'fa-star': !item}"></i>
+                                        
+                                    </div>
+                                    <p>
+                                        {{review.message}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <div class="section-header">
+                        <h1>Related Products</h1>
+                    </div>
+                <ngx-slick-carousel class="row align-items-center product-slider"
+                           
+                    [config]="slideConfigRelated">
+                        <div ngxSlickItem *ngFor="let item of products"class="col-lg-3">
+                            <div class="product-item">
+                                <div class="product-title">
+                                    <a (click)="clickProductDetail(item.id)">{{item.name}}</a>
+                                    <div class="ratting">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                </div>
+                                <div class="product-image">
+                                    <a (click)="clickProductDetail(item.id)">
+                                        <img class="img-slider"src="{{baseUrl+item.urlImg}}" alt="Product Image">
+                                    </a>
+                                    <div class="product-action">
+                                        <a (click)="clickAddCart(item)"><i class="fa fa-cart-plus"></i></a>
+                                        <a (click)="clickAddWishlist(item)"><i class="fa fa-heart"></i></a>
+                                        <a (click)="clickProductDetail(item.id)"><i class="fa fa-search"></i></a>
+                                    </div>
+                                </div>
+                                <div class="product-price">
+                                    <h3><span>$</span>{{item.price}}</h3>
+                                    <a class="btn"(click)="buyNow(item)"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ngx-slick-carousel>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 sidebar">
+                <app-cat></app-cat>
+                <app-slider></app-slider>
+                <app-slidebar></app-slidebar>
+            </div>
+            <!-- Side Bar End -->
+        </div>
+    </div>
+</div>
+<!-- Product Detail End -->
+
+<app-brand></app-brand>
+

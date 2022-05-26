@@ -1,0 +1,96 @@
+<div class="container tm-mt-big tm-mb-big">
+    <div class="row">
+      <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+          <div class="row">
+            <div class="col-12">
+              <h2 class="tm-block-title d-inline-block">
+                Add New Wards: {{ fileName }}
+              </h2>
+            </div>
+            <div class="col-12">
+              <div class="custom-file mt-3 mb-3">
+                <input
+                  id="uploadBtn"
+                  type="file"
+                  #file
+                  (change)="readExcel($event, file.files)"
+                  type="file"
+                  style="display: none"
+                  required
+                />
+                <input
+                  type="button"
+                  class="btn btn-primary btn-block mx-auto"
+                  value="Upload file Excel"
+                  onclick="document.getElementById('uploadBtn').click();"
+                />
+              </div>
+            </div>
+            <div class="col-12 mt-2 mb-5">
+              <button
+                (click)="addAll()"
+                class="btn btn-primary btn-block text-uppercase"
+              >
+                Add Now
+              </button>
+            </div>
+            <div class="col-6">
+              <h2 class="tm-block-title d-inline-block">Add New Ward</h2>
+            </div>
+          </div>
+          <div class="row tm-edit-product-row">
+            <div class="col-xl-12 col-lg-12 col-md-12">
+              <div class="form-group mb-12">
+                <label for="name">Ward Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Name"
+                  [(ngModel)]="ward.name"
+                  class="form-control validate"
+                />
+              </div>
+              <div class="form-group mb-12">
+                <label for="type">Ward type</label>
+                <input
+                  id="type"
+                  name="type"
+                  type="text"
+                  placeholder="Type"
+                  [(ngModel)]="ward.type"
+                  class="form-control validate"
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="category">District</label>
+                <select
+                  class="custom-select tm-select-accounts"
+                  [(ngModel)]="ward.districtId"
+                  onfocus="this.size=10;"
+                  onblur="this.size=1;"
+                  onchange="this.size=1; this.blur();"
+                  id="category"
+                >
+                  <option [value]="item.id" *ngFor="let item of districts">
+                    {{ item.name }}
+                  </option>
+                </select>
+              </div>
+  
+              <div class="col-12">
+                <button
+                  (click)="add()"
+                  class="btn btn-primary btn-block text-uppercase"
+                >
+                  Add Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

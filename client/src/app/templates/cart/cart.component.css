@@ -1,0 +1,24 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+tbody tr:hover{
+  background:rgba(243, 169, 156, 0.5);
+}
+.my-custom-scrollbar {
+  position: relative;
+  height: 400px;
+  overflow-y: auto;
+  }
+.table-fixed{
+  background-color: white;
+  
+  position: sticky;
+  top: 0px;
+}

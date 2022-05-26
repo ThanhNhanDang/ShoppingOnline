@@ -1,0 +1,89 @@
+<div class="container mt-5">
+  <div class="row tm-content-row">
+    <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
+      <div class="tm-bg-primary-dark tm-block tm-block-products">
+        <div class="row tm-content-row">
+          <div class="col-md-8">
+            <div class="form-group has-search">
+              <span class="search fa fa-search form-control-feedback"></span>
+              <input
+                type="text"
+                [(ngModel)]="key"
+                (input)="search()"
+                class="form-control"
+                placeholder="Search.."
+                name="search"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h2
+              class="form-control"
+              style="color: rgb(207, 206, 206); padding-top: 12px"
+            >
+              Result: {{ result }}
+            </h2>
+          </div>
+        </div>
+
+        <div class="tm-product-table-container">
+          <table class="table table-hover tm-table-small tm-product-table">
+            <thead>
+              <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">PRODUCT NAME</th>
+                <th scope="col">UNIT SOLD</th>
+                <th scope="col">IN STOCK</th>
+                <th scope="col">EXPIRE DATE</th>
+                <th scope="col">&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of products">
+                <th scope="row">
+                  <div
+                    class="dot"
+                    [ngClass]="{ active: item.checkselect }"
+                    (click)="getIdProduct(item)"
+                  ></div>
+                </th>
+                <td>
+                  <a
+                    routerLink="/product/edit"
+                    [queryParams]="{ product: item.id }"
+                    class="tm-product-name"
+                    >{{ item.name }}</a
+                  >
+                </td>
+                <td>{{ item.unitSold }}</td>
+                <td>{{ item.inStock }}</td>
+                <td>{{ item.exDate }}</td>
+                <td>
+                  <a (click)="clickDelete(item)" class="tm-product-delete-link">
+                    <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- table container -->
+        <a
+          routerLink="/product/add"
+          href="javaScript:void(0)"
+          class="btn btn-primary btn-block text-uppercase mb-3"
+          >Add new product</a
+        >
+        <button
+          (click)="delete()"
+          class="btn btn-primary btn-block text-uppercase"
+        >
+          Delete selected products
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
+      <app-category></app-category>
+    </div>
+  </div>
+</div>

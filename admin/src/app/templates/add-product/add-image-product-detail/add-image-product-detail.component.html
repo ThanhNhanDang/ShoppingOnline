@@ -1,0 +1,69 @@
+<div class="container tm-mt-big tm-mb-big">
+  <div class="row">
+    <div class="col-xl-12 col-lg-10 col-md-12 col-sm-12 mx-auto">
+      <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+        <div class="row">
+          <div class="col-xl-9 col-lg-6 col-md-12">
+            <h2 class="tm-block-title d-inline-block">Update Image Details</h2>
+          </div>
+          <div class="col-xl-3 col-md-12">
+            <h2
+              (click)="addNewImageDetail()"
+              class="tm-block-title d-inline-block b"
+            >
+              <i class="fas fa-plus"></i>
+              Add New Image Details
+            </h2>
+          </div>
+        </div>
+        <div
+          *ngIf="productDetailUrlImg.length != 0"
+          class="row tm-edit-product-row"
+        >
+          <div
+            *ngFor="let item of productDetailUrlImg; let indexOfelement = index"
+            class="col-xl-3 col-lg-6 col-md-12"
+          >
+            <!-- 1 -->
+            <div class="tm-avatar-container">
+              <img
+                [src]="item.urlImgTemp"
+                (click)="file.click()"
+                alt="Product image"
+                class="img-fluid d-block"
+              />
+              <a
+                class="tm-avatar-delete-link"
+                (click)="file.click()"
+              >
+                <i class="fas fa-image tm-product-delete-icon"></i>
+              </a>
+              <a
+                class="tm-delete-link"  (click)="deleteNow(indexOfelement, item)"
+              >
+                <i class="fas fa-trash-alt tm-delete-icon"></i>
+              </a>
+            </div>
+            <div class="custom-file mt-3 mb-3">
+              <input
+                
+                accept="image/*"
+                #file
+                (change)="onFileChanged(file.files, item, indexOfelement)"
+                type="file"
+                style="display: none"
+              />
+              <button
+              type="submit"
+              (click)="updateNow(item)"
+              class="btn btn-primary btn-block text-uppercase"
+            >
+              Update Now
+            </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

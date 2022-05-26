@@ -1,0 +1,17 @@
+b{
+    font-size: 250%;
+    
+}
+p{
+    font-size: 100%;
+}
+.b2{
+    font-size: 150%;
+    color:#ff6f61
+}
+.b2:hover{
+    color:rgb(136, 0, 0)
+}
+.m{
+    text-align: center;
+}

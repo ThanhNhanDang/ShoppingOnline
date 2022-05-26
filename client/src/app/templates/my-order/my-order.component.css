@@ -1,0 +1,11 @@
+.my-custom-scrollbar {
+    position: relative;
+    height: 400px;
+    overflow-y: auto;
+    }
+    .table-fixed{
+        background-color: white;
+        
+        position: sticky;
+        top: 0px;
+      }

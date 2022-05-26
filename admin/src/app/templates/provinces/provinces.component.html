@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row tm-content-row">
+    <div class="col-12 tm-block-col">
+      <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+        <div class="row tm-content-row">
+          <div class="col-md-4">
+            <h2 class="tm-block-title">List of Province</h2>
+          </div>
+
+          <div class="col-md-4 b">
+            <b (click)="reportExcel()"
+              ><i class="fas fa-file-excel"></i>
+              Report to Excel
+            </b>
+          </div>
+          <div class="col-md-4 b">
+            <b routerLink="/provinces/add"
+              ><i class="fas fa-plus"></i>
+              Add New Province
+            </b>
+          </div>
+        </div>
+
+        <p class="text-white">Provinces</p>
+        <div class="row tm-content-row">
+          <div class="col-md-8">
+            <div class="form-group has-search">
+              <span class="search fa fa-search form-control-feedback"></span>
+              <input
+                type="text"
+                [(ngModel)]="key"
+                (input)="search()"
+                class="form-control"
+                placeholder="Search.."
+                name="search"
+              />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h2
+              class="form-control"
+              style="color: rgb(207, 206, 206); padding-top: 12px"
+            >
+              Result: {{ result }}
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row tm-content-row">
+    <div class="col-12 tm-block-col">
+      <div class="my-custom-scrollbar">
+        <table class="table" id="excel-table">
+          <thead class="table-fixed">
+            <tr>
+              <th scope="col">NAME</th>
+              <th scope="col">TYPE</th>
+              <th scope="col">EDIT</th>
+              <th scope="col">REMOVE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let province of provinces">
+              <td>
+                <b (click)="edit(province.id)">{{ province.name }}</b>
+              </td>
+              <td (click)="edit(province.id)">{{ province.type }}</td>
+              <td>
+                <i class="fa fa-edit edit" (click)="edit(province.id)"></i>
+              </td>
+              <td>
+                <i class="fa fa-trash trash" (click)="delete(province)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

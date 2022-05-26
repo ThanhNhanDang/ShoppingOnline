@@ -1,0 +1,21 @@
+.page{
+    font-size: 30px;
+}
+.a{
+    color:blue;
+}
+
+.activeSort{
+    background: blue;
+    color: white;
+}
+.page-link{
+    color: #000;
+}
+.page-link:hover{
+    color: white;
+    background:black;
+}
+.active{
+    color: black;
+}

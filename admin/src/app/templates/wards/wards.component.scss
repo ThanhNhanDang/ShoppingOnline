@@ -1,0 +1,97 @@
+
+  .my-custom-scrollbar {
+    position: relative;
+    height: 400px;
+    overflow-y: auto;
+  }
+  .table-fixed {
+    position: sticky;
+    z-index: 1;
+    top: 0px;
+  }
+  
+  h5 {
+    font-size: small;
+    color: rgb(177, 177, 120);
+  }
+  h4 {
+    font-size: medium;
+  }
+  
+  .active {
+    color: rgb(15, 250, 238);
+    font-size: 300%;
+  }
+  .inactive {
+    color: black;
+    font-size: 300%;
+  }
+  .admin {
+    color: rgb(236, 145, 92);
+  }
+  
+  .active:hover {
+    color: rgb(2, 100, 95);
+  }
+  .inactive:hover {
+    color: rgb(88, 88, 88);
+  }
+  
+  .user {
+    color: rgb(15, 250, 66);
+  }
+  .edit {
+    color: rgb(15, 250, 238);
+    font-size: 250%;
+  }
+  
+  .trash{
+      color: rgb(250, 15, 15);
+      font-size: 250%;
+  }
+  .edit:hover, .trash:hover{
+    color: yellow;
+  }
+  input::placeholder{
+      color: rgb(218, 216, 216);
+  }
+  
+  .active-dropdown{
+      color: white;
+      background:rgb(56, 56, 56);
+  }
+  
+  .has-search .form-control {
+      padding-left: 2.375rem;
+  }
+  
+  .name:hover{
+    color: Yellow;
+  }
+  .has-search .form-control-feedback {
+      position: absolute;
+      z-index: 2;
+      display: block;
+      width: 2.375rem;
+      height: 2.375rem;
+      line-height: 2.375rem;
+      text-align: center;
+      pointer-events: none;
+      color: #aaa;
+  }
+  .search{
+      font-size: 140%;
+     
+  }
+  
+  b{
+    font-size: 140%;
+    color:  rgb(15, 250, 238);
+    text-align: center;
+  
+  }
+  b:hover{
+    color: yellow;
+  }
+  
+  

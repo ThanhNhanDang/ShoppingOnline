@@ -1,0 +1,77 @@
+<div class="row tm-content-row">
+  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+    <app-line-chart></app-line-chart>
+  </div>
+  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+    <app-bar-chart></app-bar-chart>
+  </div>
+  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+    <app-pie-chart></app-pie-chart>
+  </div>
+  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-overflow">
+      <h2 class="tm-block-title">Feedback List</h2>
+      <div class="tm-notification-items">
+        <div
+          class="media tm-notification-item"
+          *ngFor="let feedback of feedbacks"
+        >
+          <img [src]="imgURL" alt="Avatar Image" class="avatar" />
+          <div class="media-body">
+            <p class="mb-2">
+              <b>{{ feedback.name }}</b
+              > : {{ feedback.email }}
+              <a href="#" class="tm-notification-link">{{ feedback.des }}</a
+              >.
+            </p>
+            <span class="tm-small tm-text-color-secondary">{{
+              feedback.time
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 tm-block-col">
+    <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+      <h2 class="tm-block-title">Orders List</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">ORDER NO.</th>
+            <th scope="col">ORDER CREATOR</th>
+            <th scope="col">LOCATION</th>
+            <th scope="col">START DATE</th>
+            <th scope="col">PAYMENT TYPE</th>
+            <th scope="col">QUANTITY</th>
+            <th scope="col">TOTAL AMOUNT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <th scope="row">
+              <b>#{{ order.orderId }}</b>
+            </th>
+            <td>
+              <div class="tm-status-circle moving"></div>
+              {{ order.userName }} ({{ order.userId }})
+            </td>
+            <td>
+              <b>{{ order.deliveryAddress.split(",")[2] }}</b>
+            </td>
+            <td>
+              {{ order.orderDate.split("T")[0] }},{{
+                order.orderDate.split("T")[1].split("Z")[0]
+              }}
+            </td>
+            <td>
+              <b>{{ order.paymentType }}</b>
+            </td>
+            <td>{{ order.quantity }}</td>
+            <td>{{ order.price }} $</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

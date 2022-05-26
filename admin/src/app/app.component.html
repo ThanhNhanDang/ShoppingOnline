@@ -1,0 +1,15 @@
+<app-nav></app-nav>
+<div>
+  <div class="container-fluid">
+    <ul class="breadcrumb">
+      <li class="breadcrumb">
+        <a href="javaScript:void(0)" (click)="backClicked()"
+          >Go Back <i class="fa fa-undo"></i
+        ></a>
+      </li>
+    </ul>
+  </div>
+</div>
+<router-outlet (activate)="active()"></router-outlet>
+<app-spinner></app-spinner>
+<app-footer></app-footer>

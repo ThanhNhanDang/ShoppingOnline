@@ -1,0 +1,12 @@
+b{
+    font-size: 250%;
+    text-align: center;
+}
+h5{
+    font-size: 150%;
+    text-align: center;
+    color:#ff6f61
+}
+h5:hover{
+    color:rgb(92, 91, 91)
+}

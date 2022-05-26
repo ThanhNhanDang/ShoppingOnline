@@ -1,0 +1,211 @@
+<!-- Breadcrumb Start -->
+<div class="breadcrumb-wrap">
+  <div class="container-fluid">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/home" routerLinkActive="active">Home</a>
+      </li>
+      <li class="breadcrumb-item" >
+        <a routerLink="/products" [ngClass]= "{active:!active}"routerLinkActive="active">Products</a>
+      </li>
+      <li class="breadcrumb-item" *ngIf= "active" >
+        <a [ngClass]= "{active:active}" routerLinkActive="active">{{cateName}}</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href="javaScript:void(0)" (click)="backClicked()"
+          >Go Back <i class="fa fa-undo"></i
+        ></a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Product List Start -->
+<div class="product-view">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="product-view-top">
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="product-search">
+                    <input type="text" [(ngModel)]="searAndSort.key" placeholder="Search" />
+                    <button (click)="search()">
+                      <i class="fa fa-search"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="product-short">
+                    <div class="dropdown">
+                      <div class="dropdown-toggle" data-toggle="dropdown">
+                        Product sort by <a class="a">{{ sortKey }}</a>
+                      </div>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a
+                          *ngFor="let item of sortKeys"
+                          [ngClass]="{ activeSort: sortId == item.id }"
+                          (click)="sort(item)"
+                          class="dropdown-item"
+                          >{{ item.name }}</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="product-price-range">
+                    <div class="dropdown">
+                      <div class="dropdown-toggle" data-toggle="dropdown">
+                        Product price range
+                      </div>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#" class="dropdown-item">$0 to $50</a>
+                        <a href="#" class="dropdown-item">$51 to $100</a>
+                        <a href="#" class="dropdown-item">$101 to $150</a>
+                        <a href="#" class="dropdown-item">$151 to $200</a>
+                        <a href="#" class="dropdown-item">$201 to $250</a>
+                        <a href="#" class="dropdown-item">$251 to $300</a>
+                        <a href="#" class="dropdown-item">$301 to $350</a>
+                        <a href="#" class="dropdown-item">$351 to $400</a>
+                        <a href="#" class="dropdown-item">$401 to $450</a>
+                        <a href="#" class="dropdown-item">$451 to $500</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <button (click)="reset()" class="btn" routerLink="/products">
+                    <i class="fa fa-undo"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <br />
+          <br />
+          <div
+            *ngIf="totalElements<=0"
+            class="col-md-12 checkout-summary text-center"
+          >
+            <h2>No results found.</h2>
+          </div>
+
+          <div class="col-md-4" *ngFor="let item of products">
+            <div class="product-item">
+              <div class="product-title">
+                <a
+                  (click)="clickProductDetail(item.id)"
+                  routerLinkActive="active"
+                  >{{ item.name }}</a
+                >
+                <p class="sold">(Sold:{{ item.unitSold }})</p>
+                <div class="ratting">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <a class="sold">({{ item.totalReview5Star }})</a>
+                </div>
+              </div>
+              <div class="product-image">
+                <a
+                  (click)="clickProductDetail(item.id)"
+                >
+                  <img
+                    class="img-slider"
+                    src="{{ baseUrl + item.urlImg }}"
+                    alt="Product Image"
+                  />
+                </a>
+                <div class="product-action">
+                  <a (click)="clickCartPlus(item)"
+                    ><i class="fa fa-cart-plus"></i
+                  ></a>
+                  <a
+                   
+                    (click)="clickWishListPlus(item)"
+                    ><i class="fa fa-heart"></i
+                  ></a>
+                  <a
+                    (click)="clickProductDetail(item.id)"
+                    ><i class="fa fa-search"></i
+                  ></a>
+                </div>
+              </div>
+              <div class="product-price">
+                <h3><span>$</span>{{ item.price }}</h3>
+                <a
+                  class="btn"
+                  (click)="clickCartPlus(item)"
+                  ><i class="fa fa-shopping-cart"></i>Buy Now</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Pagination Start -->
+        <div *ngIf="lastPage > 0" class="col-md-12">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li
+                class="page-item"
+                *ngIf="selectedItem != 1"
+                
+                (click)="previousPage()"
+              >
+                <a class="page-link">Previous</a>
+              </li>
+
+              <a
+                *ngIf="selectedItem != 1"
+                (click)="clickPage(1)"
+                class="page-link"
+                >First</a
+              >
+              <li
+                class="page-item"
+                (click)="clickPage(previousNext)"
+                [ngClass]="{ active: selectedItem == previousNext }"
+              >
+                <a class="page-link" href="javascript:void(0)">{{
+                  previousNext
+                }}</a>
+              </li>
+              <a
+                *ngIf="selectedItem != lastPage"
+                (click)="clickPage(lastPage)"
+                class="page-link"
+                >Last</a
+              >
+              <li
+                class="page-item"
+                *ngIf="selectedItem != lastPage"
+                (click)="nextPage()"
+              >
+                <a class="page-link" href="javaScript:void(0)">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <!-- Pagination Start -->
+      </div>
+
+      <!-- Side Bar Start -->
+      <div class="col-lg-4 sidebar">
+        <app-cat></app-cat>
+        <app-slider></app-slider>
+        <app-slidebar></app-slidebar>
+      </div>
+      <!-- Side Bar End -->
+    </div>
+  </div>
+</div>
+<!-- Product List End -->
+<app-brand></app-brand>
