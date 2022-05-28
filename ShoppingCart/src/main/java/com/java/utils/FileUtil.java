@@ -10,6 +10,7 @@ import java.nio.file.StandardCopyOption;
 import org.apache.commons.io.FileUtils;
 
 public class FileUtil {
+	
 	public static void fileupload(InputStream inputStream,Path uploadPath,String fileName) throws IOException {
 		 // Target directory		
 		if(!Files.exists(uploadPath)) {
@@ -17,6 +18,7 @@ public class FileUtil {
 		}
 		Path filePath = uploadPath.resolve(fileName);
 		Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		
 	}
 	public static int deleteFile(String path) throws IOException {
 		File delFile;

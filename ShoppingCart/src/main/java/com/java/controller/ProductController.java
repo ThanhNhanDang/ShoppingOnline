@@ -98,7 +98,7 @@ public class ProductController {
 	}
 	
 	
-	@PostMapping("/post-img{id}")
+	@PostMapping("/post-img")
 	public ResponseEntity<?> postFile(@RequestParam("file") MultipartFile file, @RequestParam("cateId") long cateId, @RequestParam("id") long id) {
 		try {
 			

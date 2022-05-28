@@ -46,9 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.authorizeRequests()
 		.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 		.antMatchers(
-				"/api/login/user",
-				"/api/login/user/google",
-				"/api/login/user/facebook",
+				"/api/login/**",
 	
 				"/api/category/all",
 				"/api/product/get-products-by-category/**",
@@ -59,14 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 				"/api/review/get/by-product",
 				
-				"/api/signup/user",
-				"/api/signup/user/google",
-				"/api/signup/user/facebook",
+				"/api/signup/**",
 				
 				"/api/user/signup/active",
 				
 				"/api/feedback/save"
-				
 				)
 		.permitAll()
 		

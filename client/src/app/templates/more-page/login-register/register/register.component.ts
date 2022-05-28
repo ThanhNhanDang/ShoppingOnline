@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
           <h3><a href=${url}>VERIFY</a></h3>
           <p>Thank you<br>The ESTORE</p>`
       }
-      this.httpService.postRequestEmail(`/doan1/email/send`, email).subscribe(() => {
+      this.httpService.postRequestEmail(`/doan1/email/send/estore`, email).subscribe(() => {
         alert("Registration Succses");
         this.router.navigateByUrl("/register/verify");
       }, error => {

@@ -56,7 +56,7 @@ export class HttpServiceService {
   deleteRequest(url: String, param: {}) {
     return this.http.delete<any>(this.baseUrl + url, param)
   }
-  getRequest(url: String, param: {}) {
+  getRequest(url: String, param: {}){
     return this.http.get<any>(this.baseUrl + url, param)
       .pipe(
         catchError(this.handleError.bind(this))

@@ -1,5 +1,4 @@
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProductPayload } from './../../../../payload/ProductPayload';
 import { CategoryPayload } from './../../../../payload/CategoryPayload';
 import { Observable } from 'rxjs';
 import { HttpServiceService } from './../../../../service/httpService/http-service.service';

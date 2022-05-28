@@ -1,27 +1,25 @@
 package com.java.config;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.client.RestTemplate;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+@Configuration
+@EnableScheduling
+public class WebConfig {
+    private final RestTemplate restTemplate = new RestTemplate();
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-@Component
-@EnableConfigurationProperties
-@ConfigurationProperties(prefix = "app")
-public class WebConfig implements WebMvcConfigurer{
-	
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		Path uploadDir = Paths.get("./images");
-		String stringUploadDir = uploadDir.toFile().getAbsolutePath();
-		System.out.println("vao");
-		registry.addResourceHandler("/images/**").addResourceLocations("file:/" + stringUploadDir + "/");
-	}
-	
-	
+    @Scheduled(fixedDelay = 30 * 60 * 1000)
+    public void keepAwake() {
+        String pingUrl = "https://thanhnhandev.herokuapp.com/ping";
+        String result = restTemplate.getForObject(pingUrl, String.class);
+        System.out.println(result);
+    }
+    @Scheduled(fixedDelay = 29 * 50 * 1000)
+    public void keepAwakeEmail() {
+        String pingUrl = "https://doan1thanhnhanvituong.herokuapp.com/ping";
+        String result = restTemplate.getForObject(pingUrl, String.class);
+        System.out.println(result);
+    }
 }

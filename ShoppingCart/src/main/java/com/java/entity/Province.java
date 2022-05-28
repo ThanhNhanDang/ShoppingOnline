@@ -50,7 +50,4 @@ public class Province {
 		this.type = type;
 	}
 	
-	
-	
-	
 }

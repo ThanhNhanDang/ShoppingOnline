@@ -130,7 +130,7 @@ export class ExcelService {
           worksheet.eachRow(function (row, rowNumber) {
             const JSON_ROW = row.values.toString().split(",");
             if (rowNumber > 4) {
-              json.push({ "name": JSON_ROW[2], "type": JSON_ROW[3] })
+              json.push({ "id": JSON_ROW[1], "name": JSON_ROW[2], "type": JSON_ROW[3] })
             }
           });
         });
@@ -152,7 +152,7 @@ export class ExcelService {
           worksheet.eachRow(function (row, rowNumber) {
             const JSON_ROW = row.values.toString().split(",");
             if (rowNumber > 4) {
-              json.push({ "name": JSON_ROW[2], "type": JSON_ROW[3], "provinceId": JSON_ROW[4] })
+              json.push({ "id": JSON_ROW[1], "name": JSON_ROW[2], "type": JSON_ROW[3], "provinceId": JSON_ROW[4] })
             }
           });
         });
@@ -175,7 +175,7 @@ export class ExcelService {
           worksheet.eachRow(function (row, rowNumber) {
             const JSON_ROW = row.values.toString().split(",");
             if (rowNumber > 4) {
-              json.push({ "name": JSON_ROW[2], "type": JSON_ROW[3], "districts": JSON_ROW[4] })
+              json.push({ "id": JSON_ROW[1], "name": JSON_ROW[2], "type": JSON_ROW[3], "districtId": JSON_ROW[4] })
             }
           });
         });
