@@ -1,0 +1,24 @@
+{
+  "nftables": [
+    { "metainfo": { "json_schema_version": 1 } },
+    {
+      "insert": {
+        "rule": {
+          "family": "inet",
+          "table": "firewalld",
+          "chain": "filter_INPUT_ZONES",
+          "expr": [
+            {
+              "match": {
+                "left": { "meta": { "key": "iifname" } },
+                "op": "==",
+                "right": "br-86516acf0eff"
+              }
+            },
+            { "goto": { "target": "filter_IN_docker" } }
+          ]
+        }
+      }
+    }
+  ]
+}

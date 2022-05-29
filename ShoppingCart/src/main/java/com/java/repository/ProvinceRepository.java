@@ -2,6 +2,7 @@ package com.java.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,6 @@ public interface ProvinceRepository extends JpaRepository<Province, Long>{
 	List<Province> findAllReverse (); 
 	@Query("select p from Province p Where CONCAT(p.name, ' ', p.type) LIKE %:key%")
 	List<Province> search(@Param("key") String key);
+	@Query("SELECT p.id FROM Province p ORDER BY p.id DESC")
+	List<Long> getLastId(Pageable pageable);
 }

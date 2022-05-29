@@ -32,7 +32,7 @@ public class ShoppingCartApplication {
 		roles.add(new Role("ROLE_USER", "User"));
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowCredentials(true);
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200","http://localhost:4401"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200","http://localhost:4401", "https://thanhnhandev.xyz", "https://admin.thanhnhandev.xyz"));
 		configuration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin","Content-Type","Accept"
 				,"Authorization", "Origin,Accept","X-Requested-With","Access-Control-Request-Method","Access-Control-Request-Headers"));
 		configuration.setExposedHeaders(Arrays.asList("Origin","Content-Type","Accept"

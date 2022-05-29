@@ -5,6 +5,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +55,8 @@ public class WardServiceImpl implements WardService{
 	@Modifying
 	@Override
 	public Ward save(Ward entity) {
+		Pageable firstPageWithOnelements = PageRequest.of(0, 1);
+		entity.setId(repo.getLastId(firstPageWithOnelements).get(0)+1);
 		Ward ward = repo.save(entity);
 		return ward;
 	}

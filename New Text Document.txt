@@ -1,0 +1,2 @@
+[thanhnhan@thanhnhandev ~]$ docker run -d -p 6033:3306 --name=docker-mysql --env="MYSQL_ROOT_PASSWORD=root" --env="MYSQL_PASSWORD=1234" --env="MYSQL_DATABASE=ShoppingCart"
+mysql

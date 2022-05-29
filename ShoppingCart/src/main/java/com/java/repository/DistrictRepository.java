@@ -2,6 +2,7 @@ package com.java.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +17,9 @@ public interface DistrictRepository extends JpaRepository<District, Long>{
 	List<District> findAllReverse (); 
 	@Query("select d from District d Where CONCAT(d.name, ' ', d.type) LIKE %:key%")
 	List<District> search(@Param("key") String key);
+	
+	@Query("SELECT d.id FROM District d ORDER BY d.id DESC")
+	List<Long> getLastId(Pageable pageable);
 	
 	@Query("SELECT d FROM District d WHERE d.provinceId = :provinceId")
 	public List<District> findDistrictByProvinceId(@Param("provinceId") long provinceId);
