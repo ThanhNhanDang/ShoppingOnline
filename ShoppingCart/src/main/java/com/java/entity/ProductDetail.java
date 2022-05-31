@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -14,6 +15,10 @@ public class ProductDetail {
 	private long id;
 	private long productId;
 	private String urlImg;
+	
+	@Lob
+	private byte[] data;
+	
 	@ManyToOne
 	@JoinColumn(name = "productId", insertable = false, updatable = false)
 	private Products products;
@@ -43,5 +48,12 @@ public class ProductDetail {
 	}
 	public void setUrlImg(String urlImg) {
 		this.urlImg = urlImg;
+	}
+	public byte[] getData() {
+		return data;
+	}
+	
+	public void setData(byte[] data) {
+		this.data = data;
 	}
 }

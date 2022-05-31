@@ -19,7 +19,8 @@ public class UserDto {
 	private String 	nameRole;
 	private String 	gender;
 	private long 	deliveryAddressId;
-	
+	private long 	fileId;
+
 	public UserDto() {}
 	
 	
@@ -170,17 +171,21 @@ public class UserDto {
 	}
 
 
-
 	public long getDeliveryAddressId() {
 		return deliveryAddressId;
 	}
-
 
 
 	public void setDeliveryAddressId(long deliveryAddressId) {
 		this.deliveryAddressId = deliveryAddressId;
 	}
 
-
+	
+	public long getFileId() {
+		return fileId;
+	}
+	public void setFileId(long fileId) {
+		this.fileId = fileId;
+	}
 	
 }

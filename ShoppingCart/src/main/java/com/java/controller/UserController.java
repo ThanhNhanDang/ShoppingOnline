@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.java.config.ShoppingConfig;
-import com.java.contants.ImageConstants;
 import com.java.dto.ChangePasswordDto;
 import com.java.dto.UserDto;
 import com.java.model.Message;
@@ -81,16 +80,11 @@ public class UserController {
 		}
 	}
 	
-	@PostMapping("/update/image")
-	public Object uploadImage (@RequestParam("file") MultipartFile file, @RequestParam("id") long id) {
-		try {
-			if (fileService.uploadFileUser(file, ImageConstants.URL_IMAGE_AVATAR, id) == -1)
-				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
-			return new ResponseEntity<Object>(HttpStatus.CREATED);
-		} catch (IOException e) {
-			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	@PostMapping("/update/image/{id}")
+	public Object uploadImage (@RequestParam("file") MultipartFile file, @PathVariable("id") long id) throws IOException {
+		return new ResponseEntity<>(fileService.store(file, id), HttpStatus.CREATED);
 	}
+	
 	
 	@PutMapping("/update")
 	public Object upload (@RequestBody UserDto dto) {
@@ -134,9 +128,9 @@ public class UserController {
 	}
 	
 	@DeleteMapping("/delete-not-return")
-	public ResponseEntity<?> deleteNotReturn(@RequestParam long id){
+	public ResponseEntity<?> deleteNotReturn(@RequestParam("id") long id, @RequestParam("fileId") long fileId){
 		try {
-			service.delete(id); 
+			service.delete(id, fileId); 
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/delete-not-return"),HttpStatus.BAD_REQUEST);
@@ -144,9 +138,9 @@ public class UserController {
 	
 	}
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> delete(@RequestParam long id){
+	public ResponseEntity<?> delete(@RequestParam("id") long id, @RequestParam("fileId") long fileId){
 		try {
-			List<UserDto> dtos = service.deleteDtos(id); 
+			List<UserDto> dtos = service.deleteDtos(id, fileId); 
 			return new ResponseEntity<>(dtos,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/delete"),HttpStatus.BAD_REQUEST);

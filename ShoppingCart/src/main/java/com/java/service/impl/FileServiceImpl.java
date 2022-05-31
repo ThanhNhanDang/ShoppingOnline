@@ -3,21 +3,36 @@ package com.java.service.impl;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.java.contants.ImageConstants;
+import com.java.entity.FileDB;
+import com.java.repository.FileDBRepository;
 import com.java.service.FileService;
 import com.java.utils.FileUtil;
+import com.java.utils.ImageUtil;
 
 @Service
 @Scope("prototype")
 public class FileServiceImpl implements FileService{
 	
-	  private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
+	private FileDBRepository fileDBRepository;
+	
+	public FileServiceImpl(FileDBRepository fileDBRepository) {
+		super();
+		this.fileDBRepository = fileDBRepository;
+	}
+
+	private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir"));
 
 	@Override
 	public int uploadFileProduct(MultipartFile file, String url, long cateId, long id) throws IOException {
@@ -106,7 +121,6 @@ public class FileServiceImpl implements FileService{
 			// Get the file name, including the suffix			
 		Path uploadPath = Paths.get("./static/"+url+ "/");	
 		
-		
 			 // Store in this path: the path is under the static file in the project directory: (Note: this file may need to be created by yourself)
 			 // The reason for putting it under static is that it stores static file resources, that is, you can enter the local server address through the browser, and you can access it when adding the file name
 
@@ -115,4 +129,56 @@ public class FileServiceImpl implements FileService{
 		return 0;
 	}
 
+	@Transactional
+	@Modifying
+	@Override
+	public FileDB store(MultipartFile file, String fileName) throws IOException {
+//		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+	
+		FileDB fileDB = fileDBRepository.findByName(fileName);
+		if (fileDB != null)
+			fileDB.setData(ImageUtil.compressImage(file.getBytes()));
+		else
+			fileDB = new FileDB(fileName, file.getContentType(), ImageUtil.compressImage(file.getBytes()));
+		return fileDBRepository.save(fileDB);
+	}
+	
+
+	@Transactional
+	@Modifying
+	@Override
+	public FileDB store(MultipartFile file, long id) throws IOException {
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		FileDB fileDB = null;
+		if(id == 1)// userDefault
+			fileDB  = new FileDB(fileName, file.getContentType(), ImageUtil.compressImage(file.getBytes()));
+		else {
+			fileDB = fileDBRepository.findById(id).get();
+			fileDB.setName(fileName);
+			fileDB.setType(file.getContentType());
+			fileDB.setData(ImageUtil.compressImage(file.getBytes()));
+		}
+		return fileDBRepository.save(fileDB);
+	}
+	public List<FileDB> getAllFileDB (){
+		return fileDBRepository.findAll();
+	}
+	@Override
+	public Optional<FileDB> findById(long id) {
+		final Optional<FileDB> dbImage = fileDBRepository.findById(id);
+		return dbImage;
+	}
+
+	@Override
+	public void deleteFileDB(long id) {
+		fileDBRepository.deleteById(id);
+	}
+	
+	@Override
+	public FileDB store(MultipartFile file) throws IOException {
+		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+		FileDB fileDB = new FileDB(fileName, file.getContentType(), ImageUtil.compressImage(file.getBytes()));
+		return fileDBRepository.save(fileDB);
+	}
+	
 }

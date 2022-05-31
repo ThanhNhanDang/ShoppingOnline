@@ -20,8 +20,7 @@ export class NavComponent implements OnInit {
 }
   ngOnInit(): void {
     this.name = this.http.getLoginDataByKey("name");
-    this.avatar = this.http.getLoginDataByKey("image_url");
-    console.log(this.baseUrl + this.avatar)
+    this.avatar = this.http.getLoginDataByKey("fileId");
     this.email = this.http.getLoginDataByKey("email");
     if(this.http.getLoginDataByKey("role_id")=="1")
       this.admin = true;
@@ -40,7 +39,7 @@ export class NavComponent implements OnInit {
   }
   changeUserNameSubscription(){
     this.name = this.http.getLoginDataByKey("name");
-    this.avatar = this.http.getLoginDataByKey("image_url");
+    this.avatar = this.http.getLoginDataByKey("fileId");
     this.email = this.http.getLoginDataByKey("email");
     if(this.http.getLoginDataByKey("role_id")=="1")
       this.admin = true;

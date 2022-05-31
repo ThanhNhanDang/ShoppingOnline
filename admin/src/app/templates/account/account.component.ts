@@ -13,29 +13,29 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AccountComponent implements OnInit {
   userId = this.http.getLoginDataByKey("id");
-  file!:File;
-  fileName!:string;
-  roles!:RolePlayload[];
-  active =[{value:true, status:"Active"}, {value:false, status:'Inactive'}]
+  file!: File;
+  fileName!: string;
+  roles!: RolePlayload[];
+  active = [{ value: true, status: "Active" }, { value: false, status: 'Inactive' }]
 
   baseUrl = environment.urlServe;
-  user!:UserProfile;
-  imgURL!:string;
+  user!: UserProfile;
+  imgURL!: string;
   genders: Gender[] = [
-    {id:1,value: 'Male'},
-    {id:2,value: 'Female'},
-    {id:3,value: 'Prefer not to say'}
+    { id: 1, value: 'Male' },
+    { id: 2, value: 'Female' },
+    { id: 3, value: 'Prefer not to say' }
   ];
 
-  key!:string
-  constructor(private http : HttpService,private activatedRouter: ActivatedRoute) { }
-  
+  key!: string
+  constructor(private http: HttpService, private activatedRouter: ActivatedRoute) { }
+
   ngOnInit(): void {
-    this.activatedRouter.queryParams.subscribe(data=>{
-      if(data.key ==null || data.key == ""){
+    this.activatedRouter.queryParams.subscribe(data => {
+      if (data.key == null || data.key == "") {
         this.key = this.userId;
       }
-      else{
+      else {
         this.key = data.key
       }
       this.getProfile();
@@ -44,18 +44,18 @@ export class AccountComponent implements OnInit {
     this.getAllRole();
   }
   getProfile() {
-    let request = {userId: this.key};
-    this.http.postRequest("/user/profile", request).subscribe(data=>{
+    let request = { userId: this.key };
+    this.http.postRequest("/user/profile", request).subscribe(data => {
       this.user = data;
-      this.imgURL = this.baseUrl+this.user.image_url
-    },error=>{
+      this.imgURL = `${this.baseUrl}${this.user.fileId}`
+    }, error => {
       alert(error.error.message);
     })
   }
-  dateEventEmitter(date:any){
+  dateEventEmitter(date: any) {
     console.log(date);
   }
-  onFileChanged(files:any){
+  onFileChanged(files: any) {
     if (files.length === 0)
       return;
     var mimeType;
@@ -67,41 +67,41 @@ export class AccountComponent implements OnInit {
       return;
     }
     var reader = new FileReader();
-    reader.readAsDataURL(files[0]); 
-    reader.onload = (_event) => { 
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
       this.imgURL = reader.result as string;
 
     }
   }
 
-  updateMyAccount(){
-    if(this.file!=null)
-      this.user.image_url="images/avatars/"+this.user.id+"/"+this.fileName
-    console.log(this.user)  
-    this.http.putRequest("/user/update/admin",this.user).subscribe(()=>{
-      this.updateAvatar();
-      alert("Update successful.")
-    }, error=>{
-      alert(error.error.message)
-    })
-    console.log(this.user)
-  }
-
-  updateAvatar(){
-    if(this.file != null){
-      this.http.pushFileToStorage("/user/update/image?id="+this.user.id, this.file).subscribe(()=>{
+  updateMyAccount() {
+    if (this.file != null) {
+      this.user.image_url = this.fileName
+      this.http.pushFileToStorage("/user/update/image/" + this.user.fileId, this.file).subscribe((res: any) => {
         console.log("Upload image Successful");
-      },error=>{
+        this.user.fileId = res.id;
+        this.http.putRequest("/user/update/admin", this.user).subscribe(() => {
+          alert("Update successful.")
+        }, error => {
+          alert(error.error.message)
+        })
+      }, error => {
         alert(error.error.message);
       })
-    
+    }
+    else {
+      this.http.putRequest("/user/update/admin", this.user).subscribe(() => {
+        alert("Update successful.")
+      }, error => {
+        alert(error.error.message)
+      })
     }
   }
 
-  getAllRole(){
-    this.http.getRequest("/role/all").subscribe(data=>{
+  getAllRole() {
+    this.http.getRequest("/role/all").subscribe(data => {
       this.roles = data;
-    },error=>{
+    }, error => {
       alert(error.error.message);
     })
   }

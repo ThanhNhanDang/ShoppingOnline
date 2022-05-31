@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Products {
@@ -22,12 +24,17 @@ public class Products {
 	private double	price;
 	private Instant added_on;
 	private Instant exprideDate;
+	@Lob
 	private String	description;
 	private long 	inStock;
 	private long 	unitSold;
 	private String	urlImg;
 	private long 	totalReview;
 	private long 	totalReview5Star;
+	private long 	fileId;
+	@OneToOne
+	@JoinColumn(name = "fileId", insertable=false, updatable=false)
+	private FileDB fileDB;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", insertable = false, updatable = false)
@@ -47,7 +54,7 @@ public class Products {
 	public Products() {}
 	
 	
-	public Products(long id, long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String urlImg, long totalReview, long totalReview5Star) {
+	public Products(long id, long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String urlImg, long totalReview, long totalReview5Star, long fileId) {
 		this.id = id;
 		this.category_id = category_id;
 		this.name = name;
@@ -59,9 +66,10 @@ public class Products {
 		this.urlImg = urlImg;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
+		this.fileId = fileId;
 	}
 	
-	public Products(long id, long category_id, String name, double price, Instant added_on, Instant exprideDate, String description, long inStock, long unitSold, String urlImg, long totalReview, long totalReview5Star) {
+	public Products(long id, long category_id, String name, double price, Instant added_on, Instant exprideDate, String description, long inStock, long unitSold, String urlImg, long totalReview, long totalReview5Star, long fileId) {
 		this.id = id;
 		this.category_id = category_id;
 		this.name = name;
@@ -74,11 +82,12 @@ public class Products {
 		this.urlImg = urlImg;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
+		this.fileId = fileId;
 	}
 
 
 
-	public Products(long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String	urlImg, String description, long totalReview, long totalReview5Star) {
+	public Products(long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String	urlImg, String description, long totalReview, long totalReview5Star, long fileId) {
 		this.category_id = category_id;
 		this.name = name;
 		this.price = price;
@@ -90,6 +99,7 @@ public class Products {
 		this.description = description;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
+		this.fileId = fileId;
 	}
 
 
@@ -203,9 +213,15 @@ public class Products {
 		return totalReview5Star;
 	}
 
-
 	public void setTotalReview5Star(long totalReview5Star) {
 		this.totalReview5Star = totalReview5Star;
+	}
+	
+	public long getFileId() {
+		return fileId;
+	}
+	public void setFileId(long fileId) {
+		this.fileId = fileId;
 	}
 	
 }

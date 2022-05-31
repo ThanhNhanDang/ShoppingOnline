@@ -15,7 +15,9 @@ public class ReviewDto {
 	private String  urlImgProduct;
 	private String 	productName;
 	private int 	ratting;
-
+	
+	private byte[] dataImgUser;
+	private byte[] dataImgProduct;
 
 
 	public ReviewDto(long id, long userId, long productId, String message, Instant reviewDate, String urlImg, String email, 
@@ -161,11 +163,9 @@ public class ReviewDto {
 	}
 
 
-
 	public String getReviewDateCustom() {
 		return reviewDateCustom;
 	}
-
 
 
 	public void setReviewDateCustom(String reviewDateCustom) {
@@ -173,14 +173,24 @@ public class ReviewDto {
 	}
 
 
-
 	public int getRatting() {
 		return ratting;
 	}
 
-
-
 	public void setRatting(int ratting) {
 		this.ratting = ratting;
+	}
+	
+	public byte[] getDataImgProduct() {
+		return dataImgProduct;
+	}
+	public void setDataImgProduct(byte[] dataImgProduct) {
+		this.dataImgProduct = dataImgProduct;
+	}
+	public byte[] getDataImgUser() {
+		return dataImgUser;
+	}
+	public void setDataImgUser(byte[] dataImgUser) {
+		this.dataImgUser = dataImgUser;
 	}
 }

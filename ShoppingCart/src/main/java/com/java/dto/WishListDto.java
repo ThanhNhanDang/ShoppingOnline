@@ -9,7 +9,7 @@ public class WishListDto {
     private String productName;
     private String urlImg;
     
-    
+	private byte[] dataImgProduct;
     
 	public WishListDto(long productId, double pricePerItem, int quantity, long userId, String productName,
 			String urlImg) {
@@ -73,6 +73,11 @@ public class WishListDto {
 		this.urlImg = urlImg;
 	}
     
-   
+	public byte[] getDataImgProduct() {
+		return dataImgProduct;
+	}
+	public void setDataImgProduct(byte[] dataImgProduct) {
+		this.dataImgProduct = dataImgProduct;
+	}
 	
 }

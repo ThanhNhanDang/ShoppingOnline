@@ -41,6 +41,5 @@ public class SignUpController {
 	public ResponseEntity<?> signupFacebook(@RequestBody TokenDto dto) throws IOException{
 		userService.signUpWithSocialMediaFacebook(dto);
 		return new ResponseEntity<>(HttpStatus.CREATED);
-		
 	}
 }

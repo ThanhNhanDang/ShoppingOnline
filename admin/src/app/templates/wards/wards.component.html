@@ -28,6 +28,7 @@
                   [(ngModel)]="key2"
                   class="custom-select"
                   (change)="getWardsByDistrict()"
+                  id=""
                 >
                   <option *ngFor="let item of districts" [value]="item.id">
                     {{ item.name }}

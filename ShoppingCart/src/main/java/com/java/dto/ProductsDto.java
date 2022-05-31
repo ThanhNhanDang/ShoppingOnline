@@ -2,6 +2,8 @@ package com.java.dto;
 
 import java.time.Instant;
 
+import com.java.entity.FileDB;
+
 public class ProductsDto {
 	private long 	id;
 	private long 	category_id;
@@ -18,10 +20,13 @@ public class ProductsDto {
 	private String	urlImg;
 	private long 	totalReview;
 	private long 	totalReview5Star;
+	private long 	fileId;
+
+	 private FileDB fileDB;
 	public ProductsDto() {}
 
 
-	public ProductsDto(long id, long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String	urlImg, String description, String categoryName, long totalReview, long totalReview5Star) {
+	public ProductsDto(long id, long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String	urlImg, String description, String categoryName, long totalReview, long totalReview5Star, long fileId) {
 		this.id = id;
 		this.category_id = category_id;
 		this.name = name;
@@ -35,10 +40,11 @@ public class ProductsDto {
 		this.categoryName = categoryName;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
+		this.fileId = fileId;
 	}
 
 
-	public ProductsDto(long id, long category_id, String name, double price, String exDate, long inStock, long unitSold, String urlImg,  String description, boolean checkselect, long totalReview, long totalReview5Star) {
+	public ProductsDto(long id, long category_id, String name, double price, String exDate, long inStock, long unitSold, String urlImg,  String description, boolean checkselect, long totalReview, long totalReview5Star, long fileId) {
 		this.id = id;
 		this.category_id = category_id;
 		this.name = name;
@@ -51,9 +57,10 @@ public class ProductsDto {
 		this.checkselect = checkselect;
 		this.totalReview = totalReview;
 		this.totalReview = totalReview5Star;
+		this.fileId = fileId;
 	}
 	
-	public ProductsDto(long id, long category_id, String name, double price, String exDate, long inStock, Instant added_on, long unitSold, String	urlImg, String description , long totalReview, long totalReview5Star) {
+	public ProductsDto(long id, long category_id, String name, double price, String exDate, long inStock, Instant added_on, long unitSold, String	urlImg, String description , long totalReview, long totalReview5Star, long fileId) {
 		this.id = id;
 		this.category_id = category_id;
 		this.name = name;
@@ -66,11 +73,11 @@ public class ProductsDto {
 		this.description = description;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
-
+		this.fileId = fileId;
 	}
 	
 	
-	public ProductsDto(long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String	urlImg, long totalReview, long totalReview5Star) {
+	public ProductsDto(long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String	urlImg, long totalReview, long totalReview5Star, long fileId) {
 		
 		this.category_id = category_id;
 		this.name = name;
@@ -82,6 +89,7 @@ public class ProductsDto {
 		this.urlImg = urlImg;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
+		this.fileId = fileId;
 	}
 
 	public long getId() {
@@ -152,20 +160,13 @@ public class ProductsDto {
 	}
 
 
-
-
 	public void setInStock(long inStock) {
 		this.inStock = inStock;
 	}
 
-
-
-
 	public long getUnitSold() {
 		return unitSold;
 	}
-
-
 
 
 	public void setUnitSold(long unitSold) {
@@ -230,6 +231,13 @@ public class ProductsDto {
 
 	public void setTotalReview5Star(long totalReview5Star) {
 		this.totalReview5Star = totalReview5Star;
+	}
+
+	public long getFileId() {
+		return fileId;
+	}
+	public void setFileId(long fileId) {
+		this.fileId = fileId;
 	}
 	
 }

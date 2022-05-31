@@ -15,7 +15,7 @@ public interface UserService extends BaseService<Integer, UserDto, Long>{
 	List<UserDto> search(String key);
 	void addByAdmin (RegisterByAdmin admin) throws Exception;
 	User saveReturn (UserDto dto) throws Exception;
-	List<UserDto>deleteDtos(Long id) throws Exception;
+	List<UserDto>deleteDtos(Long id, Long fileId) throws Exception;
 	int editMyAccout(UserDto dto) throws Exception;
 	int editMyAccoutByAdmin(UserDto dto) throws Exception;
 	int updateActive(UserDto dto) throws Exception;
@@ -27,4 +27,6 @@ public interface UserService extends BaseService<Integer, UserDto, Long>{
 	org.springframework.social.facebook.api.User signInFacebook(TokenDto dto) throws IOException;
 	
 	void changePassword(ChangePasswordDto dto) throws Exception;
+	
+	Integer delete (Long id, Long fileId) throws Exception ; 
 }

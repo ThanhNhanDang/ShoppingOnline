@@ -10,13 +10,13 @@ import org.springframework.web.client.RestTemplate;
 public class WebConfig {
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @Scheduled(fixedDelay = 30 * 60 * 1000)
+    @Scheduled(fixedDelay = 24 * 60 * 1000)
     public void keepAwake() {
         String pingUrl = "https://thanhnhandev.herokuapp.com/ping";
         String result = restTemplate.getForObject(pingUrl, String.class);
         System.out.println(result);
     }
-    @Scheduled(fixedDelay = 29 * 50 * 1000)
+    @Scheduled(fixedDelay = 25 * 60 * 1000)
     public void keepAwakeEmail() {
         String pingUrl = "https://doan1thanhnhanvituong.herokuapp.com/ping";
         String result = restTemplate.getForObject(pingUrl, String.class);

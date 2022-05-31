@@ -24,7 +24,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.java.contants.ImageConstants;
 import com.java.contants.SecurityConstants;
 import com.java.dto.ChangePasswordDto;
 import com.java.dto.TokenDto;
@@ -69,6 +68,7 @@ public class UserServiceImpl implements UserService{
 					entity.getIs_email_verfied(), entity.getMobile(), entity.getImage_url(), entity.getRole_id(), entity.getDeliveryAddressId());
 			dto.setNameRole(entity.getRole().getDescription()); 
 			dto.setGender(entity.getGender());
+			dto.setFileId(entity.getFileId());
 			dtos.add(dto);
 		}
 		
@@ -86,9 +86,8 @@ public class UserServiceImpl implements UserService{
 				entity.getIs_email_verfied(), entity.getMobile(), entity.getImage_url(), entity.getRole_id(), entity.getDeliveryAddressId());
 		dto.setNameRole(entity.getRole().getDescription());
 		dto.setGender(entity.getGender());
+		dto.setFileId(entity.getFileId());
 		return dto;
-		
-		
 	}
 	
 	@Transactional
@@ -110,7 +109,9 @@ public class UserServiceImpl implements UserService{
 		else
 			entity.setRole_id(2);
 		entity.setGender(dto.getGender());
-		entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
+		//entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
+		entity.setImage_url("userDefault.png");
+		entity.setFileId(1);
 		if(userRepo.save(entity) == null)
 			throw new Exception("Unable to register an account, please contact the administrator for assistance.");
 		return entity;
@@ -129,6 +130,7 @@ public class UserServiceImpl implements UserService{
 				entity.getIs_email_verfied(), entity.getMobile(), entity.getImage_url(), entity.getRole_id(), entity.getDeliveryAddressId());
 		dto.setNameRole(roleRepo.findById(entity.getRole_id()).get().getDescription());
 		dto.setGender(entity.getGender());
+		dto.setFileId(entity.getFileId());
 		return dto;
 	}
 
@@ -150,6 +152,7 @@ public class UserServiceImpl implements UserService{
 		entity.setDeliveryAddressId(dto.getDeliveryAddressId());
 		entity.setImage_url(dto.getImage_url());
 		entity.setGender(dto.getGender());
+		entity.setFileId(dto.getFileId());
 		if(userRepo.save(entity) == null)
 			throw new Exception("Unable to update");
 		return 0;
@@ -170,15 +173,14 @@ public class UserServiceImpl implements UserService{
 	@Transactional
 	@Modifying
 	@Override
-	public Integer delete(Long id) throws Exception {
-
-		this.fileService.delefileUser(id);
+	public Integer delete(Long id, Long idFile) throws Exception {
 		userRepo.deleteById(id);
+		this.fileService.deleteFileDB(id);
 		return 0;
 	}
 	@Override
-	public List<UserDto> deleteDtos(Long id) throws Exception {
-		this.delete(id);
+	public List<UserDto> deleteDtos(Long id, Long fileId) throws Exception {
+		this.delete(id, fileId);
 		List<UserDto> dtos= userRepo.FindAllByDelete();
 		return dtos;
 	}
@@ -202,6 +204,7 @@ public class UserServiceImpl implements UserService{
 		entity.setGender(dto.getGender());
 		entity.setRole_id(dto.getRole_id());
 		entity.setIs_email_verfied(dto.getIs_email_verfied());
+		entity.setFileId(dto.getFileId());
 		if(userRepo.save(entity) == null)
 			throw new Exception("Unable to update");
 		return 0;
@@ -222,7 +225,9 @@ public class UserServiceImpl implements UserService{
 		entity.setRole_id(admin.getRole_id());
 		entity.setGender(admin.getGender());
 		entity.setIs_email_verfied(admin.isIs_email_verfied());
-		entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
+		//entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
+		entity.setImage_url("userDefault.png");
+		entity.setFileId(1);
 		if(userRepo.save(entity) == null) 
 			throw new Exception("Can't add");
 		
@@ -270,7 +275,8 @@ public class UserServiceImpl implements UserService{
 		else
 			entity.setRole_id(2);
 		entity.setGender("Prefer not to say");
-		entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
+		entity.setImage_url("userDefault.png");
+		entity.setFileId(1);
 		if(userRepo.save(entity) == null)
 			throw new IOException("Unable to register an account, please contact the administrator for assistance.");
 	}
@@ -290,7 +296,8 @@ public class UserServiceImpl implements UserService{
 		else
 			entity.setRole_id(2);
 		entity.setGender("Prefer not to say");
-		entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
+		entity.setImage_url("userDefault.png");
+		entity.setFileId(1);
 		if(userRepo.save(entity) == null)
 			throw new IOException("Unable to register an account, please contact the administrator for assistance.");
 	}
@@ -343,7 +350,11 @@ public class UserServiceImpl implements UserService{
 			System.out.println("sai");
 			throw new Exception("Current password is incorrect!");
 		}
-		
 	}
-	
+
+	@Override
+	public Integer delete(Long id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

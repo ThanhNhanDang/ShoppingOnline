@@ -9,4 +9,5 @@ export class UserProfile {
     nameRole!:string;
     gender!:string;
     deliveryAddressId!:number;
+    fileId!:number;
 }

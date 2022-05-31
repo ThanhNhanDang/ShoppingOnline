@@ -53,7 +53,7 @@ export class EditProductComponent implements OnInit {
   getProduct(){
     this.http.postRequest("/product/get-product", {productId:this.productId}).subscribe(data=>{
       this.productPayload = data;
-      this.imageToShow =  this.baseUrl +this.productPayload.urlImg;
+      this.imageToShow =  this.baseUrl +this.productPayload.fileId;
       this.productPayload.exDate = this.productPayload.exDate.slice(0,10);
     },error=>{
       alert(error.error.message)

@@ -10,7 +10,7 @@ export class UserProfile {
     role_id!:number;
     is_email_verfied!:boolean;
     deliveryAddressId!:number;
-    
+    fileId!:number
     constructor(name:string, email:string, mobile:string, gender:string, roleId:number, active:boolean){
         this.name = name;
         this.email = email;
@@ -18,6 +18,5 @@ export class UserProfile {
         this.gender = gender; 
         this.role_id =roleId;
         this.is_email_verfied = active;
-
     }
 }

@@ -11,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +34,10 @@ public class User {
 	private int 	role_id;
 	private String 	gender;
 	private long 	deliveryAddressId;
+	private long 	fileId;
+	@OneToOne
+	@JoinColumn(name = "fileId", insertable=false, updatable=false)
+	 private FileDB fileDB;
 	
 	
 	@ManyToOne
@@ -54,7 +61,7 @@ public class User {
 	
 	public User() {}
 	
-
+	
 	
 	public User(long id, String name, String email, String password, Instant created_at, String login_token, String type,
 			String address, boolean is_email_verfied, String mobile, String image_url, int role_id, long deliveryAddressId) {
@@ -158,16 +165,20 @@ public class User {
 		this.gender = gender;
 	}
 
-
-
 	public long getDeliveryAddressId() {
 		return deliveryAddressId;
 	}
 
-
-
 	public void setDeliveryAddressId(long deliveryAddressId) {
 		this.deliveryAddressId = deliveryAddressId;
 	}
+	
+	public long getFileId() {
+		return fileId;
+	}
+	public void setFileId(long fileId) {
+		this.fileId = fileId;
+	}
+	
 
 }

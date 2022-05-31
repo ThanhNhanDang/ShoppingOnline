@@ -38,10 +38,8 @@ export class AddUserComponent implements OnInit {
       this.router.navigateByUrl("/accounts")
     }, error=>{
       alert(error.error.message)
-    })
-    
+    }) 
   }
-
   getAllRole(){
     this.http.getRequest("/role/all").subscribe(data=>{
       this.roles = data;

@@ -61,7 +61,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				
 				"/api/user/signup/active",
 				
-				"/api/feedback/save"
+				"/api/feedback/save",
+				"/api/get/image/**"
 				)
 		.permitAll()
 		

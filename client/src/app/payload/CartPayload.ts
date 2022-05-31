@@ -9,4 +9,5 @@ export class CartPayload{
     productName!:string;
     pricePerItem!:number;
     urlImg!:string;
+    fileId!:number;
   }

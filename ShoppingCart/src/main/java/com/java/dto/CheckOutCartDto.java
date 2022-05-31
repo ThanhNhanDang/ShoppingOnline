@@ -17,8 +17,6 @@ public class CheckOutCartDto {
 	private String 	productName;
 	private double  pricePerItem;
 	
-	
-	
 
 	public CheckOutCartDto() {}
 

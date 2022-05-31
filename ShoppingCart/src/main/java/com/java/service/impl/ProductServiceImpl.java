@@ -28,6 +28,9 @@ public class ProductServiceImpl implements ProductService{
 	private ProductRepository repository;
 	private FileService fileService;
 	private Clock cl = Clock.systemDefaultZone();
+	private final DateTimeFormatter formatter =
+			DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss")
+            .withZone(ZoneId.systemDefault());
 	
 	public ProductServiceImpl(ProductRepository repository, FileService fileService) {
 		this.repository = repository;
@@ -38,13 +41,11 @@ public class ProductServiceImpl implements ProductService{
 	public List<ProductsDto> findAll()  {
 		List<Products> list = repository.findAllReverse();
 		List<ProductsDto> dtos = new ArrayList<ProductsDto>();
-		DateTimeFormatter formatter =
-				DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss")
-	            .withZone(ZoneId.systemDefault());
+		
 		for(Products entity : list) {
 		
 			ProductsDto dto = new ProductsDto(entity.getId(), entity.getCategory_id(),
-					entity.getName(), entity.getPrice(), formatter.format( entity.getExprideDate() ), entity.getInStock(), entity.getUnitSold(), entity.getUrlImg(),entity.getDescription(), false, entity.getTotalReview(), entity.getTotalReview5Star());
+					entity.getName(), entity.getPrice(), formatter.format( entity.getExprideDate() ), entity.getInStock(), entity.getUnitSold(), entity.getUrlImg(),entity.getDescription(), false, entity.getTotalReview(), entity.getTotalReview5Star(), entity.getFileId());
 			
 			dtos.add(dto);
 		}
@@ -75,9 +76,6 @@ public class ProductServiceImpl implements ProductService{
 			return null;
 		ProductsDto dto = repository.getProductById(id);
 		Instant instant = dto.getExprideDate();
-		DateTimeFormatter formatter =
-				DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss")
-	            .withZone(ZoneId.systemDefault());
 			               
 		
 		String output = formatter.format( instant );
@@ -145,7 +143,7 @@ public class ProductServiceImpl implements ProductService{
 		if (dto.getInStock() < 0) {
 			throw new Exception("Invalid unit in stock.");
 		}
-		Products entity = new Products(dto.getCategory_id(), dto.getName(), dto.getPrice(), Instant.now(cl), dto.getExprideDate(), dto.getInStock(), dto.getUnitSold(), dto.getUrlImg(), dto.getDescription(), 1, 1);
+		Products entity = new Products(dto.getCategory_id(), dto.getName(), dto.getPrice(), Instant.now(cl), dto.getExprideDate(), dto.getInStock(), dto.getUnitSold(), dto.getUrlImg(), dto.getDescription(), 1, 4, dto.getFileId());
 		return repository.save(entity);
 	}
 
@@ -219,7 +217,11 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public List<ProductsDto> searchAdmin(String key) {
-		List<ProductsDto> dtos = repository.searchAdmin(key);
+		List<ProductsDto> dtos = new ArrayList<>();
+		repository.searchAdmin(key).forEach(item->{
+			item.setExDate(formatter.format(item.getExprideDate()));
+			dtos.add(item);
+		});;
 		return dtos;
 	}
 
