@@ -97,11 +97,11 @@ export class EditProductComponent implements OnInit {
     this.latest_date = this.datepipe.transform(this.productPayload.exDate, 'yyyy-MM-dd');
     this.productPayload.exprideDate =  this.latest_date+this.test.slice(10)
     if(this.file!=null)
-      this.productPayload.urlImg="images/products/"+this.productPayload.category_id+"/"+this.productPayload.id+"/"+this.fileName
-    this.http.putRequest("/product/update", this.productPayload).subscribe(()=>{
+      this.productPayload.urlImg=this.fileName
+      this.http.putRequest("/product/update", this.productPayload).subscribe(()=>{
       alert("Successful")
       if(this.file != null){
-        this.http.pushFileToStorage("/product/post-img?cateId="+this.productPayload.category_id+"&id="+this.productPayload.id, this.file).subscribe(()=>{
+        this.http.updateFileToStorage(`/upload/update/image/${this.productPayload.fileId}`, this.file).subscribe(()=>{
           console.log("Upload image Successful");
         },error=>{
           alert(error.error.message);

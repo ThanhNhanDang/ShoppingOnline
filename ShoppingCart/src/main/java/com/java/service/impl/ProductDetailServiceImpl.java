@@ -39,7 +39,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
 		ProductDetail entity = new ProductDetail();
 		entity.setProductId(detailDto.getProductId());
 		entity.setUrlImg(detailDto.getUrlImg());
-		
+		entity.setFileId(detailDto.getFileId());
 		detailDto.setId(repo.save(entity).getId());
 		return detailDto;
 	}
@@ -53,6 +53,7 @@ public class ProductDetailServiceImpl implements ProductDetailService{
 		}
 		ProductDetail entity = repo.findById(dto.getId()).get();
 		entity.setUrlImg(dto.getUrlImg());
+		entity.setFileId(dto.getFileId());
 		repo.save(entity);
 	}
 

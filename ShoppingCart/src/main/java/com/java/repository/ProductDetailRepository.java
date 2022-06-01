@@ -12,6 +12,6 @@ import com.java.entity.ProductDetail;
 
 @Repository
 public interface ProductDetailRepository extends JpaRepository<ProductDetail, Long>{
-	@Query("select new com.java.dto.ProductDetailDto(detail.id,detail.productId,detail.urlImg) from ProductDetail detail WHERE detail.productId = :productId ORDER BY id DESC")
+	@Query("select new com.java.dto.ProductDetailDto(detail.id,detail.productId,detail.urlImg, detail.fileId) from ProductDetail detail WHERE detail.productId = :productId ORDER BY id DESC")
 	List<ProductDetailDto> getProductDetailByProduct (@Param("productId") long productId);
 }

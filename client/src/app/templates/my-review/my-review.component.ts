@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { HttpServiceService } from './../../service/httpService/http-service.service';
 import { ReviewPayload } from './../../payload/ReviewPayload';
 import { Component, OnInit } from '@angular/core';
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyReviewComponent implements OnInit {
   reviews!: ReviewPayload[];
-
+  baseUrl = environment.urlServe
   constructor(private http:HttpServiceService) { }
 
   ngOnInit(): void {

@@ -8,8 +8,8 @@ public class WishListDto {
     private long userId;
     private String productName;
     private String urlImg;
-    
-	private byte[] dataImgProduct;
+    private long fileId;
+
     
 	public WishListDto(long productId, double pricePerItem, int quantity, long userId, String productName,
 			String urlImg) {
@@ -21,7 +21,7 @@ public class WishListDto {
 		this.urlImg = urlImg;
 	}
 	public WishListDto(long id, long productId, double pricePerItem, int quantity, long userId, String productName,
-			String urlImg) {
+			String urlImg, long fileId) {
 		this.id = id;
 		this.productId = productId;
 		this.pricePerItem = pricePerItem;
@@ -29,6 +29,7 @@ public class WishListDto {
 		this.userId = userId;
 		this.productName = productName;
 		this.urlImg = urlImg;
+		this.fileId = fileId;
 	}
 	public long getId() {
 		return id;
@@ -72,12 +73,11 @@ public class WishListDto {
 	public void setUrlImg(String urlImg) {
 		this.urlImg = urlImg;
 	}
-    
-	public byte[] getDataImgProduct() {
-		return dataImgProduct;
+	public long getFileId() {
+		return fileId;
 	}
-	public void setDataImgProduct(byte[] dataImgProduct) {
-		this.dataImgProduct = dataImgProduct;
+	public void setFileId(long fileId) {
+		this.fileId = fileId;
 	}
 	
 }

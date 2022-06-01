@@ -34,6 +34,12 @@ export class HttpService {
     return this.http.post(this.baseUrl+url, formdata)
   }
 
+  updateFileToStorage(url: string,file: File){
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    return this.http.put(this.baseUrl+url, formdata)
+  }
+
   setLoginData(data: UserProfile){
     localStorage.setItem("login_obj", JSON.stringify(data));
   }

@@ -1,12 +1,13 @@
 package com.java.entity;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ProductDetail {
@@ -15,17 +16,20 @@ public class ProductDetail {
 	private long id;
 	private long productId;
 	private String urlImg;
+	private long fileId;
 	
-	@Lob
-	private byte[] data;
+	@OneToOne
+	@JoinColumn(name = "fileId", insertable=false, updatable=false)
+	private FileDB fileDB;
 	
 	@ManyToOne
 	@JoinColumn(name = "productId", insertable = false, updatable = false)
 	private Products products;
-	public ProductDetail(long id, long productId, String urlImg) {
+	public ProductDetail(long id, long productId, String urlImg, long fileId) {
 		this.id = id;
 		this.productId = productId;
 		this.urlImg = urlImg;
+		this.fileId = fileId;
 	}
 	
 	public ProductDetail() {
@@ -49,11 +53,11 @@ public class ProductDetail {
 	public void setUrlImg(String urlImg) {
 		this.urlImg = urlImg;
 	}
-	public byte[] getData() {
-		return data;
-	}
 	
-	public void setData(byte[] data) {
-		this.data = data;
+	public long getFileId() {
+		return fileId;
+	}
+	public void setFileId(long fileId) {
+		this.fileId = fileId;
 	}
 }

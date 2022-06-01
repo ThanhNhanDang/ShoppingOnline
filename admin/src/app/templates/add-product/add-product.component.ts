@@ -71,7 +71,7 @@ export class AddProductComponent implements OnInit {
       this.productPayload.exprideDate = this.latest_date + this.test.slice(10)
 
       this.productPayload.urlImg = this.fileName
-      this.http.pushFileToStorage("/product/post-img", this.file).subscribe((res:any) => {
+      this.http.pushFileToStorage("/upload", this.file).subscribe((res:any) => {
         this.productPayload.fileId = res.id;
         this.http.postRequest("/product/add", this.productPayload).subscribe(data => {
           alert("Successful");

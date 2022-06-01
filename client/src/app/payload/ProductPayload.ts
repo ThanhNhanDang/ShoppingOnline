@@ -15,4 +15,5 @@ export class ProductPayload{
     totalReview!:number;
     totalReview5Star!:number;
     fileId!:number
+    
 }

@@ -106,11 +106,8 @@
                 >
                 <p class="sold">(Sold:{{ item.unitSold }})</p>
                 <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
+                  
+                  <i class="fa fa-star" *ngFor="let item of [].constructor(item.totalReview5Star)"></i>
                   <a class="sold">({{ item.totalReview5Star }})</a>
                 </div>
               </div>

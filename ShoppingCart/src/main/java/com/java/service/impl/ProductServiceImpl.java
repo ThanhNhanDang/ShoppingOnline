@@ -154,21 +154,14 @@ public class ProductServiceImpl implements ProductService{
 		if(dtos.size() == 1) {
 			if(this.delete(dtos.get(0).getId())==-1)
 				return null;
-			urlImg = dtos.get(0).getUrlImg();
-			
-			if (!urlImg.equals("images/base/upload-directory/upload-directory.png")) {
-				this.fileService.delefile(dtos.get(0).getCategory_id(), dtos.get(0).getId());
-			}
+			this.fileService.deleteFileDB(dtos.get(0).getFileId());
 			return this.findAll();
 			
 		}
 		for(ProductsDto dto : dtos) {
 			this.delete(dto.getId());
-			urlImg = dto.getUrlImg();
-			if (!urlImg.equals("images/base/upload-directory/upload-directory.png"))
-				this.fileService.delefile(dto.getCategory_id(), dto.getId());
+			this.fileService.deleteFileDB(dto.getFileId());
 		}
-		
 		return this.findAll();
 	}
 

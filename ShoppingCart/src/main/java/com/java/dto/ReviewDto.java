@@ -16,12 +16,12 @@ public class ReviewDto {
 	private String 	productName;
 	private int 	ratting;
 	
-	private byte[] dataImgUser;
-	private byte[] dataImgProduct;
+	private long 	fileIdUser;
+	private long 	fileIdProduct;
 
 
 	public ReviewDto(long id, long userId, long productId, String message, Instant reviewDate, String urlImg, String email, 
-			String userName, String urlImgProduct, String productName, int ratting) {
+			String userName, String urlImgProduct, String productName, int ratting, long fileIdUser, long fileIdProduct) {
 		this.id = id;
 		this.userId = userId;
 		this.productId = productId;
@@ -33,16 +33,14 @@ public class ReviewDto {
 		this.urlImgProduct = urlImgProduct;
 		this.productName = productName;
 		this.ratting = ratting;
+		this.fileIdUser = fileIdUser;
+		this.fileIdProduct = fileIdProduct;
 	}
-
-
 
 	public ReviewDto() {}
 	
-	
-	
 	public ReviewDto(long id, long userId, long productId, String message, Instant reviewDate, String urlImg,
-			String userName, int ratting) {
+			String userName, int ratting, long fileIdUser) {
 		this.id = id;
 		this.userId = userId;
 		this.productId = productId;
@@ -51,11 +49,11 @@ public class ReviewDto {
 		this.urlImg = urlImg;
 		this.userName = userName;
 		this.ratting = ratting;
+		this.fileIdUser = fileIdUser;
+		this.fileIdProduct = fileIdProduct;
 	}
 
-
-
-	public ReviewDto(long userId, long productId, String message, Instant reviewDate, String urlImg, String userName, int ratting) {
+	public ReviewDto(long userId, long productId, String message, Instant reviewDate, String urlImg, String userName, int ratting, long fileIdUser) {
 		this.userId = userId;
 		this.productId = productId;
 		this.message = message;
@@ -63,8 +61,8 @@ public class ReviewDto {
 		this.urlImg = urlImg;
 		this.userName = userName;
 		this.ratting = ratting;
+		this.fileIdUser = fileIdUser;
 	}
-
 
 
 	public Instant getReviewDate() {
@@ -181,16 +179,17 @@ public class ReviewDto {
 		this.ratting = ratting;
 	}
 	
-	public byte[] getDataImgProduct() {
-		return dataImgProduct;
+	public long getFileIdUser() {
+		return this.fileIdUser;
 	}
-	public void setDataImgProduct(byte[] dataImgProduct) {
-		this.dataImgProduct = dataImgProduct;
+	public void setFileIdUser(long fileIdUser) {
+		this.fileIdUser = fileIdUser;
 	}
-	public byte[] getDataImgUser() {
-		return dataImgUser;
+	
+	public long getFileIdProduct() {
+		return this.fileIdProduct;
 	}
-	public void setDataImgUser(byte[] dataImgUser) {
-		this.dataImgUser = dataImgUser;
+	public void setFileIdProduct(long fileIdProduct) {
+		this.fileIdProduct = fileIdProduct;
 	}
 }

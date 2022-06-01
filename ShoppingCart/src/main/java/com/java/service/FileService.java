@@ -24,5 +24,6 @@ public interface FileService {
 	FileDB store(MultipartFile file, String fileName) throws IOException;
 	FileDB store(MultipartFile file, long id) throws IOException;
 	FileDB store(MultipartFile file) throws IOException;
+	FileDB storeUpdate(MultipartFile file, long fileId) throws IOException;
 	void deleteFileDB (long id);
 }

@@ -65,8 +65,10 @@ export class ProductDetailComponent implements OnInit{
       this.getDetailUrlImg();
       this.getReviews()
       //lấy sản phẩm đồng thời lấy những sản phẩm có liên quan
-      this.http.getRequest("/product/get-products-by-category?page=3&id="+this.product.category_id,"").subscribe(data=>{
+      this.http.getRequest("/product/get-products-by-category?page=0&id="+this.product.category_id,"").subscribe(data=>{
         this.products=data.content
+        console.log(this.products); 
+        
       },error=>{
         alert("Server connection error")
       })

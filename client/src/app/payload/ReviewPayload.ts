@@ -11,6 +11,8 @@ export class ReviewPayload{
     productName!:string;
     ratting!:number
     starReview !:boolean[]
+    fileIdUser!:number;
+    fileIdProduct!:number;
     constructor(userId:string, productId:string, message:string,
         reviewDate:string, urlImg:string,userName:string, ratting:number){
             this.userId = userId;
@@ -20,5 +22,6 @@ export class ReviewPayload{
             this.urlImg = urlImg;
             this.userName = userName;
             this.ratting = ratting;
+          
         }
 }

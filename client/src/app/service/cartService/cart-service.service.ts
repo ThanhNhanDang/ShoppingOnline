@@ -24,5 +24,20 @@ export class CartServiceService {
       alert(error.error.message)
     })
   }
+
+  addCart2(obj:any){
+    var request = {
+      "productId":obj.productId,
+      "userId": obj.userId, 
+      "quantity":obj.quantity
+    }
+    this.http.postRequest("/cart/add-product", request).subscribe((data:any)=>{
+      this.http.sendClickSubject();
+      alert("Successful") 
+    },
+    error=>{
+      console.log(error.error.message);
+    })
+  }
  
 }

@@ -63,8 +63,6 @@ export class ProductComponent implements OnInit {
     }
     if(this.productDelete.length > 1)
       if(!confirm("Are you sure you want to delete the selected products?")){return}
-    
-    
     this.http.postRequest("/product/delete/all-by-select", this.productDelete).subscribe(data=>{
       this.products = data;
       this.result = data.length;

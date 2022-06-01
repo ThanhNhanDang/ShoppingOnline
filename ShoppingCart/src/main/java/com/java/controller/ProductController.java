@@ -1,6 +1,5 @@
 package com.java.controller;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
@@ -19,25 +18,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.java.config.ShoppingConfig;
 import com.java.dto.ProductsDto;
 import com.java.entity.Products;
 import com.java.model.Message;
 import com.java.model.SearchAndSort;
-import com.java.service.FileService;
 import com.java.service.ProductService;
 
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
 	private ProductService productService;
-	private FileService fileService;
 
-	public ProductController(ProductService productService, FileService fileService) {
+	public ProductController(ProductService productService) {
 		this.productService = productService;
-		this.fileService = fileService;
+	
 	}
 
 	@GetMapping("/all")
@@ -102,11 +98,6 @@ public class ProductController {
 			return new ResponseEntity<>(new Message("This product was not found", Instant.now(), "500",
 					"Internal Server Error", "/api/product/get-product"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
-
-	@PostMapping("/post-img")
-	public ResponseEntity<?> postFile(@RequestParam("file") MultipartFile file) throws IOException {
-		return new ResponseEntity<>(fileService.store(file),HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")

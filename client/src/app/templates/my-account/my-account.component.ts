@@ -167,7 +167,7 @@ export class MyAccountComponent implements OnInit {
   updateMyAccount() {
     if (this.file != null) {
       this.userPayload.image_url = this.fileName
-      this.http.pushFileToStorage(`/user/update/image/${this.userPayload.fileId}`, this.file,).subscribe((res: any) => {
+      this.http.updateFileToStorage(`/upload/update/image/${this.userPayload.fileId}`, this.file).subscribe((res: any) => {
         this.userPayload.fileId = res.id;
         this.http.putRequest("/user/update", this.userPayload).subscribe(() => {
           alert("Update successful.")

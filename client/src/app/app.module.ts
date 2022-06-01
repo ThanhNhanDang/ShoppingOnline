@@ -61,6 +61,8 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from 'angularx-social-login';
+import { PasswordComponent } from './templates/more-page/login-register/password/password.component';
+import { PasswordRegisterComponent } from './templates/more-page/login-register/password-register/password-register.component';
 
 @NgModule({
   declarations: [
@@ -112,6 +114,8 @@ import {
     SearchComponent,
     SuccessComponent,
     ActiveComponent,
+    PasswordComponent,
+    PasswordRegisterComponent,
 
   ],
   imports: [

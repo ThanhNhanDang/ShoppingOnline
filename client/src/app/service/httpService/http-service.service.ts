@@ -189,6 +189,11 @@ export class HttpServiceService {
     formdata.append('file', file);
     return this.http.post(this.baseUrl + url, formdata)
   }
+  updateFileToStorage(url: string,file: File){
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    return this.http.put(this.baseUrl+url, formdata)
+  }
 
   sendLoginSucject() {
     this.loginSubject.next();

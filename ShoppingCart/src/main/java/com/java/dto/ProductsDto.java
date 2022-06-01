@@ -2,8 +2,6 @@ package com.java.dto;
 
 import java.time.Instant;
 
-import com.java.entity.FileDB;
-
 public class ProductsDto {
 	private long 	id;
 	private long 	category_id;
@@ -21,8 +19,6 @@ public class ProductsDto {
 	private long 	totalReview;
 	private long 	totalReview5Star;
 	private long 	fileId;
-
-	 private FileDB fileDB;
 	public ProductsDto() {}
 
 

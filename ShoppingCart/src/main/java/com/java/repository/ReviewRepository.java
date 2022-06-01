@@ -13,10 +13,10 @@ import com.java.entity.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long>{
 	
-	@Query("select new com.java.dto.ReviewDto(review.id, review.userId, review.productId, review.message, review.reviewDate, u.image_url,  u.name, review.ratting) from Review review, User u WHERE review.productId = :productId and review.user=u")
+	@Query("select new com.java.dto.ReviewDto(review.id, review.userId, review.productId, review.message, review.reviewDate, u.image_url,  u.name, review.ratting, u.fileId) from Review review, User u WHERE review.productId = :productId and review.user=u")
 	List<ReviewDto> findAllReviewByProduct(@Param("productId") long productId);
 	
-	@Query("select new com.java.dto.ReviewDto(review.id, review.userId, review.productId, review.message, review.reviewDate, u.image_url,  u.name, u.email, p.urlImg, p.name, review.ratting) from Review review, User u, Products p WHERE review.userId = :userId and review.user=u and review.products = p")
+	@Query("select new com.java.dto.ReviewDto(review.id, review.userId, review.productId, review.message, review.reviewDate, u.image_url,  u.name, u.email, p.urlImg, p.name, review.ratting, u.fileId, p.fileId) from Review review, User u, Products p WHERE review.userId = :userId and review.user=u and review.products = p")
 	List<ReviewDto> findAllReviewByUser(@Param("userId") long userId);
 	
 	@Query("delete from Review review WHERE review.userId = :userId and review.productId = :productId")

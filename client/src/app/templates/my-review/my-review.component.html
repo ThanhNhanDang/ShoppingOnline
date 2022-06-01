@@ -17,7 +17,7 @@
                          <td>
                              <div class="user-info">
                                  <div class="user-info__img">
-                                     <img src="{{review.urlImg}}" alt="User Img">
+                                     <img src="{{baseUrl + review.fileIdUser}}" alt="User Img">
                                  </div>
                                  <div class="user-info__basic">
                                      <h5 class="mb-0">{{review.email}}</h5>
@@ -32,7 +32,7 @@
                          <td>
                             <div class="user-info">
                                 <div routerLink="/product-detail"(click)="clickDetail(review.productId)"  class="user-info__img">
-                                    <img src="{{review.urlImgProduct}}" alt="User Img">
+                                    <img src="{{baseUrl+review.fileIdProduct}}" alt="User Img">
                                 </div>
                                 <div class="user-info__basic">
                                     <a routerLink="/product-detail"(click)="clickDetail(review.productId)" href="javaScript:void(0)"><h5 class="mb-0">{{review.productName}}</h5></a>

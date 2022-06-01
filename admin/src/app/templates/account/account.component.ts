@@ -77,7 +77,7 @@ export class AccountComponent implements OnInit {
   updateMyAccount() {
     if (this.file != null) {
       this.user.image_url = this.fileName
-      this.http.pushFileToStorage("/user/update/image/" + this.user.fileId, this.file).subscribe((res: any) => {
+      this.http.updateFileToStorage("/upload/update/image/" + this.user.fileId, this.file).subscribe((res: any) => {
         console.log("Upload image Successful");
         this.user.fileId = res.id;
         this.http.putRequest("/user/update/admin", this.user).subscribe(() => {

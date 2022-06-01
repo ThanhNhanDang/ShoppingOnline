@@ -29,7 +29,7 @@ export class ProductsComponent implements OnInit {
   active = false;
 
   cateName="";
-
+  
 
   //sort
   sortKey="Newest";
@@ -101,7 +101,6 @@ export class ProductsComponent implements OnInit {
     if(!this.http.checkLogin())
       return 
    this.productService.addWishList(item)
-   this.router.navigateByUrl("/checkout");
   }
 
   getPage(){

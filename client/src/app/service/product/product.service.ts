@@ -15,7 +15,7 @@ export class ProductService {
       "userId":  this.http.getLoginDataByKey("id"),
       "quantity": quantity
     }
-    this.cartService.addCart(request);
+    this.cartService.addCart2(request);
   }
 
   addWishList(obj:any){
