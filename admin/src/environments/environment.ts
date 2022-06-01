@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl: "http://localhost:8081/api",
-  urlServe: "http://localhost:8081/api/get/image/",
+  baseUrl: "https://thanhnhandev.herokuapp.com/api",
+  urlServe: "https://thanhnhandev.herokuapp.com/api/get/image/",
 };
 
 /*
