@@ -9,39 +9,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddCategoryComponent implements OnInit {
   categories !: CategoryPayload[];
-  category = new CategoryPayload("", "fa fa-female");
-  constructor(private http : HttpService) { }
+  category = new CategoryPayload("");
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
-    this.http.getRequest("/category/all").subscribe(data=>{
+    this.http.getRequest("/category/all").subscribe(data => {
       this.categories = data;
-    },error=>{
+    }, error => {
       alert(error.error.message)
     })
   }
 
-  addNow(){
-    if(this.category.name == "" || this.category.classFa == ""){
+  addNow() {
+    if (this.category.name == "") {
       alert("Invalid category")
       return;
     }
 
-    this.http.postRequest("/category/add", this.category).subscribe(data=>{
+    this.http.postRequest("/category/add", this.category).subscribe(data => {
       this.categories.push(data);
       this.category.name = "";
       alert("Successful")
     })
-    
   }
-  delete(item:CategoryPayload){
-    if(confirm("Are you sure you want to remove \""+item.name + "\" ?")){
-      this.http.deleteRequest("/category/delete/" + item.id, "").subscribe(data=>{
+  delete(item: CategoryPayload) {
+    if (confirm("Are you sure you want to remove \"" + item.name + "\" ?")) {
+      this.http.deleteRequest("/category/delete/" + item.id, "").subscribe(data => {
         this.categories = data;
         alert("Delete category successfully")
-      }, error=>{
+      }, error => {
         alert(error.error.message)
       })
     }
   }
-
 }

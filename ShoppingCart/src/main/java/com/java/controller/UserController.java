@@ -170,7 +170,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/signup/active")
-	public ResponseEntity<?> signupActive(@RequestParam String email, @RequestParam String code){
+	public ResponseEntity<?> signupActive(@RequestParam("email") String email, @RequestParam("code") String code){
 		try {
 			service.checkCode(code, email);
 			return new ResponseEntity<>(HttpStatus.OK);

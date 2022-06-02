@@ -247,6 +247,7 @@ public class UserServiceImpl implements UserService{
 			throw new Exception("User not found.");
 		}
 		//sau đó kiểm tra xem tài khoản đã được kích hoạt chưa nếu chưa thì mới tiếp tục so sánh với code
+		System.out.println(entity.getIs_email_verfied()+"is email");
 		if(entity.getIs_email_verfied() == true)
 			throw new Exception("Account has been activated.");
 		
