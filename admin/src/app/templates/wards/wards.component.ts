@@ -40,14 +40,6 @@ export class WardsComponent implements OnInit {
       }
     })
   }
-  getAll() {
-    this.http.getRequest("/Vietnamese-Administrative-Unit/wards/get-all").subscribe(data => {
-      this.wards = data;
-      this.result = data.length;
-    }, error => {
-      alert(error.error.message);
-    })
-  }
 
   search() {
     if (this.key == null || this.key == "") {
@@ -79,7 +71,11 @@ export class WardsComponent implements OnInit {
   }
 
   reportExcel(): void {
-    this.excelService.reportAsExcelFile("Wards Report", '', this.columns, this.wards, null, this.fileName, this.fileName)
+    this.http.getRequest("/Vietnamese-Administrative-Unit/wards/get-all").subscribe(data => {
+      this.excelService.reportAsExcelFile("Wards Report", '', this.columns, data, null, this.fileName, this.fileName)
+    }, error => {
+      alert(error.error.message);
+    })
   }
 
   public getWardsByDistrict() {
