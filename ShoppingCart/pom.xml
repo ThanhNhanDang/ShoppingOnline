@@ -13,7 +13,6 @@
 	<artifactId>ShoppingCart</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>ShoppingCart</name>
 	<description>User management portal - angularJs - spring boot</description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -96,13 +95,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				
 				<configuration>
-			        <archive>
-			          <manifest>
-			            <mainClass>com.java.ShoppingCartApplication</mainClass>
-			          </manifest>
-			        </archive>
-      			</configuration>
+				<archive>
+					<manifest>
+						<addClasspath>true</addClasspath>
+						<!-- here we specify that we want to use the main method within the App class -->
+						<mainClass>com.java.ShoppingCartApplication</mainClass>
+					</manifest>
+					</archive>
+				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>

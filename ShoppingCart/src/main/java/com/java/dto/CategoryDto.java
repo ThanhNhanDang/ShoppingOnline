@@ -3,22 +3,19 @@ package com.java.dto;
 public class CategoryDto {
 	private long 	id;
 	private String	name;
-	private String	classFa;
 	private long 	quantity;
 	
 	public CategoryDto() {}
 
-	public CategoryDto(long id, String name, String	classFa) {
+	public CategoryDto(long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.classFa = classFa;
 	}
 	
-	public CategoryDto(long id, String name, String	classFa, long quantity) {
+	public CategoryDto(long id, String name, long quantity) {
 		this.id = id;
 		this.name = name;
-		this.classFa = classFa;
-		this.setQuantity(quantity);
+		this.quantity = quantity;
 	}
 	
 	public long getId() {
@@ -35,14 +32,6 @@ public class CategoryDto {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getClassFa() {
-		return classFa;
-	}
-
-	public void setClassFa(String classFa) {
-		this.classFa = classFa;
 	}
 
 	public long getQuantity() {

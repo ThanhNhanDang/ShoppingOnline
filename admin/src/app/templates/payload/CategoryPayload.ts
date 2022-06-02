@@ -1,9 +1,7 @@
 export class CategoryPayload{
     name!:string;
-    id!:number;
-    classFa!:string;
-    constructor(name :string, classFa: string){
+    id!:number
+    constructor(name :string){
         this.name = name;
-        this.classFa = classFa;
     }
 }

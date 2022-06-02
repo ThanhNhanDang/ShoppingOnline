@@ -30,7 +30,7 @@ public class CategoryServiceImpl implements CategoryService{
 		List<Category> categories = cateRepo.findAll();
 		List<CategoryDto> categoryDtos = new ArrayList<CategoryDto>();
 		for(Category category : categories) {
-			CategoryDto categoryDto = new CategoryDto(category.getId(), category.getName(),category.getClassFa(), category.getProducts().size());
+			CategoryDto categoryDto = new CategoryDto(category.getId(), category.getName(), category.getProducts().size());
 			categoryDtos.add(categoryDto);
 		}
 		return categoryDtos;
@@ -45,7 +45,6 @@ public class CategoryServiceImpl implements CategoryService{
 		for(CategoryDto dto: categoryDtos) {
 			Category entity = cateRepo.findById(dto.getId()).get();
 			entity.setName(dto.getName());
-			entity.setClassFa(dto.getClassFa());
 			entities.add(entity);
 		}
 		cateRepo.saveAll(entities);
@@ -54,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService{
 
 	@Override
 	public CategoryDto save(CategoryDto dto) {
-		Category entity = new Category(dto.getName(), dto.getClassFa());
+		Category entity = new Category(dto.getName());
 		cateRepo.save(entity);
 		return dto;
 	}

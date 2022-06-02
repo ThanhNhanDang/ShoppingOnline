@@ -15,21 +15,18 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long 	id;
 	private String	name;
-	private String	classFa;
 	@OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
 	private List<Products> products;
 	
 	public Category() {}
 
-	public Category(long id, String name, String classFa) {
+	public Category(long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.classFa = classFa ;
 	}
 	
-	public Category(String name, String classFa) {
+	public Category(String name) {
 		this.name = name;
-		this.classFa = classFa ;
 	}
 	public long getId() {
 		return id;
@@ -47,13 +44,6 @@ public class Category {
 		this.name = name;
 	}
 
-	public String getClassFa() {
-		return classFa;
-	}
-
-	public void setClassFa(String classFa) {
-		this.classFa = classFa;
-	}
 	public List<Products> getProducts() {
 		return products;
 	}

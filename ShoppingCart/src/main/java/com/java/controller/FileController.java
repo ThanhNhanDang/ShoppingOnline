@@ -70,7 +70,7 @@ public class FileController{
 		}
 	}
 	
-	@PostMapping()
+	@PostMapping
 	public ResponseEntity<?> postFile(@RequestParam("file") MultipartFile file) throws IOException {
 		return new ResponseEntity<>(fileService.store(file),HttpStatus.CREATED);
 	}

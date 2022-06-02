@@ -33,7 +33,7 @@ public class ReviewServiceImpl implements ReviewService{
 		if (reviewDto.getRatting() > 5 || reviewDto.getRatting() < 1) {
 			 throw new Exception("Can't review. Invalid rating");
 		}
-		Review entity = new Review(reviewDto.getUserId(), reviewDto.getProductId(), reviewDto.getMessage(), reviewDto.getReviewDate(), reviewDto.getRatting());
+		Review entity = new Review(reviewDto.getUserId(), reviewDto.getProductId(), reviewDto.getMessage(), reviewDto.getReviewDate(), reviewDto.getRatting(), r);
 		productService.updateReviewOfProduct(entity.getProductId(), entity.getRatting());
 		if(reviewRepo.save(entity)== null)
 			return null;
