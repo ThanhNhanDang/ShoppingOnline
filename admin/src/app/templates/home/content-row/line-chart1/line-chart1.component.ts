@@ -1,15 +1,13 @@
 import { LineChartPayload } from './../../../payload/lineChart.payload';
-import { EchartServiceService } from './../../../service/echartService/echart-service.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-line-chart',
-  templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.scss']
+  selector: 'app-line-chart1',
+  templateUrl: './line-chart1.component.html',
+  styleUrls: ['../line-chart/line-chart.component.scss']
 })
-export class LineChartComponent implements OnInit {
+export class LineChart1Component implements OnInit {
   chartOption!: any;
   subscription!: Subscription;
   isDarkMode: boolean = false;
@@ -61,7 +59,7 @@ export class LineChartComponent implements OnInit {
     this.chartOption = {
       title: {
         x: 'center',
-        text: 'Visitors and orders in a WEEK'
+        text: 'Visitors and orders for a YEAR'
       },
       tooltip: {
         trigger: 'axis'
@@ -87,8 +85,7 @@ export class LineChartComponent implements OnInit {
           value: m.value
         })),
         type: 'line'
-      },
-      {
+      }, {
         name: 'rose2',
         data: [323, 345, 232, 351, 406, 400, 390],
         type: 'line'
@@ -98,4 +95,3 @@ export class LineChartComponent implements OnInit {
   }
 
 }
-//[150, 230, 224, 218, 135, 147, 260],

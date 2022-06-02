@@ -13,7 +13,7 @@ export class AppComponent {
 
   constructor(private titleService:Title){
     this.titleService.setTitle("E Store");
-   
+    
   }
   active(){
     window.scroll(0,0);

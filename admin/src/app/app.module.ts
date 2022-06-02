@@ -38,6 +38,7 @@ import { AddDistrictComponent } from './templates/districts/add-district/add-dis
 import { UpdateDistrictComponent } from './templates/districts/update-district/update-district.component';
 import { UpdateWardComponent } from './templates/wards/update-ward/update-ward.component';
 import { AddWardComponent } from './templates/wards/add-ward/add-ward.component';
+import { LineChart1Component } from './templates/home/content-row/line-chart1/line-chart1.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { AddWardComponent } from './templates/wards/add-ward/add-ward.component'
     UpdateWardComponent,
     AddWardComponent,
     UpdateDefaultImageComponent,
+    LineChart1Component,
     
   
   ],

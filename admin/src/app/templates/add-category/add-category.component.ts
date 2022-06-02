@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-category.component.scss']
 })
 export class AddCategoryComponent implements OnInit {
-  categories !: CategoryPayload[];
+  categories: CategoryPayload[] = [];
   category = new CategoryPayload("");
   constructor(private http: HttpService) { }
 

@@ -26,7 +26,7 @@ public class GetImageController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<byte[]> getImage(@PathVariable("id") long id) throws IOException {
-
+		
 	        final Optional<FileDB> dbImage = fileService.findById(id);
 
 	        return ResponseEntity

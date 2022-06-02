@@ -61,7 +61,7 @@ public class UserDto {
 	}
 	
 	public UserDto(long id, String name, String email,Instant created_at,
-			String address, boolean is_email_verfied, String mobile, String image_url, int role_id, String nameRole, long deliveryAddressId, String gender) {
+			String address, boolean is_email_verfied, String mobile, String image_url, int role_id, String nameRole, long deliveryAddressId, String gender, long fileId) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -74,6 +74,7 @@ public class UserDto {
 		this.role_id = role_id;
 		this.deliveryAddressId = deliveryAddressId;
 		this.gender = gender;
+		this.fileId = fileId;
 	}
 
 

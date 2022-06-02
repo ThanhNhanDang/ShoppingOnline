@@ -58,7 +58,6 @@ export class NavComponent implements OnInit {
   reportExcelWard(): void {
     this.http.getRequest("/Vietnamese-Administrative-Unit/wards/get-all").subscribe(data => {
       this.excelService.reportAsExcelFile("Report Wards", '', this.columnsWard, data, null, this.fileNameWard, this.fileNameWard)
-
     }, error => {
       alert(error.error.message);
     })

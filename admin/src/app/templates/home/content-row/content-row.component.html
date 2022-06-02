@@ -1,5 +1,8 @@
 <div class="row tm-content-row">
   <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+    <app-line-chart1></app-line-chart1>
+  </div>
+  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
     <app-line-chart></app-line-chart>
   </div>
   <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
@@ -8,7 +11,7 @@
   <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
     <app-pie-chart></app-pie-chart>
   </div>
-  <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 tm-block-col">
     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-overflow">
       <h2 class="tm-block-title">Feedback List</h2>
       <div class="tm-notification-items">
@@ -57,7 +60,7 @@
               {{ order.userName }} ({{ order.userId }})
             </td>
             <td>
-              <b>{{ order.deliveryAddress.split(",")[2] }}</b>
+              {{ order.deliveryAddress}}
             </td>
             <td>
               {{ order.orderDate.split("T")[0] }},{{

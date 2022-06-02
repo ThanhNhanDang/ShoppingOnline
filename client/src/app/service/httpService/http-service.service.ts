@@ -212,7 +212,6 @@ export class HttpServiceService {
   setUpdate(userProfile: UserProfile) {
     this.setLoginData(userProfile);
     localStorage.setItem("search key", "");
-    alert("Successfully");
     this.sendClickSubject();
   }
 }

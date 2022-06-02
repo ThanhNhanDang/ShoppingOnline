@@ -1,3 +1,4 @@
+import { urlVerify } from './../../../../../environments/environment.prod';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { Gender } from './../../../../payload/Gender';
 import { HttpServiceService } from './../../../../service/httpService/http-service.service';
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  urlVerify = "https://thanhnhandev.xyz";
+  urlVerify = urlVerify;
   myScriptElement!: HTMLScriptElement;
   form!: FormGroup;
   registerPayload!: ResgisterPayload;

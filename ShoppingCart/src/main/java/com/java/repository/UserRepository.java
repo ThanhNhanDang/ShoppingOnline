@@ -18,10 +18,10 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Query("SELECT u FROM User u WHERE u.email = :email")
 	User checkEmail (@Param("email") String email);
 	
-	@Query("select new com.java.dto.UserDto(u.id, u.name, u.email, u.created_at, u.address, u.is_email_verfied, u.mobile, u.image_url, r.id, r.description, u.deliveryAddressId, u.gender) from User u, Role r Where CONCAT(u.name, ' ', u.email, ' ', u.gender, ' ', r.description) LIKE %:key% and u.role=r")
+	@Query("select new com.java.dto.UserDto(u.id, u.name, u.email, u.created_at, u.address, u.is_email_verfied, u.mobile, u.image_url, r.id, r.description, u.deliveryAddressId, u.gender, u.fileId) from User u, Role r Where CONCAT(u.name, ' ', u.email, ' ', u.gender, ' ', r.description) LIKE %:key% and u.role=r")
 	List<UserDto> search(@Param("key") String key);
 	
-	@Query("select new com.java.dto.UserDto(u.id, u.name, u.email, u.created_at, u.address, u.is_email_verfied, u.mobile, u.image_url, r.id, r.description, u.deliveryAddressId, u.gender) from User u, Role r Where u.role=r")
+	@Query("select new com.java.dto.UserDto(u.id, u.name, u.email, u.created_at, u.address, u.is_email_verfied, u.mobile, u.image_url, r.id, r.description, u.deliveryAddressId, u.gender, u.fileId) from User u, Role r Where u.role=r")
 	List<UserDto> FindAllByDelete();
 	
 	@Transactional

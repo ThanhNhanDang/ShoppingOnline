@@ -115,7 +115,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				
 				"/api/feedback/get-all",
 				
-				"/api/upload"
+				"/api/upload",
+				"/dashboad/get-data"
 			
 				)
 		.hasAnyRole("ADMIN")

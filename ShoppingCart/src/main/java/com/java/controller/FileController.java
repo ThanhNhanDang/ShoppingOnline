@@ -22,7 +22,7 @@ import com.java.model.Message;
 import com.java.service.FileService;
 
 @RestController
-@RequestMapping("api/upload/")
+@RequestMapping("api/upload")
 public class FileController{
 	private FileService fileService;
 	

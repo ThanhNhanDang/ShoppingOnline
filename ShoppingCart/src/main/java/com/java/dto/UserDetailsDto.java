@@ -13,6 +13,5 @@ public class UserDetailsDto extends User implements UserDetails{
 	public UserDetailsDto(String email, String password, Collection<? extends GrantedAuthority> authorities) {
 		super(email, password, authorities);
 		// TODO Auto-generated constructor stub
-	}
-	
+	}	
 }

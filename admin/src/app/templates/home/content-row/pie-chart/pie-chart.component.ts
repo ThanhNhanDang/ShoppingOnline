@@ -10,9 +10,9 @@ import { ThemeOption } from 'ngx-echarts';
   styleUrls: ['./pie-chart.component.scss']
 })
 export class PieChartComponent implements OnInit {
-  options:any
+  options: any
   theme!: string | ThemeOption;
-  
+
   constructor() {
   }
 
@@ -22,12 +22,12 @@ export class PieChartComponent implements OnInit {
     // })
     this.initChart()
   }
-  initChart(){
+  initChart() {
     this.theme = 'dark'
     this.options = {
       title: {
         x: 'center',
-        text: 'Storage Information'
+        text: '10 products with the most orders'
       },
       tooltip: {
         trigger: 'item',
@@ -36,14 +36,14 @@ export class PieChartComponent implements OnInit {
       legend: {
         x: 'center',
         y: 'bottom',
-        data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
+        data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8', 'rose9', 'rose10']
       },
       calculable: true,
       series: [
         {
           name: 'area',
           type: 'pie',
-          radius: [30, 110],
+          radius: [20, 120],
           roseType: 'area',
           data: [
             { value: 10, name: 'rose1' },
@@ -53,7 +53,10 @@ export class PieChartComponent implements OnInit {
             { value: 20, name: 'rose5' },
             { value: 35, name: 'rose6' },
             { value: 30, name: 'rose7' },
-            { value: 40, name: 'rose8' }
+            { value: 40, name: 'rose8' },
+            { value: 20, name: 'rose9' },
+            { value: 35, name: 'rose10' },
+
           ]
         }
       ]

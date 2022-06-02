@@ -36,10 +36,10 @@ public class CheckOutCart {
 		this.productId = productId;
 		this.quantity = quantity;
 		this.price = price;
-		this.orderDate = orderDate;
+		this.orderDate = orderDate;s
 		this.userId = userId;
 		this.orderId = orderId;
-		this.setPaymentType(paymentType);
+		this.paymentType = paymentType;
 		this.deliveryAddress = deliveryAddress;
 		
 	}

@@ -10,5 +10,10 @@ public class WebController {
 	public String ping() {
 		return "pong";
 	}
+	
+	@GetMapping("/dashboad/get-data")
+	public String dashboad() {
+		return "pong";
+	}
 
 }
