@@ -7,6 +7,7 @@ import { HttpServiceService } from './../../../../service/httpService/http-servi
 
 import { Component, OnInit } from '@angular/core';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit {
   myScriptElement!: HTMLScriptElement;
   loginForm!: FormGroup;
   error!:string;
-  constructor(private authService: SocialAuthService, private http: HttpServiceService, private router:Router, private appCookie:AppCookieService) { 
+  constructor(private _location: Location, private authService: SocialAuthService, private http: HttpServiceService, private router:Router, private appCookie:AppCookieService) { 
   }
 
   ngOnInit(): void {
@@ -73,7 +74,7 @@ export class LoginComponent implements OnInit {
     localStorage.setItem("search key", "");
     this.http.sendClickSubject();
     this.http.sendSubjectBottomBarForLogin();
-    this.router.navigateByUrl("/home");
+    this._location.back();
   }
 
   setUpdate(userProfile:UserProfile){

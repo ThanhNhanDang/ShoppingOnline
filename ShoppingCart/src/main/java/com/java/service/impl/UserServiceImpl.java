@@ -291,6 +291,7 @@ public class UserServiceImpl implements UserService{
 		entity.setEmail(user.getEmail());
 		entity.setName(user.getName());
 		entity.setPassword(hashedPass);
+		entity.setIs_email_verfied(true);
 		entity.setCreated_at(Instant.now(cl));
 		if(user.getEmail().equalsIgnoreCase("yesthanhnhan16@gmail.com"))
 			entity.setRole_id(1);

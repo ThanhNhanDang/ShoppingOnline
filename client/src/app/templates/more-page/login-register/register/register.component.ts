@@ -121,7 +121,7 @@ export class RegisterComponent implements OnInit {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(data => {
       this.httpService.postRequest("/signup/user/facebook", { value: data.authToken }).subscribe(data => {
         alert("Registration Succses")
-        this.router.navigateByUrl("/register/verify");
+        this.router.navigateByUrl("/login");
       }, error => {
         alert(error.error.message)
       });
