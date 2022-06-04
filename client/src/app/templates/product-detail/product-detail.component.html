@@ -62,7 +62,11 @@
                   <h2>{{ product.name }}</h2>
                 </div>
                 <div class="ratting">
-                    <i class="fa fa-star" *ngFor="let item of [].constructor(product.totalReview5Star)"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
                 </div>
                 <div class="price">
                   <h4>Price:</h4>
@@ -216,54 +220,57 @@
             </div>
           </div>
         </div>
-       
-          <div class="product">
-            <div class="section-header">
-              <h1>Related Products</h1>
-            </div>
-            <ngx-slick-carousel
-              class="row align-items-center product-slider"
-              [config]="slideConfigRelated"
-            >
-              <div ngxSlickItem *ngFor="let item of products" class="col-md-6">
-                <div class="product-item">
-                  <div class="product-title">
-                    <a (click)="clickProductDetail(item.id)">{{ item.name }}</a>
-                    <div class="ratting">
-                        <i class="fa fa-star" *ngFor="let item of [].constructor(item.totalReview5Star)"></i>
-                    </div>
-                  </div>
-                  <div class="product-image">
-                    <a (click)="clickProductDetail(item.id)">
-                      <img
-                        class="img-slider"
-                        src="{{ baseUrl + item.fileId }}"
-                        alt="Product Image"
-                      />
-                    </a>
-                    <div class="product-action">
-                      <a (click)="clickAddCart(item)"
-                        ><i class="fa fa-cart-plus"></i
-                      ></a>
-                      <a (click)="clickAddWishlist(item)"
-                        ><i class="fa fa-heart"></i
-                      ></a>
-                      <a (click)="clickProductDetail(item.id)"
-                        ><i class="fa fa-search"></i
-                      ></a>
-                    </div>
-                  </div>
-                  <div class="product-price">
-                    <h3><span>$</span>{{ item.price }}</h3>
-                    <a class="btn" (click)="buyNow(item)"
-                      ><i class="fa fa-shopping-cart"></i>Buy Now</a
-                    >
+
+        <div class="product">
+          <div class="section-header">
+            <h1>Related Products</h1>
+          </div>
+          <ngx-slick-carousel
+            class="row align-items-center product-slider"
+            [config]="slideConfigRelated"
+          >
+            <div ngxSlickItem *ngFor="let item of products" class="col-md-6">
+              <div class="product-item">
+                <div class="product-title">
+                  <a (click)="clickProductDetail(item.id)">{{ item.name }}</a>
+                  <div class="ratting">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
                   </div>
                 </div>
+                <div class="product-image">
+                  <a (click)="clickProductDetail(item.id)">
+                    <img
+                      class="img-slider"
+                      src="{{ baseUrl + item.fileId }}"
+                      alt="Product Image"
+                    />
+                  </a>
+                  <div class="product-action">
+                    <a (click)="clickAddCart(item)"
+                      ><i class="fa fa-cart-plus"></i
+                    ></a>
+                    <a (click)="clickAddWishlist(item)"
+                      ><i class="fa fa-heart"></i
+                    ></a>
+                    <a (click)="clickProductDetail(item.id)"
+                      ><i class="fa fa-search"></i
+                    ></a>
+                  </div>
+                </div>
+                <div class="product-price">
+                  <h3><span>$</span>{{ item.price }}</h3>
+                  <a class="btn" (click)="buyNow(item)"
+                    ><i class="fa fa-shopping-cart"></i>Buy Now</a
+                  >
+                </div>
               </div>
-            </ngx-slick-carousel>
-          </div>
-       
+            </div>
+          </ngx-slick-carousel>
+        </div>
       </div>
 
       <div class="col-lg-4 sidebar">

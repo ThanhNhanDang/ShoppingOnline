@@ -4,7 +4,11 @@
       <h1>Recent Product</h1>
     </div>
     <ngx-slick-carousel class="row align-items-center" [config]="slideConfig">
-      <div ngxSlickItem *ngFor="let product of products" class="col-lg-3 col-md-4">
+      <div
+        ngxSlickItem
+        *ngFor="let product of products"
+        class="col-lg-3 col-md-4"
+      >
         <div class="product-item">
           <div class="product-title">
             <a (click)="clickDetail(product.id)" routerLinkActive="active">{{
@@ -12,10 +16,9 @@
             }}</a>
             <p class="sold">(Sold:{{ product.unitSold }})</p>
             <div class="ratting">
-              <i
-                class="fa fa-star"
-                *ngFor="let item of [].constructor(product.totalReview5Star)"
-              ></i>
+              <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
 
               <a>({{ product.totalReview5Star }})</a>
             </div>
