@@ -76,7 +76,7 @@ export class AddProductComponent implements OnInit {
         this.productPayload.fileId = res.id;
         this.http.postRequest("/product/add", this.productPayload).subscribe(data => {
           alert("Successful");
-          this.router.navigate(["/product/edit"], { queryParams: { 'product': data.id } })
+          this.router.navigate(["/product/edit/detail-img"], { queryParams: { 'category': data.category_id, 'product': data.id } })
         })
       }, error => {
         alert(error.error.message)
