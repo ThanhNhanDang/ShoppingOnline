@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
     localStorage.setItem("search key", "");
     this.http.sendClickSubject();
     this.http.sendSubjectBottomBarForLogin();
-    this._location.back();
+    this.router.navigateByUrl("/home");
   }
 
   setUpdate(userProfile:UserProfile){

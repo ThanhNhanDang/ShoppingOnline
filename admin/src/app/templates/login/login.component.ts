@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
         }
         this.appCookie.set("authenticationToken", data['authenticationToken'])
         this.http.setLoginData (data['userProfile']);
-        alert("Successfully" );
+        alert("Successfully");
         this.router.navigateByUrl("/dashboard");
         this.http.sendSubjectLogin();
       }

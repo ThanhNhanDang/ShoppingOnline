@@ -11,7 +11,7 @@ import { FeedbackPayload } from '../../payload/FeedbackPayload';
   styleUrls: ['./content-row.component.scss']
 })
 export class ContentRowComponent implements OnInit {
-  imgURL = environment.urlServe + "images/avatars/userDefault.png";
+  imgURL = environment.urlServe + 1;
   orders: OrderPayload[] = [];
   feedbacks: FeedbackPayload[] = [];
   constructor(private http: HttpService, private router: Router, private activatedRouter: ActivatedRoute) { }

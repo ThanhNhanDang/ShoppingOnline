@@ -18,7 +18,7 @@ export class RecentProductComponent implements OnInit {
   constructor(private router: Router, private http: HttpServiceService, private sliderService:SliderService, private productService:ProductService) { }
 
   ngOnInit(): void {
-    this.http.getRequest("/product/get-products-by-category?page=2","").subscribe(data=>{
+    this.http.getRequest("/product/get-products-by-category?page=1","").subscribe(data=>{
       this.products=data.content
     },error=>{
       alert("Server connection error")
