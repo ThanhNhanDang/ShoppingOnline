@@ -22,7 +22,7 @@ export class AddProductComponent implements OnInit {
   file!: File;
   fileName!: string;
   imgURL = this.baseUrl + this.productPayload.urlImg
-  constructor(private http: HttpService, private datepipe: DatePipe, private router:Router) { }
+  constructor(private http: HttpService, private datepipe: DatePipe, private router: Router) { }
 
   ngOnInit(): void {
     this.http.getRequest("/category/all").subscribe(data => {
@@ -72,11 +72,11 @@ export class AddProductComponent implements OnInit {
       this.productPayload.exprideDate = this.latest_date + this.test.slice(10)
 
       this.productPayload.urlImg = this.fileName
-      this.http.pushFileToStorage("/upload", this.file).subscribe((res:any) => {
+      this.http.pushFileToStorage("/upload", this.file).subscribe((res: any) => {
         this.productPayload.fileId = res.id;
         this.http.postRequest("/product/add", this.productPayload).subscribe(data => {
           alert("Successful");
-          this.router.navigate(["/product"], {queryParams:{'key': data.id}})
+          this.router.navigate(["/product/edit"], { queryParams: { 'product': data.id } })
         })
       }, error => {
         alert(error.error.message)
