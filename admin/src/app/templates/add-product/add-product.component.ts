@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ProductPayload } from './../payload/productPayload';
 import { environment } from './../../../environments/environment';
 import { HttpService } from './../service/httpService/http.service';
@@ -21,7 +22,7 @@ export class AddProductComponent implements OnInit {
   file!: File;
   fileName!: string;
   imgURL = this.baseUrl + this.productPayload.urlImg
-  constructor(private http: HttpService, private datepipe: DatePipe, private _location: Location) { }
+  constructor(private http: HttpService, private datepipe: DatePipe, private router:Router) { }
 
   ngOnInit(): void {
     this.http.getRequest("/category/all").subscribe(data => {
@@ -75,8 +76,7 @@ export class AddProductComponent implements OnInit {
         this.productPayload.fileId = res.id;
         this.http.postRequest("/product/add", this.productPayload).subscribe(data => {
           alert("Successful");
-          this.productPayload = new ProductPayload();
-          this.imgURL = this.baseUrl + this.productPayload.urlImg
+          this.router.navigate(["/product"], {queryParams:{'key': data.id}})
         })
       }, error => {
         alert(error.error.message)
