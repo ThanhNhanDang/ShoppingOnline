@@ -23,7 +23,7 @@
           <div class="product-image">
             <a (click)="clickDetail(product.id)">
               <img
-                class="img-slider"
+              class="img-fluid d-block mx-auto"
                 src="{{ baseUrl + product.fileId }}"
                 alt="Product Image"
               />
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="product-price">
-            <h3><span>$</span>{{ product.price }}</h3>
+            <h3>{{ product.price }} <span>$</span></h3>
             <a class="btn" (click)="buyNow(product)"
               ><i class="fa fa-shopping-cart"></i>Buy Now</a
             >

@@ -1,3 +1,5 @@
+import { ResetPasswordComponent } from './templates/more-page/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './templates/more-page/forgot-password/forgot-password.component';
 
 import { ActiveComponent } from './templates/more-page/login-register/register/success/active/active.component';
 import { SuccessComponent } from './templates/more-page/login-register/register/success/success.component';
@@ -30,6 +32,7 @@ const routes: Routes = [
   { path: 'wish-list', component: WishListComponent, canActivate:[GuardCanActivateGuard]},
   { path: 'contact-us', component:  ContactUsComponent},
   { path: 'login', component:  LoginComponent, canActivate:[GuardCanActivateGuard]},
+  { path: 'forgot-password', component:  ForgotPasswordComponent},
   { path: 'register', component:  RegisterComponent, canActivate:[GuardCanActivateGuard]},
   { path: 'register/verify', component:  SuccessComponent, canActivate:[GuardCanActivateGuard]},
   { path: 'register/verify/active', component:  ActiveComponent},
@@ -38,9 +41,9 @@ const routes: Routes = [
   { path: '403-error', component:  E403Component},
   { path: 'admin', component:  CartComponent, canActivate:[GuardCanActivateGuard]},
   { path: 'product-detail', component: ProductDetailComponent},
+  { path: 'user/change-password', component:  ResetPasswordComponent},
   { path: "", redirectTo: '/home', pathMatch: 'full' },
   { path: "**", redirectTo: '/404-error', pathMatch: 'full' },
- 
   
 ];
 

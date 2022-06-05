@@ -60,6 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				"/api/signup/**",
 				
 				"/api/user/signup/active",
+				"/api/user/reset-password",
+				"/api/user/validate-token-password",
 				
 				"/api/feedback/save",
 				"/api/get/image/**"

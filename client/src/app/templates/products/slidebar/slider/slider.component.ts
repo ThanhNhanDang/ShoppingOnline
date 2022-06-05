@@ -19,7 +19,7 @@ export class SliderComponent implements OnInit {
   constructor(private http: HttpServiceService, private sliderService:SliderService, private productService:ProductService, private router:Router) { }
   search = new SearchAndSortPayload()
   ngOnInit(): void {
-    this.search.page = 2;
+    this.search.page = 1;
     this.http.postRequest("/product/search",this.search).subscribe(data=>{
       this.products=data.content
     },error=>{

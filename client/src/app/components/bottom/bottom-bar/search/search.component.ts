@@ -42,7 +42,19 @@ export class SearchComponent implements OnInit {
     this.http.clickDetailProduct(productId);
   }
 
-  productSearch(){
+  productSearch(item:any){
+    if(this.searchAndSort.key.length < 3){
+      alert("Keyword too short.")
+      return;
+    }
+    this.products = []
+    this.checkSearch = false
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    this.router.navigate(['/product-detail'], {queryParams:{'key':item.id}});
+    })
+  }
+
+  productSearchAll(){
     if(this.searchAndSort.key.length < 3){
       alert("Keyword too short.")
       return;

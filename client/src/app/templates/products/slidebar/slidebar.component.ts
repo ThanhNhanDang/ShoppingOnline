@@ -20,7 +20,7 @@ export class SlidebarComponent implements OnInit {
   constructor(private http: HttpServiceService, private sliderService:SliderService, private productService:ProductService, private router:Router) { }
   search = new SearchAndSortPayload()
   ngOnInit(): void {
-    this.search.page = 6;
+    this.search.page = 0;
     this.http.postRequest("/product/search",this.search).subscribe(data=>{
       this.products=data.content
     },error=>{

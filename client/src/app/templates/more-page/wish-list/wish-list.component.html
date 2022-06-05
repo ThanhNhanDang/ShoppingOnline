@@ -1,66 +1,88 @@
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
-    <div class="container-fluid">
-        <ul class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a routerLink="/home" routerLinkActive="active">Home</a>
-              </li>
-              <li class="breadcrumb-item" >
-                <a routerLink="/products" routerLinkActive="active">Products</a>
-              </li>
-            <li class="breadcrumb-item active">Wishlist</li>
-        </ul>
-    </div>
+  <div class="container-fluid">
+    <ul class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a routerLink="/home" routerLinkActive="active">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a routerLink="/products" routerLinkActive="active">Products</a>
+      </li>
+      <li class="breadcrumb-item active">Wishlist</li>
+    </ul>
+  </div>
 </div>
 <!-- Breadcrumb End -->
 
 <!-- Wishlist Start -->
 <div class="wishlist-page">
-    <div class="container-fluid">
-        <div  *ngIf="checkIsEmpty" class="cart-content">
-            <h2>{{message}}</h2>
-        </div>
-        <div class="wishlist-page-inner" *ngIf="!checkIsEmpty" >
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="table-responsive my-custom-scrollbar">
-                        <table class="table table-bordered">
-                            <thead class="table-fixed thead-dark">
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Add to Cart</th>
-                                    <th>Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody class="align-middle" *ngFor="let item of wishList">
-                                <tr>
-                                    <td>
-                                        <div class="img">
-                                            <a (click)="clickDetail(item.productId)"><img src="{{baseUrl+item.fileId}}" alt="Image"></a>
-                                            <a (click)="clickDetail(item.productId)" >{{item.productName}}</a>
-                                         
-                                        </div>
-                                    </td>
-                                    <td>${{item.pricePerItem}}</td>
-                                    <td>
-                                        <div class="qty">
-                                            <button class="btn-minus" (click)="handleMinus(item)"><i class="fa fa-minus"></i></button>
-                                            <input type="number" min="1" [ngModel]="item.quantity" (ngModelChange)="onInputChanged(item, $event)">
-                                            <button class="btn-plus" (click)="handlePlus(item)"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td><button (click)="addToCart(item)"class="btn-cart">Add to Cart</button></td>
-                                    <td><button (click)="deleteItem(item)"><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                              
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div *ngIf="checkIsEmpty" class="cart-content">
+      <h2>{{ message }}</h2>
     </div>
+    <div class="wishlist-page-inner" *ngIf="!checkIsEmpty">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive my-custom-scrollbar">
+            <table class="table table-bordered">
+              <thead class="table-fixed thead-dark">
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Add to Cart</th>
+                  <th>Remove</th>
+                </tr>
+              </thead>
+              <tbody class="align-middle" *ngFor="let item of wishList">
+                <tr>
+                  <td>
+                    <div class="img">
+                      <a (click)="clickDetail(item.productId)"
+                        ><img
+                          src="{{ baseUrl + item.fileId }}"
+                          class="img-fluid d-block mx-auto"
+                          alt="Image"
+                      /></a>
+                      <a (click)="clickDetail(item.productId)">{{
+                        item.productName
+                      }}</a>
+                    </div>
+                  </td>
+                  <td>{{ item.pricePerItem }} $</td>
+                  <td>
+                    <div class="qty">
+                      <button class="btn-minus" (click)="handleMinus(item)">
+                        <i class="fa fa-minus"></i>
+                      </button>
+                      <input
+                        type="number"
+                        min="1"
+                        [ngModel]="item.quantity"
+                        (ngModelChange)="onInputChanged(item, $event)"
+                      />
+                      <button class="btn-plus" (click)="handlePlus(item)">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td>
+                    <button (click)="addToCart(item)" class="btn-cart">
+                      Add to Cart
+                    </button>
+                  </td>
+                  <td>
+                    <button (click)="deleteItem(item)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- Wishlist End -->

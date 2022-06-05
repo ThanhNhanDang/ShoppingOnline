@@ -1,17 +1,16 @@
-
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins',sans-serif;
+  font-family: "Poppins", sans-serif;
 }
-.body{
+.body {
   display: grid;
   height: 80vh;
   width: 100%;
   place-items: center;
 }
-.container{
+.container {
   background: #fff;
   max-width: 350px;
   width: 100%;
@@ -20,21 +19,21 @@
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
 }
 
-.container form .input-box{
+.container form .input-box {
   width: 100%;
   height: 45px;
   margin-top: 25px;
   position: relative;
 }
-.container form .input-box input{
+.container form .input-box input {
   width: 100%;
   height: 100%;
   outline: none;
   font-size: 16px;
   border: none;
 }
-.container form .underline::before{
-  content: '';
+.container form .underline::before {
+  content: "";
   position: absolute;
   height: 2px;
   width: 100%;
@@ -42,8 +41,8 @@
   left: 0;
   bottom: 0;
 }
-.container form .underline::after{
-  content: '';
+.container form .underline::after {
+  content: "";
   position: absolute;
   height: 2px;
   width: 100%;
@@ -55,33 +54,40 @@
   transition: all 0.3s ease;
 }
 .container form .input-box input:focus ~ .underline::after,
-.container form .input-box input:valid ~ .underline::after{
+.container form .input-box input:valid ~ .underline::after {
   transform: scaleX(1);
   transform-origin: left;
 }
-.container form .button{
+.container form .button {
   margin: 40px 0 20px 0;
 }
-.container .input-box input[type="submit"]{
-  background: linear-gradient(to right,  #ff8e61 0%, #ff6f61 100%);
+.container .input-box input[type="submit"] {
+  background: linear-gradient(to right, #ff8e61 0%, #ff6f61 100%);
   font-size: 17px;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.container .input-box input[type="submit"]:hover{
+.container .input-box input[type="submit"]:hover {
   letter-spacing: 1px;
-  background: linear-gradient(to left,  #ff8e61 0%, #ff6f61 100%);
+  background: linear-gradient(to left, #ff8e61 0%, #ff6f61 100%);
 }
-.container .option{
+.container .option {
   font-size: 14px;
   text-align: center;
 }
+.container .option2 {
+  font-size: larger;
+  text-align: center;
+}
+.container .option2 a {
+  text-decoration: underline;
+}
 .container .facebook button,
 .container .twitter button,
-.container .google button{
-  border:none;
+.container .google button {
+  border: none;
   display: block;
   height: 45px;
   width: 100%;
@@ -95,49 +101,48 @@
 }
 
 .container .facebook i,
-.container .twitter i
-.container .google i{
+.container .twitter i .container .google i {
   font-size: 20px;
 }
-.container .twitter button{
-  background: linear-gradient(to right,  #61d2ff 0%, #4781b8 100%);
+.container .twitter button {
+  background: linear-gradient(to right, #61d2ff 0%, #4781b8 100%);
   margin: 20px 0 15px 0;
 }
-.container .twitter button:hover{
+.container .twitter button:hover {
   letter-spacing: 1px;
   background: linear-gradient(to left, #61d2ff 0%, #4781b8 100%);
   margin: 20px 0 15px 0;
 }
-.container .facebook button{
-  background: linear-gradient( to right,   #2834db 0%, #0a1061 100%);
+.container .facebook button {
+  background: linear-gradient(to right, #2834db 0%, #0a1061 100%);
   margin: 20px 0 50px 0;
 }
-.container .facebook button:hover{
+.container .facebook button:hover {
   letter-spacing: 1px;
-  background: linear-gradient( to left,  #2834db 0%, #0a1061 100%);
+  background: linear-gradient(to left, #2834db 0%, #0a1061 100%);
   margin: 20px 0 50px 0;
 }
-.container .google button{
-    background: linear-gradient(to right,  #b1b1af 0%, #cbced4 100%);
-    margin: 20px 0 15px 0;
-  }
-  .container .google button:hover{
-    letter-spacing: 1px;
-    background: linear-gradient(to left,  #b1b1af 0%, #cbced4 100%);
-    margin: 20px 0 15px 0;
-  }
+.container .google button {
+  background: linear-gradient(to right, #b1b1af 0%, #cbced4 100%);
+  margin: 20px 0 15px 0;
+}
+.container .google button:hover {
+  letter-spacing: 1px;
+  background: linear-gradient(to left, #b1b1af 0%, #cbced4 100%);
+  margin: 20px 0 15px 0;
+}
 
-.message{
+.message {
   text-align: center;
-  color:rgb(226, 57, 57);
+  color: rgb(226, 57, 57);
   font-size: 100%;
 }
 
-.a{
+.a {
   color: #ff6f61;
   text-align: center;
   font-size: 100%;
 }
-.a:hover{
-  color:#be3529
+.a:hover {
+  color: #be3529;
 }

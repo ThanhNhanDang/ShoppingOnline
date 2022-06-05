@@ -1,7 +1,7 @@
 import { BasicAuthInterceptor } from './service/BasicAuthInterceptor';
-import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser/';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -61,8 +61,8 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from 'angularx-social-login';
-import { PasswordComponent } from './templates/more-page/login-register/password/password.component';
-import { PasswordRegisterComponent } from './templates/more-page/login-register/password-register/password-register.component';
+import { ForgotPasswordComponent } from './templates/more-page/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './templates/more-page/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -114,8 +114,8 @@ import { PasswordRegisterComponent } from './templates/more-page/login-register/
     SearchComponent,
     SuccessComponent,
     ActiveComponent,
-    PasswordComponent,
-    PasswordRegisterComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
 
   ],
   imports: [
@@ -128,8 +128,8 @@ import { PasswordRegisterComponent } from './templates/more-page/login-register/
     SocialLoginModule
   ],
   providers: [
-    { 
-      provide:'SocialAuthServiceConfig',
+    {
+      provide: 'SocialAuthServiceConfig',
       useValue: {
         autoLogin: false,
         providers: [
@@ -147,9 +147,9 @@ import { PasswordRegisterComponent } from './templates/more-page/login-register/
       } as SocialAuthServiceConfig,
     },
     {
-      provide:HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true
+      provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true
     },
-    
+
   ],
   bootstrap: [AppComponent]
 })

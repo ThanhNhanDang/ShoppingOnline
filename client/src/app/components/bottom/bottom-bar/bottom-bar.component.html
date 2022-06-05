@@ -38,9 +38,12 @@
                 <div class="row cart-detail" *ngFor="let item of wishList">
                   <div
                     (click)="clickDetailProduct(item.productId)"
-                    class="col-lg-4 col-sm-4 col-4 cart-detail-img"
+                    class="col-lg-4 col-sm-4 col-4"
                   >
-                    <img src="{{ baseUrl + item.fileId }}" />
+                    <img
+                      src="{{ baseUrl + item.fileId }}"
+                      class="img-fluid d-block mx-auto"
+                    />
                   </div>
                   <div class="col-lg-5 col-sm-5 col-5 cart-detail-product">
                     <p
@@ -50,7 +53,7 @@
                       {{ item.productName }}
                     </p>
                     <span class="price text-info">
-                      ${{ item.pricePerItem }}</span
+                      {{ item.pricePerItem }} $</span
                     >
                     <span class="count"> Quantity:{{ item.quantity }}</span>
                   </div>
@@ -95,7 +98,7 @@
                 </div>
                 <div class="col-lg-6 col-sm-6 col-6 total-section text-right">
                   <p>
-                    Total: <span class="text-info">${{ subTotal }}</span>
+                    Total: <span class="text-info">{{ subTotal }} $</span>
                   </p>
                 </div>
               </div>
@@ -107,9 +110,12 @@
                 <div class="row cart-detail" *ngFor="let item of cart">
                   <div
                     (click)="clickDetailProduct(item.product_id)"
-                    class="col-lg-4 col-sm-4 col-4 cart-detail-img"
+                    class="col-lg-4 col-sm-4 col-4"
                   >
-                    <img src="{{ baseUrl + item.fileId }}" />
+                    <img
+                      src="{{ baseUrl + item.fileId }}"
+                      class="img-fluid d-block mx-auto"
+                    />
                   </div>
                   <div class="col-lg-5 col-sm-5 col-5 cart-detail-product">
                     <p
@@ -119,7 +125,7 @@
                       {{ item.productName }}
                     </p>
                     <span class="price text-info">
-                      ${{ item.pricePerItem }}</span
+                      {{ item.pricePerItem }} $</span
                     >
                     <span class="count"> Quantity:{{ item.quantity }}</span>
                   </div>

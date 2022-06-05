@@ -52,7 +52,7 @@ public class ProductsDto {
 		this.description = description;
 		this.checkselect = checkselect;
 		this.totalReview = totalReview;
-		this.totalReview = totalReview5Star;
+		this.totalReview5Star = totalReview5Star;
 		this.fileId = fileId;
 	}
 	

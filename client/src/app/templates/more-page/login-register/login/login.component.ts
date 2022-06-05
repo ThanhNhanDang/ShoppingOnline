@@ -1,13 +1,12 @@
-import { UserProfile } from './../../../../payload/UserProfile';
+import { UserProfile } from '../../../../payload/UserProfile';
 import { AuthenticationResponse } from 'src/app/payload/AuthenticationResponse';
-import { AppCookieService } from './../../../../service/appCookie/app-cookie.service';
+import { AppCookieService } from '../../../../service/appCookie/app-cookie.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
-import { HttpServiceService } from './../../../../service/httpService/http-service.service';
+import { HttpServiceService } from '../../../../service/httpService/http-service.service';
 
 import { Component, OnInit } from '@angular/core';
 import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
-import { Location } from '@angular/common';
 
 
 @Component({
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
   myScriptElement!: HTMLScriptElement;
   loginForm!: FormGroup;
   error!:string;
-  constructor(private _location: Location, private authService: SocialAuthService, private http: HttpServiceService, private router:Router, private appCookie:AppCookieService) { 
+  constructor(private authService: SocialAuthService, private http: HttpServiceService, private router:Router, private appCookie:AppCookieService) { 
   }
 
   ngOnInit(): void {
@@ -46,8 +45,6 @@ export class LoginComponent implements OnInit {
       this.error=error.error.message;
     })
   }
-
-
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(data=>{
       this.http.loginRequest("/login/user/google", {value:data.idToken}).subscribe(data=>{

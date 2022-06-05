@@ -5,6 +5,8 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.java.config.ShoppingConfig;
 import com.java.dto.ChangePasswordDto;
+import com.java.dto.GenericResponseDto;
+import com.java.dto.ResetPasswordDto;
 import com.java.dto.UserDto;
 import com.java.model.Message;
 import com.java.model.RegisterByAdmin;
@@ -32,16 +36,17 @@ import com.java.service.UserService;
 public class UserController {
 	private UserService service;
 	private FileService fileService;
-	public UserController( UserService service, FileService fileService) {
+
+	public UserController(UserService service, FileService fileService) {
 		this.service = service;
 		this.fileService = fileService;
 	}
-	
+
 	@GetMapping("/profile/{email}")
-	public ResponseEntity<UserDto> get (@PathVariable String email){
+	public ResponseEntity<UserDto> get(@PathVariable String email) {
 		try {
-			UserDto dto =  service.findByEmail(email);
-			if(dto == null)
+			UserDto dto = service.findByEmail(email);
+			if (dto == null)
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			return new ResponseEntity<>(dto, HttpStatus.OK);
 		} catch (Exception e) {
@@ -49,17 +54,20 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@PostMapping("/profile")
-	public ResponseEntity<?> get (@RequestBody HashMap<String, String> request){
+	public ResponseEntity<?> get(@RequestBody HashMap<String, String> request) {
 		try {
-			String keys []= {"userId"};
-			if(ShoppingConfig.validationWithHashMap(keys, request)) {}
+			String keys[] = { "userId" };
+			if (ShoppingConfig.validationWithHashMap(keys, request)) {
+			}
 			long userId = Long.valueOf(request.get("userId"));
-			
-			UserDto dto =  service.findById(userId);
-			if(dto == null) {
-				return new ResponseEntity<>(new Message("No Content", Instant.now(), "201", "No Content", "/api/user/profile"), HttpStatus.NO_CONTENT);
+
+			UserDto dto = service.findById(userId);
+			if (dto == null) {
+				return new ResponseEntity<>(
+						new Message("No Content", Instant.now(), "201", "No Content", "/api/user/profile"),
+						HttpStatus.NO_CONTENT);
 			}
 			return new ResponseEntity<>(dto, HttpStatus.OK);
 		} catch (Exception e) {
@@ -67,11 +75,12 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+
 	@GetMapping("/all")
-	public ResponseEntity<List<UserDto>> get (){
+	public ResponseEntity<List<UserDto>> get() {
 		try {
-			List<UserDto> dtos  = service.findAll();
-			if(dtos.isEmpty())
+			List<UserDto> dtos = service.findAll();
+			if (dtos.isEmpty())
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			return new ResponseEntity<>(dtos, HttpStatus.OK);
 		} catch (Exception e) {
@@ -79,105 +88,160 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	@PostMapping("/update/image/{id}")
-	public Object uploadImage (@RequestParam("file") MultipartFile file, @PathVariable("id") long id) throws IOException {
+	public Object uploadImage(@RequestParam("file") MultipartFile file, @PathVariable("id") long id)
+			throws IOException {
 		return new ResponseEntity<>(fileService.store(file, id), HttpStatus.CREATED);
 	}
-	
-	
+
 	@PutMapping("/update")
-	public Object upload (@RequestBody UserDto dto) {
+	public Object upload(@RequestBody UserDto dto) {
 		try {
 			service.editMyAccout(dto);
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update"),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
-	
+
 	@PutMapping("/update/active-admin")
-	public ResponseEntity<?> updateActive(@RequestBody UserDto dto){
+	public ResponseEntity<?> updateActive(@RequestBody UserDto dto) {
 		try {
 			service.updateActive(dto);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update/active-admin"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update/active-admin"),
+					HttpStatus.BAD_REQUEST);
 		}
-		
-		
+
 	}
-	
+
 	@PutMapping("/update/admin")
-	public Object updateAdmin (@RequestBody UserDto dto) {
+	public Object updateAdmin(@RequestBody UserDto dto) {
 		try {
 			service.editMyAccoutByAdmin(dto);
 			return new ResponseEntity<Object>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<Object>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update/admin"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update/admin"),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
+
 	@GetMapping("/search")
-	public @ResponseBody List<UserDto> search(@RequestParam String key){
-			List<UserDto> dtos = service.search(key);
-			return dtos;
+	public @ResponseBody List<UserDto> search(@RequestParam String key) {
+		List<UserDto> dtos = service.search(key);
+		return dtos;
 	}
-	
+
 	@DeleteMapping("/delete-not-return")
-	public ResponseEntity<?> deleteNotReturn(@RequestParam("id") long id, @RequestParam("fileId") long fileId){
+	public ResponseEntity<?> deleteNotReturn(@RequestParam("id") long id, @RequestParam("fileId") long fileId) {
 		try {
-			service.delete(id, fileId); 
+			service.delete(id, fileId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/delete-not-return"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/delete-not-return"),
+					HttpStatus.BAD_REQUEST);
 		}
-	
+
 	}
+
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> delete(@RequestParam("id") long id, @RequestParam("fileId") long fileId){
+	public ResponseEntity<?> delete(@RequestParam("id") long id, @RequestParam("fileId") long fileId) {
 		try {
-			List<UserDto> dtos = service.deleteDtos(id, fileId); 
-			return new ResponseEntity<>(dtos,HttpStatus.OK);
+			List<UserDto> dtos = service.deleteDtos(id, fileId);
+			return new ResponseEntity<>(dtos, HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/delete"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/delete"),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PostMapping("/add/by-admin")
-	public ResponseEntity<?> signupByAdmin(@RequestBody RegisterByAdmin registerByAdmin){
+	public ResponseEntity<?> signupByAdmin(@RequestBody RegisterByAdmin registerByAdmin) {
 		try {
 			service.addByAdmin(registerByAdmin);
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/add/by-admin"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/add/by-admin"),
+					HttpStatus.BAD_REQUEST);
 		}
-		
+
 	}
-	
+
 	@PutMapping("/change-password")
-	public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDto dto){
+	public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDto dto) {
 		try {
 			service.changePassword(dto);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/change-password"),HttpStatus.BAD_REQUEST);
-			
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/change-password"),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
+	@PutMapping("/reset-password")
+	public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordDto dto) {
+		try {
+			GenericResponseDto genericResponseDto = service.validatePasswordResetToken(dto.getToken());
+			if (genericResponseDto.getMessage() != null) {
+				genericResponseDto.setError(genericResponseDto.getMessage());
+				return new ResponseEntity<>(genericResponseDto, HttpStatus.BAD_REQUEST);
+			}
+
+			genericResponseDto = service.passwordReset(dto);
+			return new ResponseEntity<>(genericResponseDto, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/change-password"),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("/validate-token-password")
+	public ResponseEntity<?> validateTokenPassword(@RequestParam("token") String token) {
+		try {
+			GenericResponseDto result = service.validatePasswordResetToken(token);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request",
+					"/api/user/validate-token-password"), HttpStatus.BAD_REQUEST);
+
+		}
+	}
+
 	@PostMapping("/signup/active")
-	public ResponseEntity<?> signupActive(@RequestParam("email") String email, @RequestParam("code") String code){
+	public ResponseEntity<?> signupActive(@RequestParam("email") String email, @RequestParam("code") String code) {
 		try {
 			service.checkCode(code, email);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/signup/active"),HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/signup/active"),
+					HttpStatus.BAD_REQUEST);
 
 		}
 	}
-	
+
+	@PostMapping("/reset-password")
+	public ResponseEntity<GenericResponseDto> resetPassword(HttpServletRequest request,
+			@RequestParam("email") String email) {
+		try {
+			GenericResponseDto genericResponseDto = this.service.resetPassword(request, email);
+			return new ResponseEntity<GenericResponseDto>(genericResponseDto, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<GenericResponseDto>(new GenericResponseDto(e.getMessage(), e.getMessage()),
+					HttpStatus.BAD_REQUEST);
+		}
+
+	}
+
 }

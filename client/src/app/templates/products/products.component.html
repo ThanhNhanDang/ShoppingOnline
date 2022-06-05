@@ -5,11 +5,18 @@
       <li class="breadcrumb-item">
         <a routerLink="/home" routerLinkActive="active">Home</a>
       </li>
-      <li class="breadcrumb-item" >
-        <a routerLink="/products" [ngClass]= "{active:!active}"routerLinkActive="active">Products</a>
+      <li class="breadcrumb-item">
+        <a
+          routerLink="/products"
+          [ngClass]="{ active: !active }"
+          routerLinkActive="active"
+          >Products</a
+        >
       </li>
-      <li class="breadcrumb-item" *ngIf= "active" >
-        <a [ngClass]= "{active:active}" routerLinkActive="active">{{cateName}}</a>
+      <li class="breadcrumb-item" *ngIf="active">
+        <a [ngClass]="{ active: active }" routerLinkActive="active">{{
+          cateName
+        }}</a>
       </li>
       <li class="breadcrumb-item">
         <a href="javaScript:void(0)" (click)="backClicked()"
@@ -32,7 +39,11 @@
               <div class="row">
                 <div class="col-md-3">
                   <div class="product-search">
-                    <input type="text" [(ngModel)]="searAndSort.key" placeholder="Search" />
+                    <input
+                      type="text"
+                      [(ngModel)]="searAndSort.key"
+                      placeholder="Search"
+                    />
                     <button (click)="search()">
                       <i class="fa fa-search"></i>
                     </button>
@@ -63,16 +74,17 @@
                         Product price range
                       </div>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item">$0 to $50</a>
-                        <a href="#" class="dropdown-item">$51 to $100</a>
-                        <a href="#" class="dropdown-item">$101 to $150</a>
-                        <a href="#" class="dropdown-item">$151 to $200</a>
-                        <a href="#" class="dropdown-item">$201 to $250</a>
-                        <a href="#" class="dropdown-item">$251 to $300</a>
-                        <a href="#" class="dropdown-item">$301 to $350</a>
-                        <a href="#" class="dropdown-item">$351 to $400</a>
-                        <a href="#" class="dropdown-item">$401 to $450</a>
-                        <a href="#" class="dropdown-item">$451 to $500</a>
+                        <a href="#" class="dropdown-item">0$ to 50$</a>
+                        <a href="#" class="dropdown-item">51$ to 100$</a>
+                        <a href="#" class="dropdown-item">151$ to 200$</a>
+                        <a href="#" class="dropdown-item">201$ to 250$</a>
+                        <a href="#" class="dropdown-item">101$ to 150$</a>
+                        <a href="#" class="dropdown-item">251$ to 300$</a>
+                        <a href="#" class="dropdown-item">301$ to 350$</a>
+                        <a href="#" class="dropdown-item">351$ to 400$</a>
+                        <a href="#" class="dropdown-item">401$ to 450$</a>
+                        <a href="#" class="dropdown-item">451$ to 500$</a>
+                        <a href="#" class="dropdown-item">over 500$</a>
                       </div>
                     </div>
                   </div>
@@ -90,7 +102,7 @@
           <br />
           <br />
           <div
-            *ngIf="totalElements<=0"
+            *ngIf="totalElements <= 0"
             class="col-md-12 checkout-summary text-center"
           >
             <h2>No results found.</h2>
@@ -116,11 +128,9 @@
                 </div>
               </div>
               <div class="product-image">
-                <a
-                  (click)="clickProductDetail(item.id)"
-                >
+                <a (click)="clickProductDetail(item.id)">
                   <img
-                    class="img-slider"
+                    class="img-fluid d-block mx-auto"
                     src="{{ baseUrl + item.fileId }}"
                     alt="Product Image"
                   />
@@ -129,22 +139,17 @@
                   <a (click)="clickCartPlus(item)"
                     ><i class="fa fa-cart-plus"></i
                   ></a>
-                  <a
-                   
-                    (click)="clickWishListPlus(item)"
+                  <a (click)="clickWishListPlus(item)"
                     ><i class="fa fa-heart"></i
                   ></a>
-                  <a
-                    (click)="clickProductDetail(item.id)"
+                  <a (click)="clickProductDetail(item.id)"
                     ><i class="fa fa-search"></i
                   ></a>
                 </div>
               </div>
               <div class="product-price">
-                <h3><span>$</span>{{ item.price }}</h3>
-                <a
-                  class="btn"
-                  (click)="clickCartPlus(item)"
+                <h3>{{ item.price }} <span>$</span></h3>
+                <a class="btn" (click)="clickCartPlus(item)"
                   ><i class="fa fa-shopping-cart"></i>Buy Now</a
                 >
               </div>
@@ -158,7 +163,6 @@
               <li
                 class="page-item"
                 *ngIf="selectedItem != 1"
-                
                 (click)="previousPage()"
               >
                 <a class="page-link">Previous</a>

@@ -1,32 +1,52 @@
-
 <div class="body">
   <div class="container">
-    <h5 class="message">{{error}}</h5>
-    <h4>email: yesthanhnhan16@gmail.com<br>pass: 123456</h4>
+    <h5 class="message">{{ error }}</h5>
+    <h4>email: yesthanhnhan16@gmail.com<br />pass: 123456</h4>
     <form [formGroup]="loginForm">
       <div class="input-box underline">
-        <input type="text" [formControlName]="'email'" placeholder="Enter your email" required>
+        <input
+          type="text"
+          [formControlName]="'email'"
+          placeholder="Enter your email"
+          required
+        />
         <div class="underline"></div>
       </div>
       <div class="input-box">
-        <input type="password" [formControlName]="'password'" placeholder="Enter your password" required>
+        <input
+          type="password"
+          [formControlName]="'password'"
+          placeholder="Enter your password"
+          required
+        />
         <div class="underline"></div>
       </div>
       <div class="input-box button">
-        <input type="submit" (click)="loginUserCheck()" name="" value="Continue">
+        <input
+          type="submit"
+          (click)="loginUserCheck()"
+          name=""
+          value="Continue"
+        />
       </div>
     </form>
+    <div class="option2">
+      <a routerLink="/forgot-password" routerLinkActive="active">
+        Forgot password</a
+      >
+    </div>
     <div class="option">or</div>
     <div class="google">
-      <button (click)="signInWithGoogle()"><i class="fab fa-google"></i> Sign in With Google</button>
+      <button (click)="signInWithGoogle()">
+        <i class="fab fa-google"></i> Sign in With Google
+      </button>
     </div>
     <div class="facebook">
-      <button (click)="signInWithFB()"><i class="fab fa-facebook-f"></i> Sign in With Facebook</button>
+      <button (click)="signInWithFB()">
+        <i class="fab fa-facebook-f"></i> Sign in With Facebook
+      </button>
     </div>
   </div>
-  
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/js/all.min.js"></script>
-
