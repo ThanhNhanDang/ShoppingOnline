@@ -61,6 +61,7 @@
                           [ngClass]="{ activeSort: sortId == item.id }"
                           (click)="sort(item)"
                           class="dropdown-item"
+                          style="cursor: pointer"
                           >{{ item.name }}</a
                         >
                       </div>
@@ -71,20 +72,35 @@
                   <div class="product-price-range">
                     <div class="dropdown">
                       <div class="dropdown-toggle" data-toggle="dropdown">
-                        Product price range
+                        Product price range <a class="a">{{ sortKeyPrice }}</a>
                       </div>
                       <div class="dropdown-menu dropdown-menu-right">
-                        <a href="#" class="dropdown-item">0$ to 50$</a>
-                        <a href="#" class="dropdown-item">51$ to 100$</a>
-                        <a href="#" class="dropdown-item">151$ to 200$</a>
-                        <a href="#" class="dropdown-item">201$ to 250$</a>
-                        <a href="#" class="dropdown-item">101$ to 150$</a>
-                        <a href="#" class="dropdown-item">251$ to 300$</a>
-                        <a href="#" class="dropdown-item">301$ to 350$</a>
-                        <a href="#" class="dropdown-item">351$ to 400$</a>
-                        <a href="#" class="dropdown-item">401$ to 450$</a>
-                        <a href="#" class="dropdown-item">451$ to 500$</a>
-                        <a href="#" class="dropdown-item">over 500$</a>
+                        <a
+                          class="dropdown-item"
+                          style="cursor: pointer"
+                          (click)="sortPriceNone()"
+                          [ngClass]="{
+                            activeSort: sortPriceRangeId == 0
+                          }"
+                        >
+                          <p>None</p>
+                        </a>
+                        <a
+                          *ngFor="let item of priceRange"
+                          class="dropdown-item"
+                          style="cursor: pointer"
+                          (click)="sortPrice(item)"
+                          [ngClass]="{
+                            activeSort: sortPriceRangeId == item.id
+                          }"
+                        >
+                          <p *ngIf="item.end == null">
+                            more than {{ item.start }} $
+                          </p>
+                          <p *ngIf="item.end != null">
+                            {{ item.start }} $ to {{ item.end }} $
+                          </p>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -111,11 +127,14 @@
           <div class="col-md-4" *ngFor="let item of products">
             <div class="product-item">
               <div class="product-title">
-                <a
+                <div
+                  class="name"
                   (click)="clickProductDetail(item.id)"
                   routerLinkActive="active"
-                  >{{ item.name }}</a
                 >
+                  {{ item.name }}
+                </div>
+
                 <p class="sold">(Sold:{{ item.unitSold }})</p>
                 <div class="ratting">
                   <i class="fa fa-star"></i>

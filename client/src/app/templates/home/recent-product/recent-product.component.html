@@ -11,9 +11,14 @@
       >
         <div class="product-item">
           <div class="product-title">
-            <a (click)="clickDetail(product.id)" routerLinkActive="active">{{
-              product.name
-            }}</a>
+            <div
+              class="name"
+              (click)="clickDetail(product.id)"
+              routerLinkActive="active"
+            >
+              {{ product.name }}
+            </div>
+
             <p class="sold">(Sold:{{ product.unitSold }})</p>
             <div class="ratting">
               <i class="fa fa-star"></i> <i class="fa fa-star"></i>

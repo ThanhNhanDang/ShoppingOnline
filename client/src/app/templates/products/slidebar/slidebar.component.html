@@ -2,15 +2,22 @@
   <ngx-slick-carousel class="normal-slider" [config]="slideConfig">
     <div ngxSlickItem *ngFor="let product of products" class="product-item">
       <div class="product-title">
-        <a (click)="clickProductDetail(product.id)" routerLinkActive="active">{{
-          product.name
-        }}</a>
+        <div
+          class="name"
+          (click)="clickProductDetail(product.id)"
+          routerLinkActive="active"
+        >
+          {{ product.name }}
+        </div>
+
         <p class="sold">(Sold:{{ product.unitSold }})</p>
         <div class="ratting">
-          <i
-            class="fa fa-star"
-            *ngFor="let item of [].constructor(product.totalReview5Star)"
-          ></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+
           <a>({{ product.totalReview5Star }})</a>
         </div>
       </div>
