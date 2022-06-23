@@ -1,5 +1,7 @@
 package com.java.entity;
 
+import java.time.Instant;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class DeliveryAddress {
 	private long wardId;
 	private long districtId;
 	private long provinceId;
+	private Instant time;
 	
 	
 	@ManyToOne
@@ -48,13 +51,14 @@ public class DeliveryAddress {
 	}
 
 	public DeliveryAddress( long userId, String address, long provinceId, long districtId,
-			long wardId) {
+			long wardId, Instant time) {
 		
 		this.userId = userId;
 		this.address = address;
 		this.provinceId = provinceId;
 		this.districtId = districtId;
 		this.wardId = wardId;
+		this.time = time;
 	}
 	
 	public DeliveryAddress(String address, long provinceId, long districtId,
@@ -110,6 +114,14 @@ public class DeliveryAddress {
 
 	public void setProvinceId(long provinceId) {
 		this.provinceId = provinceId;
+	}
+
+	public Instant getTime() {
+		return time;
+	}
+
+	public void setTime(Instant time) {
+		this.time = time;
 	}	
 	
 }

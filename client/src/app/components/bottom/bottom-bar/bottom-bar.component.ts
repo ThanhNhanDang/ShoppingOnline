@@ -72,7 +72,7 @@ export class BottomBarComponent implements OnInit {
       for (this.i = 0; this.i < this.cart.length; this.i++) {
         this.subTotal += this.cart[this.i].price;
       }
-      this.subTotal = Number((Math.round(this.subTotal * 100) / 100).toFixed(2));
+      this.subTotal = this.http.getRoundingNumber(this.subTotal);
       if (this.cart.length == 0)
         this.checkIsEmptyCart = true;
       else this.checkIsEmptyCart = false;

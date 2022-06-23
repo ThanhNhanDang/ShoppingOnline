@@ -10,6 +10,7 @@ export class OrderPayload {
     productId!: Number
     productName!: String
     quantity!: Number
-    price!: Number
-    constructor() {}
+    price!: number
+    countTheMostOrders!: number;
+    constructor() { }
 }

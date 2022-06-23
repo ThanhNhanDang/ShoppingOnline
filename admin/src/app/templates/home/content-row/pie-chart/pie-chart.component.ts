@@ -1,9 +1,14 @@
+import { OrderPayload } from './../../../payload/OrderPayload';
+import { HttpService } from './../../../service/httpService/http.service';
 
-import { EchartServiceService } from './../../../service/echartService/echart-service.service';
 import { Component, OnInit } from '@angular/core';
 import { ThemeOption } from 'ngx-echarts';
 
+interface jsonDataChart {
+  value: number;
+  name: String;
 
+}
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
@@ -12,14 +17,17 @@ import { ThemeOption } from 'ngx-echarts';
 export class PieChartComponent implements OnInit {
   options: any
   theme!: string | ThemeOption;
+  dataChart!: jsonDataChart[];
+  legendData!: String[];
+  constructor(private http: HttpService) {
 
-  constructor() {
   }
 
   ngOnInit(): void {
     // this.subscription = this.echartService.getLineChart().subscribe(data=>{
     //   this.initLineChart(data);
     // })
+    this.getProductWithTheMostOrders();
     this.initChart()
   }
   initChart() {
@@ -36,30 +44,34 @@ export class PieChartComponent implements OnInit {
       legend: {
         x: 'center',
         y: 'bottom',
-        data: ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8', 'rose9', 'rose10']
+        data: this.legendData 
       },
       calculable: true,
       series: [
         {
-          name: 'area',
+          name: 'Product Id:',
           type: 'pie',
           radius: [20, 120],
           roseType: 'area',
-          data: [
-            { value: 10, name: 'rose1' },
-            { value: 5, name: 'rose2' },
-            { value: 15, name: 'rose3' },
-            { value: 25, name: 'rose4' },
-            { value: 20, name: 'rose5' },
-            { value: 35, name: 'rose6' },
-            { value: 30, name: 'rose7' },
-            { value: 40, name: 'rose8' },
-            { value: 20, name: 'rose9' },
-            { value: 35, name: 'rose10' },
-
-          ]
+          data: this.dataChart
         }
       ]
     };
+  }
+
+  getProductWithTheMostOrders() {
+    this.http.getRequest("/dashboad/get-data/product-with-the-most-orders").subscribe(data => {
+      this.legendData = [];
+      this.dataChart = [];
+      this.handleData(data);
+      this.initChart()
+    })
+  }
+
+  handleData(response: OrderPayload[]) {
+    response.forEach(item => {
+      this.legendData.push("ID: " + item.productId);
+      this.dataChart.push({ value: item.countTheMostOrders, name: "ID: " + item.productId });
+    })
   }
 }

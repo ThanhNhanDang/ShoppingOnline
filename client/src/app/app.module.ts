@@ -1,7 +1,7 @@
 import { BasicAuthInterceptor } from './service/BasicAuthInterceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser/';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -46,7 +46,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { UserComponent } from './templates/admin/user/user.component';
 import { MyOrderComponent } from './templates/my-order/my-order.component';
-import { ProductComponent } from './templates/admin/product/product.component';
 import { CheckoutComponent } from './templates/checkout/checkout.component';
 import { MyReviewComponent } from './templates/my-review/my-review.component';
 import { E404Component } from './templates/errors/e404/e404.component';
@@ -63,6 +62,7 @@ import {
 } from 'angularx-social-login';
 import { ForgotPasswordComponent } from './templates/more-page/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './templates/more-page/reset-password/reset-password.component';
+import { ProductComponent } from './templates/product/product.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +116,6 @@ import { ResetPasswordComponent } from './templates/more-page/reset-password/res
     ActiveComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-
   ],
   imports: [
     BrowserModule,

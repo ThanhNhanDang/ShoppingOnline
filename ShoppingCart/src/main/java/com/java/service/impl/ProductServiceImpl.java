@@ -143,14 +143,13 @@ public class ProductServiceImpl implements ProductService{
 		if (dto.getInStock() < 0) {
 			throw new Exception("Invalid unit in stock.");
 		}
-		Products entity = new Products(dto.getCategory_id(), dto.getName(), dto.getPrice(), Instant.now(cl), dto.getExprideDate(), dto.getInStock(), dto.getUnitSold(), dto.getUrlImg(), dto.getDescription(), 1, 4, dto.getFileId());
+		Products entity = new Products(dto.getCategory_id(), dto.getName(), dto.getPrice(), Instant.now(cl), dto.getExprideDate(), dto.getInStock(), dto.getUnitSold(), dto.getUrlImg(), dto.getDescription(), 0, 5, dto.getFileId());
 		return repository.save(entity);
 	}
 
 	
 	@Override
 	public List<ProductsDto> deleteAllBySelect(List<ProductsDto> dtos) throws Exception {
-		String urlImg;
 		if(dtos.size() == 1) {
 			if(this.delete(dtos.get(0).getId())==-1)
 				return null;
@@ -193,7 +192,7 @@ public class ProductServiceImpl implements ProductService{
 	@Modifying
 	@Transactional
 	@Override
-	public boolean updateReviewOfProduct(long id, long numberStar) throws Exception {
+	public boolean updateReviewOfProduct(long id, long numberStar, int average) throws Exception {
 		if(!this.isExits(id))
 			throw new Exception("Can't review. Product not found.");
 		
@@ -201,6 +200,7 @@ public class ProductServiceImpl implements ProductService{
 		
 		Products entity = repository.findById(id).get();
 		entity.setTotalReview(entity.getTotalReview()+1);
+		entity.setTotalReview5Star(average);
 		if(numberStar == 5)
 			entity.setTotalReview5Star(entity.getTotalReview5Star()+1);
 		

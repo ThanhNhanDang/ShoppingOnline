@@ -94,7 +94,6 @@ export class LineChartComponent implements OnInit {
         type: 'line'
       }]
     }
-    console.log(this.chartOption);
   }
 
 }

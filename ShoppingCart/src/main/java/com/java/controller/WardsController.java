@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.java.config.ShoppingConfig;
-import com.java.entity.District;
 import com.java.entity.Ward;
 import com.java.model.Message;
 import com.java.service.WardService;

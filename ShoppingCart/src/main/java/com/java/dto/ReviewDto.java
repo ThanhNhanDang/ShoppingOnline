@@ -50,7 +50,6 @@ public class ReviewDto {
 		this.userName = userName;
 		this.ratting = ratting;
 		this.fileIdUser = fileIdUser;
-		this.fileIdProduct = fileIdProduct;
 	}
 
 	public ReviewDto(long userId, long productId, String message, Instant reviewDate, String urlImg, String userName, int ratting, long fileIdUser) {

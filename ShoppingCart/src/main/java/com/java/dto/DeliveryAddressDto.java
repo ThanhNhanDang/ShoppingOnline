@@ -1,5 +1,7 @@
 package com.java.dto;
 
+import java.time.Instant;
+
 public class DeliveryAddressDto {
 	private long id;
 	private long userId;
@@ -7,6 +9,7 @@ public class DeliveryAddressDto {
 	private long wardId;
 	private long districtId;
 	private long provinceId;
+	private Instant time;
 	
 	public DeliveryAddressDto() {}
 	public DeliveryAddressDto(long id, long userId, String address, long wardId, long districtId, long provinceId) {
@@ -67,6 +70,12 @@ public class DeliveryAddressDto {
 	}
 	public void setProvinceId(long provinceId) {
 		this.provinceId = provinceId;
+	}
+	public Instant getTime() {
+		return time;
+	}
+	public void setTime(Instant time) {
+		this.time = time;
 	}
 	
 	

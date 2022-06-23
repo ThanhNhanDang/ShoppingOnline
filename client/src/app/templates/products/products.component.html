@@ -123,55 +123,9 @@
           >
             <h2>No results found.</h2>
           </div>
-
           <div class="col-md-4" *ngFor="let item of products">
             <div class="product-item">
-              <div class="product-title">
-                <div
-                  class="name"
-                  (click)="clickProductDetail(item.id)"
-                  routerLinkActive="active"
-                >
-                  {{ item.name }}
-                </div>
-
-                <p class="sold">(Sold:{{ item.unitSold }})</p>
-                <div class="ratting">
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-                  <i class="fa fa-star"></i>
-
-                  <a class="sold">({{ item.totalReview5Star }})</a>
-                </div>
-              </div>
-              <div class="product-image">
-                <a (click)="clickProductDetail(item.id)">
-                  <img
-                    class="img-fluid d-block mx-auto"
-                    src="{{ baseUrl + item.fileId }}"
-                    alt="Product Image"
-                  />
-                </a>
-                <div class="product-action">
-                  <a (click)="clickCartPlus(item)"
-                    ><i class="fa fa-cart-plus"></i
-                  ></a>
-                  <a (click)="clickWishListPlus(item)"
-                    ><i class="fa fa-heart"></i
-                  ></a>
-                  <a (click)="clickProductDetail(item.id)"
-                    ><i class="fa fa-search"></i
-                  ></a>
-                </div>
-              </div>
-              <div class="product-price">
-                <h3>{{ item.price }} <span>$</span></h3>
-                <a class="btn" (click)="clickCartPlus(item)"
-                  ><i class="fa fa-shopping-cart"></i>Buy Now</a
-                >
-              </div>
+              <app-product [item]="item"></app-product>
             </div>
           </div>
         </div>

@@ -56,7 +56,7 @@ export class HttpServiceService {
   deleteRequest(url: String, param: {}) {
     return this.http.delete<any>(this.baseUrl + url, param)
   }
-  getRequest(url: String, param: {}){
+  getRequest(url: String, param: {}) {
     return this.http.get<any>(this.baseUrl + url, param)
       .pipe(
         catchError(this.handleError.bind(this))
@@ -189,10 +189,10 @@ export class HttpServiceService {
     formdata.append('file', file);
     return this.http.post(this.baseUrl + url, formdata)
   }
-  updateFileToStorage(url: string,file: File){
+  updateFileToStorage(url: string, file: File) {
     const formdata: FormData = new FormData();
     formdata.append('file', file);
-    return this.http.put(this.baseUrl+url, formdata)
+    return this.http.put(this.baseUrl + url, formdata)
   }
 
   sendLoginSucject() {
@@ -213,6 +213,10 @@ export class HttpServiceService {
     this.setLoginData(userProfile);
     localStorage.setItem("search key", "");
     this.sendClickSubject();
+  }
+
+  getRoundingNumber(input: number) {
+    return Number((Math.round(input * 100) / 100).toFixed(2));
   }
 }
 

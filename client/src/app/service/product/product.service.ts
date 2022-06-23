@@ -8,28 +8,32 @@ import { Injectable } from '@angular/core';
 })
 export class ProductService {
 
-  constructor(private http: HttpServiceService, private cartService:CartServiceService) { }
-  addCart(obj:any, quantity:number){
+  constructor(private http: HttpServiceService, private cartService: CartServiceService) { }
+  addCart(obj: any, quantity: number) {
+    if (quantity >= obj.inStock) {
+      alert("Quatity invalid !!");
+      return;
+    }
     var request = {
-      "productId":obj.id,
-      "userId":  this.http.getLoginDataByKey("id"),
+      "productId": obj.id,
+      "userId": this.http.getLoginDataByKey("id"),
       "quantity": quantity
     }
     this.cartService.addCart2(request);
   }
 
-  addWishList(obj:any){
+  addWishList(obj: any) {
     var request = {
-      "productId":obj.id,
-      "userId":  this.http.getLoginDataByKey("id"),
+      "productId": obj.id,
+      "userId": this.http.getLoginDataByKey("id"),
       "quantity": "1"
     }
-    this.http.postRequest("/wishlist/add", request).subscribe((data:any)=>{
+    this.http.postRequest("/wishlist/add", request).subscribe((data: any) => {
       this.http.sendSubjectWishList();
       alert("Successful")
     },
-    error=>{
-      alert(error.error.message)
-    })
+      error => {
+        alert(error.error.message)
+      })
   }
 }

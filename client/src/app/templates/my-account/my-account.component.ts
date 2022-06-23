@@ -122,7 +122,6 @@ export class MyAccountComponent implements OnInit {
 
   getDistrictAndWard() {
     this.deliveryAddress.forEach(value => {
-
       this.http.postRequest("/Vietnamese-Administrative-Unit/districts/get-all-by-province-id", { provinceId: value.provinceId }).subscribe(data => {
         value.districts = data;
         console.log(value.districts)

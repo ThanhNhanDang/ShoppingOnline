@@ -63,6 +63,8 @@ export class ProductDetailComponent implements OnInit {
 
       this.totalPrice = this.product.price;
       this.discountPrice = this.totalPrice + this.totalPrice * this.discount;
+      this.discountPrice = this.http.getRoundingNumber(this.discountPrice);
+      
       this.getDetailUrlImg();
       this.getReviews()
       //lấy sản phẩm đồng thời lấy những sản phẩm có liên quan
@@ -106,13 +108,19 @@ export class ProductDetailComponent implements OnInit {
     }
     this.totalPrice = this.product.price * this.quantity;
     this.discountPrice = this.totalPrice + this.totalPrice * this.discount;
+    this.handleRouding();
 
   }
   handlePlus() {
     this.quantity++;
     this.totalPrice = this.product.price * this.quantity;
     this.discountPrice = this.totalPrice + this.totalPrice * this.discount;
+    this.handleRouding();
+  }
 
+  handleRouding(){
+    this.totalPrice = this.http.getRoundingNumber(this.totalPrice);
+    this.discountPrice = this.http.getRoundingNumber(this.discountPrice);
   }
   onInputChanged(event: any) {
     this.quantity = event;
@@ -145,12 +153,6 @@ export class ProductDetailComponent implements OnInit {
     this.review = "";
     this.ratting = [true, true, true, true, true]
   }
-
-  clickProductDetail(productId: string) {
-    this.http.clickDetailProduct(productId);
-
-  }
-
   clickAddCart(item: any) {
     if (!this.http.checkLogin())
       return
@@ -164,12 +166,6 @@ export class ProductDetailComponent implements OnInit {
     this.productService.addCart(item, this.quantity);
     this.router.navigateByUrl("/checkout")
   }
-  clickAddWishlist(item: any) {
-    if (!this.http.checkLogin())
-      return
-    this.productService.addWishList(item);
-  }
-
   backClicked() {
     this._location.back();
   }

@@ -4,56 +4,9 @@
       <h1>Recent Product</h1>
     </div>
     <ngx-slick-carousel class="row align-items-center" [config]="slideConfig">
-      <div
-        ngxSlickItem
-        *ngFor="let product of products"
-        class="col-lg-3 col-md-4"
-      >
+      <div ngxSlickItem *ngFor="let item of products" class="col-lg-3 col-md-4">
         <div class="product-item">
-          <div class="product-title">
-            <div
-              class="name"
-              (click)="clickDetail(product.id)"
-              routerLinkActive="active"
-            >
-              {{ product.name }}
-            </div>
-
-            <p class="sold">(Sold:{{ product.unitSold }})</p>
-            <div class="ratting">
-              <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-
-              <a>({{ product.totalReview5Star }})</a>
-            </div>
-          </div>
-          <div class="product-image">
-            <a (click)="clickDetail(product.id)">
-              <img
-                class="img-fluid d-block mx-auto"
-                src="{{ baseUrl + product.fileId }}"
-                alt="Product Image"
-              />
-            </a>
-            <div class="product-action">
-              <a (click)="clickAddCart(product)"
-                ><i class="fa fa-cart-plus"></i
-              ></a>
-              <a (click)="clickAddWishlist(product)"
-                ><i class="fa fa-heart"></i
-              ></a>
-              <a (click)="clickDetail(product.id)"
-                ><i class="fa fa-search"></i
-              ></a>
-            </div>
-          </div>
-          <div class="product-price">
-            <h3>{{ product.price }} <span>$</span></h3>
-            <a class="btn" (click)="buyNow(product)"
-              ><i class="fa fa-shopping-cart"></i>Buy Now</a
-            >
-          </div>
+          <app-product [item]="item"></app-product>
         </div>
       </div>
     </ngx-slick-carousel>

@@ -1,14 +1,14 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-export const url = "https://thanhnhandev.top"
-
+// export const url = "https://thanhnhandev.top"
+export const url = "http://localhost:8081"
 
 export const urlVerify = "https://thanhnhandev.xyz"
 export const environment = {
   production: false,
-  baseUrl: url+"/api",
-  urlServe: url+"/api/get/image/",
+  baseUrl: url + "/api",
+  urlServe: url + "/api/get/image/",
   urlEmail: "https://doan1thanhnhanvituong.herokuapp.com",
   title: "E Store"
 };

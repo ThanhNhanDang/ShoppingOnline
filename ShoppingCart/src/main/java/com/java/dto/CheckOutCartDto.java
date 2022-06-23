@@ -3,7 +3,7 @@ package com.java.dto;
 import java.time.Instant;
 
 
-public class CheckOutCartDto {
+public class CheckOutCartDto implements Comparable<CheckOutCartDto>{
 	private long 	id;
 	private long 	productId;
 	private int 	quantity;
@@ -16,7 +16,7 @@ public class CheckOutCartDto {
 	private String 	userName;
 	private String 	productName;
 	private double  pricePerItem;
-	
+	private long 	countTheMostOrders;
 
 	public CheckOutCartDto() {}
 
@@ -135,5 +135,17 @@ public class CheckOutCartDto {
 		this.pricePerItem = pricePerItem;
 	}
 
+	public long getCountTheMostOrders() {
+		return countTheMostOrders;
+	}
+
+	public void setCountTheMostOrders(long countTheMostOrders) {
+		this.countTheMostOrders = countTheMostOrders;
+	}
+
+	@Override
+	public int compareTo(CheckOutCartDto o) {
+		 return this.getCountTheMostOrders() > o.getCountTheMostOrders() ? 1 : -1; 
+	}
 	
 }

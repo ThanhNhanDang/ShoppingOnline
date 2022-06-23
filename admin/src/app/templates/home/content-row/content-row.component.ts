@@ -14,7 +14,7 @@ export class ContentRowComponent implements OnInit {
   imgURL = environment.urlServe + 1;
   orders: OrderPayload[] = [];
   feedbacks: FeedbackPayload[] = [];
-  constructor(private http: HttpService, private router: Router, private activatedRouter: ActivatedRoute) { }
+  constructor(private http: HttpService) { }
 
   ngOnInit(): void {
     this.getAllOrder();
@@ -24,6 +24,9 @@ export class ContentRowComponent implements OnInit {
   private getAllOrder() {
     this.http.getRequest("/order/get-all").subscribe(data => {
       this.orders = data;
+      this.orders.forEach(item => {
+        item.price = this.http.getRoundingNumber(item.price);
+      })
     }, error => {
       alert(error.error.message);
     })

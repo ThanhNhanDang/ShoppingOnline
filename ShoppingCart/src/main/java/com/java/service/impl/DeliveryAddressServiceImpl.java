@@ -1,5 +1,6 @@
 package com.java.service.impl;
 
+import java.time.Clock;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
 	private DeliveryAddressRepository repo;
 	private CartService cartService;
 	private ProductService productService;
+	private Clock cl = Clock.systemDefaultZone();
 	
 	public DeliveryAddressServiceImpl(DeliveryAddressRepository repo, CartService cartService, ProductService productService) {
 		this.repo = repo;
@@ -52,7 +54,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
 
 	@Override
 	public DeliveryAddressDto save(DeliveryAddressDto dto) {
-		DeliveryAddress entity =  new DeliveryAddress(dto.getUserId(), dto.getAddress(), dto.getProvinceId(), dto.getDistrictId(), dto.getWardId());
+		DeliveryAddress entity =  new DeliveryAddress(dto.getUserId(), dto.getAddress(), dto.getProvinceId(), dto.getDistrictId(), dto.getWardId(), Instant.now(cl));
 		repo.save(entity);
 		return dto;
 	}
@@ -113,19 +115,19 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
 			
 			if(cartService.checkTotalPriceAgainstCart(totalPrice, userId)) {
 				List<CheckOutCart> entities = new ArrayList<CheckOutCart>();
+				String orderId = "" + cartService.getOrderId();
+				Instant orderDate = Instant.now(cl);
 				for (AddToCartDto cartDto : cartDtos) {
 					
 					long productId = cartDto.getProduct_id();
 					int quantity = cartDto.getQuantity();
 					if (!productService.updateInSockAndUnitSold(productId, quantity)){}
-					String orderId = "" + cartService.getOrderId();
 					CheckOutCart entity = new CheckOutCart();
 					entity.setProductId(productId);
 					entity.setQuantity(quantity);
 					entity.setPaymentType(checkoutOrderRequest.get("paymentType"));
 					entity.setDeliveryAddress(deliveryAddress);
-					entity.setOrderDate(Instant.now());
-					System.out.println(entity.getOrderDate());
+					entity.setOrderDate(orderDate);
 					entity.setUserId(userId);
 					entity.setPrice(totalPrice);
 					entity.setOrderId(orderId);
@@ -170,6 +172,8 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService{
 		repo.deleteByUser(id, userId);
 		
 	}
+	
+	
 	
 	
 

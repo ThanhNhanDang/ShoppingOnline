@@ -24,6 +24,7 @@ interface sortItem {
 export class ProductsComponent implements OnInit {
   searAndSort!: SearchAndSortPayload;
   products!: ProductPayload[];
+  item = "Hello";
   lastPage!: number;
   totalElements = 0;
   active = false;
@@ -115,20 +116,6 @@ export class ProductsComponent implements OnInit {
     this.http.setTitle("E Store-Products")
 
   }
-  clickCartPlus(productPayload: ProductPayload) {
-    if (!this.http.checkLogin())
-      return
-    this.productService.addCart(productPayload, 1)
-  }
-
-  clickProductDetail(productId: string) {
-    this.http.clickDetailProduct(productId);
-  }
-  clickWishListPlus(item: ProductPayload) {
-    if (!this.http.checkLogin())
-      return
-    this.productService.addWishList(item)
-  }
 
   getPage() {
     this.http.postRequest("/product/search", this.searAndSort).subscribe(data => {
@@ -203,6 +190,6 @@ export class ProductsComponent implements OnInit {
     this.previousNext = this.selectedItem = 1;
   }
   sortPriceNone() {
-    this.router.navigate(['/products'], {queryParams: { 'page': this.previousNext } });
+    this.router.navigate(['/products'], { queryParams: { 'page': this.previousNext } });
   }
 }

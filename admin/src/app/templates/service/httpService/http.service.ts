@@ -12,62 +12,64 @@ export class HttpService {
   baseUrl = environment.baseUrl;
   private subjectLogin = new Subject<any>();
 
-  constructor(private http : HttpClient, private appCookie:AppCookieService) { }
+  constructor(private http: HttpClient, private appCookie: AppCookieService) { }
 
-  postRequest(url:String, param:{}){
+  postRequest(url: String, param: {}) {
     return this.http.post<any>(this.baseUrl + url, param)
   }
-  putRequest(url:String, param:{}){
-    
+  putRequest(url: String, param: {}) {
+
     return this.http.put(this.baseUrl + url, param)
   }
-  getRequest(url:String){
+  getRequest(url: String) {
     return this.http.get<any>(this.baseUrl + url)
   }
-  deleteRequest(url:String, param:{}){
+  deleteRequest(url: String, param: {}) {
     return this.http.delete<any>(this.baseUrl + url, param)
   }
 
-  pushFileToStorage(url: string,file: File){
+  pushFileToStorage(url: string, file: File) {
     const formdata: FormData = new FormData();
     formdata.append('file', file);
-    return this.http.post(this.baseUrl+url, formdata)
+    return this.http.post(this.baseUrl + url, formdata)
   }
 
-  updateFileToStorage(url: string,file: File){
+  updateFileToStorage(url: string, file: File) {
     const formdata: FormData = new FormData();
     formdata.append('file', file);
-    return this.http.put(this.baseUrl+url, formdata)
+    return this.http.put(this.baseUrl + url, formdata)
   }
 
-  setLoginData(data: UserProfile){
+  setLoginData(data: UserProfile) {
     localStorage.setItem("login_obj", JSON.stringify(data));
   }
-  logout(){ 
+  logout() {
     this.appCookie.remove("authenticationToken")
-    localStorage.setItem("login_obj","");
-   
+    localStorage.setItem("login_obj", "");
+
   }
-  isLogin(){
-    if(this.appCookie.get("authenticationToken") != "" && String(this.appCookie.get("authenticationToken"))?.length > 10)
+  isLogin() {
+    if (this.appCookie.get("authenticationToken") != "" && String(this.appCookie.get("authenticationToken"))?.length > 10)
       return true
     return false;
   }
-  getLoginDataByKey(key: string){
-    let data = JSON.parse(localStorage.getItem("login_obj") || '{}') ;
-    if(data.hasOwnProperty(key)){
-     return  data[key];
+  getLoginDataByKey(key: string) {
+    let data = JSON.parse(localStorage.getItem("login_obj") || '{}');
+    if (data.hasOwnProperty(key)) {
+      return data[key];
     }
-   return null;
+    return null;
   }
 
 
-  sendSubjectLogin(){
+  sendSubjectLogin() {
     this.subjectLogin.next();
   }
-  getSubjectLogin():Observable<any>{
+  getSubjectLogin(): Observable<any> {
     return this.subjectLogin.asObservable();
   }
-
+  getRoundingNumber(input: number) {
+    return Number((Math.round(input * 100) / 100).toFixed(2));
+  }
 
 }
