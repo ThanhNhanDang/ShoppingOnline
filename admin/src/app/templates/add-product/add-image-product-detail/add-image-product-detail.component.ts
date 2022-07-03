@@ -1,7 +1,7 @@
 import { ProductDetailUrlImg } from './../../payload/ProductDetailPayload';
 import { HttpService } from './../../service/httpService/http.service';
 import { environment } from './../../../../environments/environment';
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,18 +10,18 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './add-image-product-detail.component.html',
   styleUrls: ['./add-image-product-detail.component.scss']
 })
+
 export class AddImageProductDetailComponent implements OnInit {
   productId!: string;
   cateId!: string;
-  productDetailUrlImg!: ProductDetailUrlImg[];
+  files: File[] = [];
+  productDetailUrlImg: ProductDetailUrlImg[] = [];
   detail!: ProductDetailUrlImg;
   selectedFile!: File;
   baseUrl = environment.urlServe;
   date: any;
   latest_date: any;
   test!: string;
-  fileName!: string;
-  imgURL = this.baseUrl + "2"
   constructor(private activatedRouter: ActivatedRoute, private http: HttpService, private _location: Location) { }
 
   ngOnInit(): void {
@@ -37,11 +37,9 @@ export class AddImageProductDetailComponent implements OnInit {
     })
   }
 
-  onFileChanged(files: any, item: ProductDetailUrlImg, indexOfelement: number) {
+  onChangeOneFile(files: any, item: ProductDetailUrlImg, indexOfelement: number) {
     if (files.length === 0)
       return;
-    item.file = files.item(0)
-    this.fileName = item.file.name;
     var mimeType;
     mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
@@ -51,16 +49,45 @@ export class AddImageProductDetailComponent implements OnInit {
     var reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = (_event) => {
-      item.urlImg = this.fileName;
-      item.urlImgTemp = reader.result as string;
+      item.srcImg = reader.result as string;
+      item.file = files.item(0);
+      item.checkOnChange = false;
     }
+  }
+
+  async onChangeMultipleFile(files: any) {
+    if (files.length === 0)
+      return;
+    var mimeType;
+    for (let i = 0; i < files.length; i++) {
+      mimeType = files[i].type;
+      if (mimeType.match(/image\/*/) == null) {
+        console.log("Only images are supported.")
+      }
+      else {
+        await this.readFile(files[i]);
+      }
+    }
+  }
+
+  readFile(file: File) {
+    let product: ProductDetailUrlImg = new ProductDetailUrlImg();
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (_event) => {
+      product.srcImg = reader.result as string;
+      product.file = file;
+    }
+    this.productDetailUrlImg.unshift(product);
   }
 
   getDetailUrlImg() {
     this.http.postRequest("/product-detail/get-product-detail-by-product", { productId: this.productId, cateId: this.cateId }).subscribe(data => {
       this.productDetailUrlImg = data;
       this.productDetailUrlImg.forEach(element => {
-        element.urlImgTemp = this.baseUrl + element.fileId
+        element.srcImg = this.baseUrl + "/products/" + this.productId + "/" + element.urlImg;
+        element.checkUpload = true;
+        element.checkOnChange = true;
       });
     }, error => {
       alert(error.error.message)
@@ -68,43 +95,95 @@ export class AddImageProductDetailComponent implements OnInit {
     })
   }
 
-  addNewImageDetail() {
-    this.detail = new ProductDetailUrlImg(this.productId, this.imgURL);
-    this.detail.urlImg = "productDetail.png";
-    this.detail.fileId = 2;
-    this.http.postRequest("/product-detail/add", this.detail).subscribe(data => {
-      this.detail.id = data.id;
-      this.productDetailUrlImg.unshift(this.detail);
-    }, error => {
-
-      alert(error.error.message);
+  deleteNow(item: ProductDetailUrlImg) {
+    if (!item.checkUpload) {
+      const index = this.productDetailUrlImg.indexOf(item, 0);
+      if (index > -1) {
+        this.productDetailUrlImg.splice(index, 1);
+      }
+      return
+    }
+    this.http.deleteRequest("/product-detail/delete?id=" + item.id, {}).subscribe(() => {
+      const index = this.productDetailUrlImg.indexOf(item, 0);
+      if (index > -1) {
+        this.productDetailUrlImg.splice(index, 1);
+      }
     })
   }
 
-  deleteNow(indexOfelement: number, item: ProductDetailUrlImg) {
-    this.http.deleteRequest("/product-detail/delete?fileId=" + item.fileId + "&id=" + item.id, "").subscribe(() => {
-      this.productDetailUrlImg.forEach(function (item, index, object) {
-        if (index === indexOfelement) {
-          object.splice(index, 1);
-        }
-      });
-      alert("Delete successful")
-    }, error => {
-      alert(error.error.message)
-    })
-  }
-  updateNow(item: ProductDetailUrlImg) {
+  updateOneItem(item: ProductDetailUrlImg) {
     if (item.file != null) {
-      this.http.updateFileToStorage(`/upload/update/image/${item.fileId}`, item.file).subscribe((res: any) => {
-        item.fileId = res.id;
-        this.http.putRequest("/product-detail/update", item).subscribe(() => {
-          alert("Update successful")
-        }, error => {
-          alert(error.error.message);
+      if (!item.checkUpload) { //chưa upload
+        this.http.postRequestFileToStorage("/product-detail/add", { productId: this.productId }, item.file).subscribe(data => {
+          item.id = data.id;
+          item.checkUpload = true;
+          item.checkOnChange = true;
         })
+        return;
+      }
+      this.http.putRequestFileToStorage("/product-detail/update", { id: item.id, productId: this.productId }, item.file).subscribe((res: any) => {
+        item.checkOnChange = true;
       }, error => {
         alert(error.error.message);
       })
     }
+  }
+  addAllItem() {
+    let check = true;
+    let listMultipleFile = []
+    let listProductDetail = []
+    for (let element of this.productDetailUrlImg) {
+      if (!element.checkUpload) { // nếu một item được thêm mới
+        check = false;
+        listMultipleFile.push(element.file);
+        listProductDetail.push({ productId: this.productId });
+      }
+    }
+    if (check) {
+      alert("The data has not changed.");
+      return;
+    }
+    this.http.postRequestMulFileToStorage("/product-detail/add/all", listProductDetail, listMultipleFile).subscribe((data) => {
+      for (let i = 0; i < data.length; i++) {
+        this.productDetailUrlImg[i].id = data[i].id;
+      }
+      this.productDetailUrlImg.forEach(elment => {
+        if (!elment.checkUpload) { elment.checkUpload = true; elment.checkOnChange = true };
+      })
+    }, error => {
+      alert(error.error.message)
+    })
+  }
+  updateAllItem() {
+    let check = true;
+    let listMultipleFile = []
+    let listProductDetail = []
+    for (let element of this.productDetailUrlImg) {
+      if (!element.checkOnChange) { // nếu một item được chỉnh sửa
+        check = false;
+        listMultipleFile.push(element.file);
+        listProductDetail.unshift({ id: element.id, productId: this.productId });
+      }
+    }
+    if (check) {
+      alert("The data has not changed.");
+      return;
+    }
+
+    this.http.putRequestMulFileToStorage("/product-detail/update/all", listProductDetail, listMultipleFile).subscribe((data) => {
+      this.productDetailUrlImg.forEach(elment => {
+        if (!elment.checkOnChange) { elment.checkOnChange = true };
+      })
+    }, error => {
+      alert(error.error.message)
+    })
+  }
+
+  deleteAllItem() {
+    this.http.deleteRequest("/product-detail/delete/all?productId=" + this.productId + "", {}).subscribe(() => {
+      this.getDetailUrlImg();
+    }, error => {
+      alert(error.error.message);
+    })
   }
 }

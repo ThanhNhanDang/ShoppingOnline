@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.java.config.ShoppingConfig;
 import com.java.dto.ProductsDto;
@@ -33,7 +35,7 @@ public class ProductController {
 
 	public ProductController(ProductService productService) {
 		this.productService = productService;
-	
+
 	}
 
 	@GetMapping("/all")
@@ -69,16 +71,17 @@ public class ProductController {
 		return new ResponseEntity<>(dtos, HttpStatus.OK);
 	}
 
-	@PostMapping("/add")
-	public ResponseEntity<?> add(@RequestBody ProductsDto dto) {
+	@PostMapping(value = "/add", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+	public ResponseEntity<?> add(@RequestParam("dto") String dto, @RequestParam("file") MultipartFile file) {
 		try {
-			Products entity = productService.saveReturn(dto);
+			Products entity = productService.saveReturn(dto, file);
 			if (entity == null)
 				throw new Exception("Can't Add");
-			return new ResponseEntity<>(entity, HttpStatus.CREATED);
+			return new ResponseEntity<>(HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>(new Message(e.getMessage(), Instant.now(), "500", "Internal Server Error",
-					"/api/product/get-products-by-category"), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad request", "/api/product/add"),
+					HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -95,16 +98,33 @@ public class ProductController {
 						"Bad Request", "/api/product/get-product"), HttpStatus.BAD_REQUEST);
 			return new ResponseEntity<>(dto, HttpStatus.OK);
 		} catch (Exception e) {
+			
 			return new ResponseEntity<>(new Message("This product was not found", Instant.now(), "500",
 					"Internal Server Error", "/api/product/get-product"), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
+	@PutMapping(value = "/update/product-image", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<?> update(@RequestParam("dto") String dto, @RequestParam("file") MultipartFile file) {
+		try {			
+			int check = productService.edit(dto, file);
+			if (check == -1) {
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/product/update/product-image"),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@PutMapping("/update")
 	public ResponseEntity<?> update(@RequestBody ProductsDto dto) {
 		try {
 
-			int check = productService.editMyAccout(dto);
+			int check = productService.edit(dto);
 			if (check == -1) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}

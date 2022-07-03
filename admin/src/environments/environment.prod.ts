@@ -7,11 +7,13 @@ export const url = "http://localhost:8081"
 
 export const urlVerify = "https://thanhnhandev.xyz"
 
+export const user = "/avatars";
+export const product = "/products";
 export const environment = {
   production: false,
-  baseUrl: url+"/api",
-  urlServe: url+"/api/get/image/",
-  urlEmail: "https://doan1thanhnhanvituong.herokuapp.com",
+  baseUrl: url + "/api",
+  urlServe: url + "/images",
+  urlEmail: "https://doan1.thanhnhandev.xyz"
 };
 
 /*

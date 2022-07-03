@@ -8,10 +8,10 @@ declare var $ : any;
 export class DatepickerDirective implements AfterViewInit{
   myDate: any;
   @Output() dateEventEmitter = new EventEmitter();
-  constructor(private e:ElementRef, private ngZone:NgZone) { }
+  constructor(private elementRef:ElementRef, private ngZone:NgZone) { }
   ngAfterViewInit():void{
     this.ngZone.runOutsideAngular(()=>{
-      $(this.e.nativeElement).datepicker({
+      $(this.elementRef.nativeElement).datepicker({
         onSelect: (date:any)=>{
           this.ngZone.run(()=>{
             this.setDate(date)

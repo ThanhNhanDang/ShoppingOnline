@@ -7,12 +7,36 @@
             <h2 class="tm-block-title d-inline-block">Update Image Details</h2>
           </div>
           <div class="col-xl-3 col-md-12">
-            <h2
-              (click)="addNewImageDetail()"
-              class="tm-block-title d-inline-block b"
-            >
+            <h2 (click)="file2.click()" class="tm-block-title d-inline-block b">
               <i class="fas fa-plus"></i>
               Add New Image Details
+            </h2>
+          </div>
+          <div class="col-xl-3 col-md-12">
+            <h2
+              (click)="addAllItem()"
+              class="tm-block-title d-inline-block add-all"
+            >
+              <i class="fas fa-plus"></i>
+              Add All Image Details
+            </h2>
+          </div>
+          <div class="col-xl-3 col-md-12">
+            <h2
+              (click)="updateAllItem()"
+              class="tm-block-title d-inline-block add-all"
+            >
+              <i class="fas fa-plus"></i>
+              Update All Image Details
+            </h2>
+          </div>
+          <div class="col-xl-3 col-md-12">
+            <h2
+              (click)="deleteAllItem()"
+              class="tm-block-title d-inline-block delete-all"
+            >
+              <i class="fas fa-minus"></i>
+              Delete All Image Details
             </h2>
           </div>
         </div>
@@ -25,44 +49,50 @@
             class="col-xl-3 col-lg-6 col-md-12"
           >
             <!-- 1 -->
-            <div class="tm-avatar-container">
+            <div class="tm-avatar-container mx-auto">
               <img
-                [src]="item.urlImgTemp"
-                (click)="file.click()"
+                [src]="item.srcImg"
                 alt="Product image"
                 class="img-fluid d-block mx-auto"
               />
-              <a
-                class="tm-avatar-delete-link"
-                (click)="file.click()"
-              >
+              <a class="tm-avatar-delete-link" (click)="file.click()">
                 <i class="fas fa-image tm-product-delete-icon"></i>
               </a>
-              <a
-                class="tm-delete-link"  (click)="deleteNow(indexOfelement, item)"
-              >
+              <a class="tm-delete-link" (click)="deleteNow(item)">
                 <i class="fas fa-trash-alt tm-delete-icon"></i>
               </a>
             </div>
             <div class="custom-file mt-3 mb-3">
               <input
-                
                 accept="image/*"
                 #file
-                (change)="onFileChanged(file.files, item, indexOfelement)"
+                (change)="onChangeOneFile(file.files, item, indexOfelement)"
                 type="file"
                 style="display: none"
               />
               <button
-              type="submit"
-              (click)="updateNow(item)"
-              class="btn btn-primary btn-block text-uppercase"
-            >
-              Update Now
-            </button>
+                type="submit"
+                (click)="updateOneItem(item)"
+                class="btn btn-block text-uppercase"
+                [ngClass]="{
+                  'btn-primary': item.checkUpload,
+                  'btn-info': !item.checkUpload
+                }"
+                [disabled]="item.checkOnChange"
+              >
+                {{ item.checkUpload ? "Update" : "Upload" }} Now
+              </button>
             </div>
           </div>
         </div>
+        <input
+          accept="image/*"
+          (change)="onChangeMultipleFile(file2.files)"
+          #file2
+          multiple
+          type="file"
+          style="display: none"
+        />
       </div>
     </div>
   </div>

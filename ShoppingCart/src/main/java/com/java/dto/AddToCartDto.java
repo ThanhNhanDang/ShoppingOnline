@@ -13,11 +13,10 @@ public class AddToCartDto {
 	private String 	productName;
 	private String 	urlImg;
 	private double  pricePerItem;
-	private long 	fileId;
 	
 	public AddToCartDto() {}
 
-	public AddToCartDto(long id, long product_id, int quantity, double price, Instant added_date, long user_id, String userName, String productName, double pricePerItem, String urlImg, long fileId) {
+	public AddToCartDto(long id, long product_id, int quantity, double price, Instant added_date, long user_id, String userName, String productName, double pricePerItem, String urlImg) {
 		this.id = id;
 		this.product_id = product_id;
 		this.quantity = quantity;
@@ -28,7 +27,6 @@ public class AddToCartDto {
 		this.productName = productName;
 		this.pricePerItem = pricePerItem;
 		this.urlImg = urlImg;
-		this.fileId = fileId;
 	}
 
 	public AddToCartDto(long id, long product_id, int quantity, double price, Instant added_date, long user_id, String urlImg) {
@@ -110,13 +108,6 @@ public class AddToCartDto {
 
 	public void setUrlImg(String urlImg) {
 		this.urlImg = urlImg;
-	}
-	
-	public void setFileId(long fileId) {
-		this.fileId = fileId;
-	}
-	public long getFileId() {
-		return fileId;
 	}
 
 }

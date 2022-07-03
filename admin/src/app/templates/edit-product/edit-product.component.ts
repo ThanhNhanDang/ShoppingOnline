@@ -14,54 +14,54 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditProductComponent implements OnInit {
   imageToShow: any;
-  productId!:string;
-  productPayload!:ProductPayload;
+  productId!: string;
+  productPayload!: ProductPayload;
   categories !: CategoryPayload[];
-  editProduct!:EditProduct;
-  fileName !:string;
-  file!:File;
-  date:any;
-  latest_date:any;
+  editProduct!: EditProduct;
+  fileName !: string;
+  file!: File;
+  date: any;
+  latest_date: any;
   baseUrl = environment.urlServe;
-  test!:string
-  constructor(private activatedRouter:ActivatedRoute,private datepipe:DatePipe ,private http : HttpService, private _location: Location) { }
+  test!: string
+  constructor(private activatedRouter: ActivatedRoute, private datepipe: DatePipe, private http: HttpService, private _location: Location) { }
 
   ngOnInit(): void {
-    this.activatedRouter.queryParams.subscribe(data=>{
-      if(data.product ==null || data.product == ""){
+    this.activatedRouter.queryParams.subscribe(data => {
+      if (data.product == null || data.product == "") {
         return;
       }
-      else{
+      else {
         this.productId = data.product;
         this.getProduct();
       }
     })
     this.getCategory();
   }
-  dateEventEmitter(date:any){
+  dateEventEmitter(date: any) {
     this.productPayload.exDate = date;
   }
-  
-  getCategory(){
-    this.http.getRequest("/category/all").subscribe(data=>{
+
+  getCategory() {
+    this.http.getRequest("/category/all").subscribe(data => {
       this.categories = data;
-    },error=>{
+    }, error => {
       alert(error.error.message)
     })
   }
 
-  getProduct(){
-    this.http.postRequest("/product/get-product", {productId:this.productId}).subscribe(data=>{
+  getProduct() {
+    this.http.postRequest("/product/get-product", { productId: this.productId }).subscribe(data => {
       this.productPayload = data;
-      this.imageToShow =  this.baseUrl +this.productPayload.fileId;
-      this.productPayload.exDate = this.productPayload.exDate.slice(0,10);
-    },error=>{
+      this.imageToShow = this.baseUrl + "/products/" + this.productPayload.id + "/" + this.productPayload.urlImg;
+      this.productPayload.exDate = this.productPayload.exDate.slice(0, 10);
+    }, error => {
       alert(error.error.message)
       this._location.back();
     })
   }
 
-  onFileChanged(files:any){
+  onFileChanged(files: any) {
 
     if (files.length === 0)
       return;
@@ -74,42 +74,40 @@ export class EditProductComponent implements OnInit {
       return;
     }
     var reader = new FileReader();
-    reader.readAsDataURL(files[0]); 
-    reader.onload = (_event) => { 
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
       this.imageToShow = reader.result as string;
     }
   }
 
-  update(){
-    
-    if(this.productPayload.name == "")
-    return alert("Name not be empty"); 
-    if(this.productPayload.price == null || this.productPayload.price <= 0)
-    return alert("Invalid price: must > 0.");
-    if(this.productPayload.exDate == "")
-    return alert("Expride Date not be empty"); 
-  
-    if(this.productPayload.inStock == null || this.productPayload.inStock < 0)
-    return alert("Invalid unit in stock.");
+  update() {
+    if (this.productPayload.name == "")
+      return alert("Name not be empty");
+    if (this.productPayload.price == null || this.productPayload.price <= 0)
+      return alert("Invalid price: must > 0.");
+    if (this.productPayload.exDate == "")
+      return alert("Expride Date not be empty");
+    if (this.productPayload.inStock == null || this.productPayload.inStock < 0)
+      return alert("Invalid unit in stock.");
 
-    this.date=new Date();
+    this.date = new Date();
     this.test = this.date.toISOString()
     this.latest_date = this.datepipe.transform(this.productPayload.exDate, 'yyyy-MM-dd');
-    this.productPayload.exprideDate =  this.latest_date+this.test.slice(10)
-    if(this.file!=null)
-      this.productPayload.urlImg=this.fileName
-      this.http.putRequest("/product/update", this.productPayload).subscribe(()=>{
-      alert("Successful")
-      if(this.file != null){
-        this.http.updateFileToStorage(`/upload/update/image/${this.productPayload.fileId}`, this.file).subscribe(()=>{
-          console.log("Upload image Successful");
-        },error=>{
-          alert(error.error.message);
-        })
-      }
-      this._location.back();
-    },error=>{
+    this.productPayload.exprideDate = this.latest_date + this.test.slice(10)
+
+    if (this.file != null) {
+      this.http.putRequestFileToStorage("/product/update/product-image", this.productPayload, this.file).subscribe(() => {
+        alert("Successful")
+      }, error => {
+        alert(error.error.message)
+      })
+      return;
+    }
+    this.http.putRequest("/product/update", this.productPayload).subscribe(() => {
+      alert("Successful");
+    }, error => {
       alert(error.error.message)
     })
+
   }
 } 

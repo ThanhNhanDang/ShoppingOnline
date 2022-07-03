@@ -47,7 +47,7 @@ export class AccountComponent implements OnInit {
     let request = { userId: this.key };
     this.http.postRequest("/user/profile", request).subscribe(data => {
       this.user = data;
-      this.imgURL = `${this.baseUrl}${this.user.fileId}`
+      this.imgURL = `${this.baseUrl}/${this.user.image_url}`
     }, error => {
       alert(error.error.message);
     })
@@ -76,11 +76,12 @@ export class AccountComponent implements OnInit {
 
   updateMyAccount() {
     if (this.file != null) {
-      this.user.image_url = this.fileName
-      this.http.updateFileToStorage("/upload/update/image/" + this.user.fileId, this.file).subscribe((res: any) => {
+      
+      this.http.updateFileToStorage("/upload/update/image/avatars/" + this.user.id, this.file).subscribe((res: any) => {
         console.log("Upload image Successful");
-        this.user.fileId = res.id;
+        this.user.image_url = "avatars/"+this.user.id+"/"+"userDefault.png";
         this.http.putRequest("/user/update/admin", this.user).subscribe(() => {
+          
           alert("Update successful.")
         }, error => {
           alert(error.error.message)

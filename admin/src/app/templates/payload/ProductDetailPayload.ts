@@ -1,13 +1,13 @@
-export class ProductDetailUrlImg{
-    id!:string;
-    productId!:string;
-    urlImg!:string;
-    urlImgTemp!:string;
+export class ProductDetailUrlImg {
+    id!: number;
     file!:File;
-    fileId!:number;
-    constructor(productId:string, urlImgTemp:string){
-        this.productId = productId;
-        this.urlImgTemp = this.urlImg = urlImgTemp;
-        this.fileId = 2
+    productId!: number;
+    urlImg!: string;
+    srcImg!:string;
+    checkUpload!: boolean
+    checkOnChange!: boolean
+    constructor() {
+        this.checkUpload = false;
+        this.checkOnChange = false;
     }
 }

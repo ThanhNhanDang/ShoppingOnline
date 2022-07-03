@@ -15,13 +15,9 @@ public class ReviewDto {
 	private String  urlImgProduct;
 	private String 	productName;
 	private int 	ratting;
-	
-	private long 	fileIdUser;
-	private long 	fileIdProduct;
-
 
 	public ReviewDto(long id, long userId, long productId, String message, Instant reviewDate, String urlImg, String email, 
-			String userName, String urlImgProduct, String productName, int ratting, long fileIdUser, long fileIdProduct) {
+			String userName, String urlImgProduct, String productName, int ratting) {
 		this.id = id;
 		this.userId = userId;
 		this.productId = productId;
@@ -33,14 +29,12 @@ public class ReviewDto {
 		this.urlImgProduct = urlImgProduct;
 		this.productName = productName;
 		this.ratting = ratting;
-		this.fileIdUser = fileIdUser;
-		this.fileIdProduct = fileIdProduct;
 	}
 
 	public ReviewDto() {}
 	
 	public ReviewDto(long id, long userId, long productId, String message, Instant reviewDate, String urlImg,
-			String userName, int ratting, long fileIdUser) {
+			String userName, int ratting) {
 		this.id = id;
 		this.userId = userId;
 		this.productId = productId;
@@ -49,7 +43,6 @@ public class ReviewDto {
 		this.urlImg = urlImg;
 		this.userName = userName;
 		this.ratting = ratting;
-		this.fileIdUser = fileIdUser;
 	}
 
 	public ReviewDto(long userId, long productId, String message, Instant reviewDate, String urlImg, String userName, int ratting, long fileIdUser) {
@@ -60,7 +53,6 @@ public class ReviewDto {
 		this.urlImg = urlImg;
 		this.userName = userName;
 		this.ratting = ratting;
-		this.fileIdUser = fileIdUser;
 	}
 
 
@@ -176,19 +168,5 @@ public class ReviewDto {
 
 	public void setRatting(int ratting) {
 		this.ratting = ratting;
-	}
-	
-	public long getFileIdUser() {
-		return this.fileIdUser;
-	}
-	public void setFileIdUser(long fileIdUser) {
-		this.fileIdUser = fileIdUser;
-	}
-	
-	public long getFileIdProduct() {
-		return this.fileIdProduct;
-	}
-	public void setFileIdProduct(long fileIdProduct) {
-		this.fileIdProduct = fileIdProduct;
 	}
 }

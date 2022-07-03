@@ -85,7 +85,6 @@ public class UserServiceImpl implements UserService {
 					entity.getDeliveryAddressId());
 			dto.setNameRole(entity.getRole().getDescription());
 			dto.setGender(entity.getGender());
-			dto.setFileId(entity.getFileId());
 			dtos.add(dto);
 		}
 
@@ -102,7 +101,6 @@ public class UserServiceImpl implements UserService {
 				entity.getMobile(), entity.getImage_url(), entity.getRole_id(), entity.getDeliveryAddressId());
 		dto.setNameRole(entity.getRole().getDescription());
 		dto.setGender(entity.getGender());
-		dto.setFileId(entity.getFileId());
 		return dto;
 	}
 
@@ -125,9 +123,7 @@ public class UserServiceImpl implements UserService {
 		else
 			entity.setRole_id(2);
 		entity.setGender(dto.getGender());
-		// entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
 		entity.setImage_url("userDefault.png");
-		entity.setFileId(1);
 		if (userRepo.save(entity) == null)
 			throw new Exception("Unable to register an account, please contact the administrator for assistance.");
 		return entity;
@@ -145,7 +141,6 @@ public class UserServiceImpl implements UserService {
 				entity.getMobile(), entity.getImage_url(), entity.getRole_id(), entity.getDeliveryAddressId());
 		dto.setNameRole(roleRepo.findById(entity.getRole_id()).get().getDescription());
 		dto.setGender(entity.getGender());
-		dto.setFileId(entity.getFileId());
 		return dto;
 	}
 
@@ -168,7 +163,6 @@ public class UserServiceImpl implements UserService {
 		entity.setDeliveryAddressId(dto.getDeliveryAddressId());
 		entity.setImage_url(dto.getImage_url());
 		entity.setGender(dto.getGender());
-		entity.setFileId(dto.getFileId());
 		if (userRepo.save(entity) == null)
 			throw new Exception("Unable to update");
 		return 0;
@@ -191,7 +185,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Integer delete(Long id, Long idFile) throws Exception {
 		this.userRepo.deleteById(id);
-		this.fileService.deleteFileDB(idFile);
 		return 0;
 	}
 
@@ -224,7 +217,6 @@ public class UserServiceImpl implements UserService {
 		entity.setGender(dto.getGender());
 		entity.setRole_id(dto.getRole_id());
 		entity.setIs_email_verfied(dto.getIs_email_verfied());
-		entity.setFileId(dto.getFileId());
 		if (userRepo.save(entity) == null)
 			throw new Exception("Unable to update");
 		return 0;
@@ -247,9 +239,7 @@ public class UserServiceImpl implements UserService {
 		entity.setRole_id(admin.getRole_id());
 		entity.setGender(admin.getGender());
 		entity.setIs_email_verfied(admin.isIs_email_verfied());
-		// entity.setImage_url(ImageConstants.URL_IMAGE_AVATAR+"userDefault.png");
 		entity.setImage_url("userDefault.png");
-		entity.setFileId(1);
 		if (userRepo.save(entity) == null)
 			throw new Exception("Can't add");
 
@@ -302,7 +292,6 @@ public class UserServiceImpl implements UserService {
 			entity.setRole_id(2);
 		entity.setGender("Prefer not to say");
 		entity.setImage_url("userDefault.png");
-		entity.setFileId(1);
 		if (userRepo.save(entity) == null)
 			throw new IOException("Unable to register an account, please contact the administrator for assistance.");
 	}
@@ -326,7 +315,6 @@ public class UserServiceImpl implements UserService {
 			entity.setRole_id(2);
 		entity.setGender("Prefer not to say");
 		entity.setImage_url("userDefault.png");
-		entity.setFileId(1);
 		if (userRepo.save(entity) == null)
 			throw new IOException("Unable to register an account, please contact the administrator for assistance.");
 	}
@@ -424,7 +412,7 @@ public class UserServiceImpl implements UserService {
 						+ ",</p></b></br><p>Please click the link below to reset your password:</p></br><h3><a href=\""
 						+ url + "\">Reset Password</a></h3></br></br><p>Thank you<br>The ESTORE</p>");
 		RestTemplate restTemplate = new RestTemplate();
-		String url2 = "https://doan1thanhnhanvituong.herokuapp.com";
+		String url2 = "https://doan1.thanhnhandev.xyz";
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));

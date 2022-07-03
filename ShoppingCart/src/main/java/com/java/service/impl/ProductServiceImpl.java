@@ -6,6 +6,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -14,7 +15,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java.dto.ProductsDto;
 import com.java.entity.Products;
 import com.java.repository.ProductRepository;
@@ -45,7 +48,7 @@ public class ProductServiceImpl implements ProductService{
 		for(Products entity : list) {
 		
 			ProductsDto dto = new ProductsDto(entity.getId(), entity.getCategory_id(),
-					entity.getName(), entity.getPrice(), formatter.format( entity.getExprideDate() ), entity.getInStock(), entity.getUnitSold(), entity.getUrlImg(),entity.getDescription(), false, entity.getTotalReview(), entity.getTotalReview5Star(), entity.getFileId());
+					entity.getName(), entity.getPrice(), formatter.format( entity.getExprideDate() ), entity.getInStock(), entity.getUnitSold(), entity.getUrlImg(),entity.getDescription(), false, entity.getTotalReview(), entity.getTotalReview5Star());
 			
 			dtos.add(dto);
 		}
@@ -72,13 +75,13 @@ public class ProductServiceImpl implements ProductService{
 
 	@Override
 	public ProductsDto findById(Long id) {
-		if(!this.isExits(id))
+		if(!this.isExits(id)) {
 			return null;
+		}
 		ProductsDto dto = repository.getProductById(id);
-		Instant instant = dto.getExprideDate();
-			               
 		
-		String output = formatter.format( instant );
+		String output = formatter.format( dto.getExprideDate2() );
+		dto.setExprideDate2(null);
 		dto.setExDate(output);	
 		return dto;
 	}
@@ -117,7 +120,7 @@ public class ProductServiceImpl implements ProductService{
 	@Modifying
 	@Transactional
 	@Override
-	public int editMyAccout(ProductsDto dto) throws Exception {
+	public int edit(ProductsDto dto) throws Exception {
 		if(dto.getInStock() < 0)
 			throw new Exception("Invalid unit in stock.");
 		if(dto.getPrice() <= 0)
@@ -129,7 +132,7 @@ public class ProductServiceImpl implements ProductService{
 		entity.setCategory_id(dto.getCategory_id());
 		entity.setName(dto.getName());
 		entity.setPrice(dto.getPrice());
-		entity.setExprideDate(dto.getExprideDate());
+		entity.setExprideDate(Instant.parse(dto.getExprideDate()));
 		entity.setInStock(dto.getInStock());
 		entity.setDescription(dto.getDescription());
 		entity.setUrlImg(dto.getUrlImg());
@@ -139,12 +142,21 @@ public class ProductServiceImpl implements ProductService{
 	@Modifying
 	@Transactional
 	@Override
-	public Products saveReturn(ProductsDto dto) throws Exception {
-		if (dto.getInStock() < 0) {
+	public Products saveReturn(String dto, MultipartFile file) throws Exception {
+		ProductsDto dtoJson = new ProductsDto();
+		ObjectMapper objectMapper = new ObjectMapper();
+		dtoJson = objectMapper.readValue(dto, ProductsDto.class);
+		
+		if (dtoJson.getInStock() < 0) {
 			throw new Exception("Invalid unit in stock.");
 		}
-		Products entity = new Products(dto.getCategory_id(), dto.getName(), dto.getPrice(), Instant.now(cl), dto.getExprideDate(), dto.getInStock(), dto.getUnitSold(), dto.getUrlImg(), dto.getDescription(), 0, 5, dto.getFileId());
-		return repository.save(entity);
+	
+		UUID uuid = UUID.randomUUID();
+		dtoJson.setUrlImg(uuid + ".png");
+		Products entity = new Products(dtoJson.getCategory_id(), dtoJson.getName(), dtoJson.getPrice(), Instant.now(cl), Instant.parse(dtoJson.getExprideDate()), dtoJson.getInStock(), dtoJson.getUnitSold(), dtoJson.getUrlImg(), dtoJson.getDescription(), 0, 5);
+		entity = repository.save(entity);
+		this.fileService.store(file, dtoJson.getUrlImg(), 4, entity.getId());
+		return entity;
 	}
 
 	
@@ -153,13 +165,13 @@ public class ProductServiceImpl implements ProductService{
 		if(dtos.size() == 1) {
 			if(this.delete(dtos.get(0).getId())==-1)
 				return null;
-			this.fileService.deleteFileDB(dtos.get(0).getFileId());
+//			this.fileService.deleteFileDB(dtos.get(0).getFileId());
 			return this.findAll();
 			
 		}
 		for(ProductsDto dto : dtos) {
 			this.delete(dto.getId());
-			this.fileService.deleteFileDB(dto.getFileId());
+//			this.fileService.deleteFileDB(dto.getFileId());
 		}
 		return this.findAll();
 	}
@@ -212,7 +224,7 @@ public class ProductServiceImpl implements ProductService{
 	public List<ProductsDto> searchAdmin(String key) {
 		List<ProductsDto> dtos = new ArrayList<>();
 		repository.searchAdmin(key).forEach(item->{
-			item.setExDate(formatter.format(item.getExprideDate()));
+			item.setExDate(formatter.format(item.getExprideDate2()));
 			dtos.add(item);
 		});;
 		return dtos;
@@ -228,6 +240,35 @@ public class ProductServiceImpl implements ProductService{
 	public Products isExits(long id, long cateId) {
 		// TODO Auto-generated method stub
 		return repository.existsByIdCateId(id, cateId);
+	}
+
+	@Override
+	public int edit(String dto, MultipartFile file) throws Exception {
+		ProductsDto dtoJson = new ProductsDto();
+		ObjectMapper objectMapper = new ObjectMapper();
+		dtoJson = objectMapper.readValue(dto, ProductsDto.class);
+		
+		if(dtoJson.getInStock() < 0)
+			throw new Exception("Invalid unit in stock.");
+		if(dtoJson.getPrice() <= 0)
+			throw new Exception("Invalid price.");
+		long id = dtoJson.getId();
+		if(!this.isExits(id))
+			return -1;
+		Products entity = repository.findById(id).get();
+		this.fileService.delefile(id, entity.getUrlImg());
+		entity.setCategory_id(dtoJson.getCategory_id());
+		entity.setName(dtoJson.getName());
+		entity.setPrice(dtoJson.getPrice());
+		entity.setExprideDate(Instant.parse(dtoJson.getExprideDate()));
+		entity.setInStock(dtoJson.getInStock());
+		entity.setDescription(dtoJson.getDescription());
+		UUID uuid = UUID.randomUUID();
+		entity.setUrlImg(uuid + ".png");
+		this.fileService.store(file, entity.getUrlImg(), 4, entity.getId());
+		repository.save(entity);
+		
+		return 0;
 	}
 
 }

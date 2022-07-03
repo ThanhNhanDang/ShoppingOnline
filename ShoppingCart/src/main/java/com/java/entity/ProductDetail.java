@@ -16,20 +16,15 @@ public class ProductDetail {
 	private long id;
 	private long productId;
 	private String urlImg;
-	private long fileId;
-	
-	@OneToOne
-	@JoinColumn(name = "fileId", insertable=false, updatable=false)
-	private FileDB fileDB;
 	
 	@ManyToOne
 	@JoinColumn(name = "productId", insertable = false, updatable = false)
 	private Products products;
-	public ProductDetail(long id, long productId, String urlImg, long fileId) {
+	public ProductDetail(long id, long productId, String urlImg) {
 		this.id = id;
 		this.productId = productId;
 		this.urlImg = urlImg;
-		this.fileId = fileId;
+	
 	}
 	
 	public ProductDetail() {
@@ -54,10 +49,4 @@ public class ProductDetail {
 		this.urlImg = urlImg;
 	}
 	
-	public long getFileId() {
-		return fileId;
-	}
-	public void setFileId(long fileId) {
-		this.fileId = fileId;
-	}
 }

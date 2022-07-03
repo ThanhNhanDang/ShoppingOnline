@@ -88,12 +88,18 @@
           </div>
 
           <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
-            <div class="tm-product-img-edit mx-auto">
+            <div class="tm-avatar-container mx-auto">
               <img
                 [src]="imgURL"
                 alt="Product image"
                 class="img-fluid d-block mx-auto"
               />
+              <a
+                class="tm-avatar-delete-link"
+                onclick="document.getElementById('fileInput').click();"
+              >
+                <i class="fas fa-image tm-product-delete-icon"></i>
+              </a>
             </div>
             <div class="custom-file mt-3 mb-3">
               <input
@@ -104,6 +110,7 @@
                 type="file"
                 style="display: none"
               />
+
               <input
                 type="button"
                 class="btn btn-primary btn-block mx-auto"

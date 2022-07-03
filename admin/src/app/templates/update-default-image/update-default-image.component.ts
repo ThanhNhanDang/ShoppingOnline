@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment';
+import { environment, product, user } from './../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../service/httpService/http.service';
 
@@ -8,10 +8,10 @@ import { HttpService } from '../service/httpService/http.service';
   styleUrls: ['./update-default-image.component.scss']
 })
 export class UpdateDefaultImageComponent implements OnInit {
-  imgURLProduct = environment.urlServe+2;
+  imgURLProduct = environment.urlServe+"/productDefault.png";
   fileProduct!: File;
 
-  imgURLUser = environment.urlServe+1;
+  imgURLUser = environment.urlServe+"/userDefault.png";
   fileUser!: File;
 
   constructor(private http: HttpService) { }

@@ -10,7 +10,8 @@ public class ProductsDto {
 	private double	price;
 	private Instant added_on;
 	private boolean checkselect;
-	private Instant exprideDate;
+	private String exprideDate;
+	private Instant exprideDate2;
 	private String	description;
 	private String  exDate;
 	private long 	inStock;
@@ -18,17 +19,16 @@ public class ProductsDto {
 	private String	urlImg;
 	private long 	totalReview;
 	private long 	totalReview5Star;
-	private long 	fileId;
 	public ProductsDto() {}
 
 
-	public ProductsDto(long id, long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String	urlImg, String description, String categoryName, long totalReview, long totalReview5Star, long fileId) {
+	public ProductsDto(long id, long category_id, String name, double price, Instant added_on, Instant exprideDate2, long inStock, long unitSold, String	urlImg, String description, String categoryName, long totalReview, long totalReview5Star) {
 		this.id = id;
 		this.category_id = category_id;
 		this.name = name;
 		this.price = price;
 		this.added_on = added_on;
-		this.exprideDate = exprideDate;
+		this.exprideDate2 = exprideDate2;
 		this.inStock = inStock;
 		this.unitSold = unitSold;
 		this.urlImg = urlImg;
@@ -36,11 +36,10 @@ public class ProductsDto {
 		this.categoryName = categoryName;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
-		this.fileId = fileId;
 	}
 
 
-	public ProductsDto(long id, long category_id, String name, double price, String exDate, long inStock, long unitSold, String urlImg,  String description, boolean checkselect, long totalReview, long totalReview5Star, long fileId) {
+	public ProductsDto(long id, long category_id, String name, double price, String exDate, long inStock, long unitSold, String urlImg,  String description, boolean checkselect, long totalReview, long totalReview5Star) {
 		this.id = id;
 		this.category_id = category_id;
 		this.name = name;
@@ -53,10 +52,10 @@ public class ProductsDto {
 		this.checkselect = checkselect;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
-		this.fileId = fileId;
+		
 	}
 	
-	public ProductsDto(long id, long category_id, String name, double price, String exDate, long inStock, Instant added_on, long unitSold, String	urlImg, String description , long totalReview, long totalReview5Star, long fileId) {
+	public ProductsDto(long id, long category_id, String name, double price, String exDate, long inStock, Instant added_on, long unitSold, String	urlImg, String description , long totalReview, long totalReview5Star) {
 		this.id = id;
 		this.category_id = category_id;
 		this.name = name;
@@ -69,23 +68,22 @@ public class ProductsDto {
 		this.description = description;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
-		this.fileId = fileId;
+		
 	}
 	
 	
-	public ProductsDto(long category_id, String name, double price, Instant added_on, Instant exprideDate, long inStock, long unitSold, String	urlImg, long totalReview, long totalReview5Star, long fileId) {
-		
+	public ProductsDto(long category_id, String name, double price, Instant added_on, Instant exprideDate2, long inStock, long unitSold, String	urlImg, long totalReview, long totalReview5Star) {
 		this.category_id = category_id;
 		this.name = name;
 		this.price = price;
 		this.added_on = added_on;
-		this.exprideDate = exprideDate;
+		this.exprideDate2 = exprideDate2;
 		this.inStock = inStock;
 		this.unitSold = unitSold;
 		this.urlImg = urlImg;
 		this.totalReview = totalReview;
 		this.totalReview5Star = totalReview5Star;
-		this.fileId = fileId;
+		
 	}
 
 	public long getId() {
@@ -139,12 +137,12 @@ public class ProductsDto {
 	}
 
 
-	public Instant getExprideDate() {
+	public String getExprideDate() {
 		return exprideDate;
 	}
 
 
-	public void setExprideDate(Instant exprideDate) {
+	public void setExprideDate(String exprideDate) {
 		this.exprideDate = exprideDate;
 	}
 
@@ -229,11 +227,14 @@ public class ProductsDto {
 		this.totalReview5Star = totalReview5Star;
 	}
 
-	public long getFileId() {
-		return fileId;
+
+	public Instant getExprideDate2() {
+		return exprideDate2;
 	}
-	public void setFileId(long fileId) {
-		this.fileId = fileId;
+
+
+	public void setExprideDate2(Instant exprideDate2) {
+		this.exprideDate2 = exprideDate2;
 	}
 	
 }

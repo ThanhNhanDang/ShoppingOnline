@@ -24,9 +24,9 @@ public interface WishListRepository extends JpaRepository<WishList, Long>{
 	@Query("DELETE FROM WishList wishList WHERE wishList.id = :id and wishList.userId = :userId")
 	void deleteByUserId(@Param("id")long id, @Param("userId")long userId);
 	
-	@Query("select new com.java.dto.WishListDto(wishList.id, wishList.productId, wishList.pricePerItem, wishList.quantity, wishList.userId, p.name,p.urlImg, p.fileId) from WishList wishList, Products p WHERE wishList.userId = :userId and wishList.products=p")
+	@Query("select new com.java.dto.WishListDto(wishList.id, wishList.productId, wishList.pricePerItem, wishList.quantity, wishList.userId, p.name,p.urlImg) from WishList wishList, Products p WHERE wishList.userId = :userId and wishList.products=p")
 	List<WishListDto> getAllByUser(@Param("userId")long userId);
 	
-	@Query("select new com.java.dto.WishListDto(wishList.id, wishList.productId, wishList.pricePerItem, wishList.quantity, wishList.userId, p.name,p.urlImg, p.fileId) from WishList wishList, Products p WHERE wishList.userId = :userId and wishList.id = :wishlistId and wishList.products=p")
+	@Query("select new com.java.dto.WishListDto(wishList.id, wishList.productId, wishList.pricePerItem, wishList.quantity, wishList.userId, p.name,p.urlImg) from WishList wishList, Products p WHERE wishList.userId = :userId and wishList.id = :wishlistId and wishList.products=p")
 	WishListDto getItem(@Param("userId")long userId, @Param("wishlistId") long wishlistId);
 }

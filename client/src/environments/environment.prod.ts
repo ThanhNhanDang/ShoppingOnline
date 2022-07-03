@@ -3,13 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 // export const url = "https://thanhnhandev.top"
 export const url = "http://localhost:8081"
-
 export const urlVerify = "https://thanhnhandev.xyz"
 export const environment = {
   production: false,
   baseUrl: url + "/api",
   urlServe: url + "/api/get/image/",
-  urlEmail: "https://doan1thanhnhanvituong.herokuapp.com",
+  urlEmail: "https://doan1.thanhnhandev.xyz",
   title: "E Store"
 };
 

@@ -34,11 +34,7 @@ public class User {
 	private int 	role_id;
 	private String 	gender;
 	private long 	deliveryAddressId;
-	private long 	fileId;
-	@OneToOne
-	@JoinColumn(name = "fileId", insertable=false, updatable=false)
-	 private FileDB fileDB;
-	
+
 	
 	@ManyToOne
 	@JoinColumn(name = "role_id", insertable = false, updatable = false)
@@ -172,13 +168,5 @@ public class User {
 	public void setDeliveryAddressId(long deliveryAddressId) {
 		this.deliveryAddressId = deliveryAddressId;
 	}
-	
-	public long getFileId() {
-		return fileId;
-	}
-	public void setFileId(long fileId) {
-		this.fileId = fileId;
-	}
-	
 
 }

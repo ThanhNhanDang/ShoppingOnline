@@ -1,7 +1,7 @@
 import { AppCookieService } from './../appCookie/app-cookie.service';
 import { UserProfile } from './../../payload/UserProfile';
 import { environment } from './../../../../environments/environment';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
@@ -16,10 +16,36 @@ export class HttpService {
 
   postRequest(url: String, param: {}) {
     return this.http.post<any>(this.baseUrl + url, param)
+
   }
+  postRequestFileToStorage(url: String, param: {}, file: File) {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    formdata.append('dto', JSON.stringify(param));
+    return this.http.post<any>(this.baseUrl + url, formdata)
+  }
+  postRequestMulFileToStorage(url: String, param: {}, files: File[]) {
+    const formdata: FormData = new FormData();
+    files.map(item => formdata.append('file', item));
+    formdata.append('dto', JSON.stringify(param));
+    return this.http.post<any>(this.baseUrl + url, formdata)
+  }
+
   putRequest(url: String, param: {}) {
 
     return this.http.put(this.baseUrl + url, param)
+  }
+  putRequestFileToStorage(url: String, param: {}, file: File) {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    formdata.append('dto', JSON.stringify(param));
+    return this.http.put<any>(this.baseUrl + url, formdata)
+  }
+  putRequestMulFileToStorage(url: String, param: {}, files: File[]) {
+    const formdata: FormData = new FormData();
+    files.map(item => formdata.append('file', item));
+    formdata.append('dto', JSON.stringify(param));
+    return this.http.put<any>(this.baseUrl + url, formdata)
   }
   getRequest(url: String) {
     return this.http.get<any>(this.baseUrl + url)

@@ -19,7 +19,6 @@ public class UserDto {
 	private String 	nameRole;
 	private String 	gender;
 	private long 	deliveryAddressId;
-	private long 	fileId;
 
 	public UserDto() {}
 	
@@ -61,7 +60,7 @@ public class UserDto {
 	}
 	
 	public UserDto(long id, String name, String email,Instant created_at,
-			String address, boolean is_email_verfied, String mobile, String image_url, int role_id, String nameRole, long deliveryAddressId, String gender, long fileId) {
+			String address, boolean is_email_verfied, String mobile, String image_url, int role_id, String nameRole, long deliveryAddressId, String gender) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -74,7 +73,7 @@ public class UserDto {
 		this.role_id = role_id;
 		this.deliveryAddressId = deliveryAddressId;
 		this.gender = gender;
-		this.fileId = fileId;
+		
 	}
 
 
@@ -159,8 +158,6 @@ public class UserDto {
 		return nameRole;
 	}
 
-
-
 	public String getGender() {
 		return gender;
 	}
@@ -179,14 +176,6 @@ public class UserDto {
 
 	public void setDeliveryAddressId(long deliveryAddressId) {
 		this.deliveryAddressId = deliveryAddressId;
-	}
-
-	
-	public long getFileId() {
-		return fileId;
-	}
-	public void setFileId(long fileId) {
-		this.fileId = fileId;
 	}
 	
 }

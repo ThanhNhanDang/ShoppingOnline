@@ -29,14 +29,12 @@ export class AddCategoryComponent implements OnInit {
     this.http.postRequest("/category/add", this.category).subscribe(data => {
       this.categories.push(data);
       this.category.name = "";
-      alert("Successful")
     })
   }
   delete(item: CategoryPayload) {
     if (confirm("Are you sure you want to remove \"" + item.name + "\" ?")) {
       this.http.deleteRequest("/category/delete/" + item.id, "").subscribe(data => {
         this.categories = data;
-        alert("Delete category successfully")
       }, error => {
         alert(error.error.message)
       })

@@ -28,7 +28,7 @@ export class AddUserComponent implements OnInit {
   constructor(private router: Router, private http : HttpService) { }
   
   ngOnInit(): void {
-    this.imgURL = this.baseUrl+"1"
+    this.imgURL = this.baseUrl+"/"+"userDefault.png";
     this.getAllRole();
   }
 

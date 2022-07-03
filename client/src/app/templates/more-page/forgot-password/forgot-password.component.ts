@@ -30,7 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
       return;
     this.http.postRequest("/user/reset-password?email=" + request.email, "").subscribe(data => {
       alert("You HAVE 5 MINUTES to verify your email to reset your password before it expires.")
-      this.router.navigateByUrl("/login");
+      location.replace("https://mail.google.com")
     }, error => {
       this.error = error.error.message;
     })

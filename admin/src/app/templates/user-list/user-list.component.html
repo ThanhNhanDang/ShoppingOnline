@@ -7,7 +7,8 @@
             <h2 class="tm-block-title">List of Accounts</h2>
           </div>
           <div class="col-md-4 b">
-            <b routerLink="/accounts/add"><i class="fas fa-plus"></i>
+            <b routerLink="/accounts/add"
+              ><i class="fas fa-plus"></i>
               Add New Account
             </b>
           </div>
@@ -42,9 +43,11 @@
           </div>
           <div class="col-md-3">
             <h2
-            class="form-control"
-            style="color: rgb(207, 206, 206);padding-top: 12px;"
-            >Result: {{result}} </h2>
+              class="form-control"
+              style="color: rgb(207, 206, 206); padding-top: 12px"
+            >
+              Result: {{ result }}
+            </h2>
           </div>
         </div>
       </div>
@@ -70,9 +73,15 @@
               <td>
                 <div class="user-info">
                   <div class="user-info__img dropdown">
-                    <img [src]="baseUrl + user.fileId" alt="User Img" />
+                    <img
+                      [src]="baseUrl + '/' + user.image_url"
+                      alt="User Img"
+                    />
                     <div class="__img dropdown-content">
-                      <img [src]="baseUrl + user.fileId" alt="User Img" />
+                      <img
+                        [src]="baseUrl + '/' + user.image_url"
+                        alt="User Img"
+                      />
                     </div>
                   </div>
                   <div class="user-info__basic">

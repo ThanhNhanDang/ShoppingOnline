@@ -28,18 +28,15 @@ import com.java.dto.ResetPasswordDto;
 import com.java.dto.UserDto;
 import com.java.model.Message;
 import com.java.model.RegisterByAdmin;
-import com.java.service.FileService;
 import com.java.service.UserService;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 	private UserService service;
-	private FileService fileService;
 
-	public UserController(UserService service, FileService fileService) {
+	public UserController(UserService service) {
 		this.service = service;
-		this.fileService = fileService;
 	}
 
 	@GetMapping("/profile/{email}")
@@ -92,7 +89,8 @@ public class UserController {
 	@PostMapping("/update/image/{id}")
 	public Object uploadImage(@RequestParam("file") MultipartFile file, @PathVariable("id") long id)
 			throws IOException {
-		return new ResponseEntity<>(fileService.store(file, id), HttpStatus.CREATED);
+//		fileService.store(file, id);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")

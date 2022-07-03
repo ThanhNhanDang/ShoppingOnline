@@ -63,8 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				"/api/user/reset-password",
 				"/api/user/validate-token-password",
 				
-				"/api/feedback/save",
-				"/api/get/image/**"
+				"/api/feedback/save"
 				)
 		.permitAll()
 		

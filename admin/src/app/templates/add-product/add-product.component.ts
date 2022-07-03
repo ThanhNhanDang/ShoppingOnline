@@ -4,7 +4,7 @@ import { environment } from './../../../environments/environment';
 import { HttpService } from './../service/httpService/http.service';
 import { CategoryPayload } from './../payload/CategoryPayload';
 import { Component, OnInit } from '@angular/core';
-import { DatePipe, Location } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-product',
@@ -21,7 +21,7 @@ export class AddProductComponent implements OnInit {
   test!: string
   file!: File;
   fileName!: string;
-  imgURL = this.baseUrl + this.productPayload.urlImg
+  imgURL = this.baseUrl + "/" + "productDefault.png";
   constructor(private http: HttpService, private datepipe: DatePipe, private router: Router) { }
 
   ngOnInit(): void {
@@ -68,16 +68,13 @@ export class AddProductComponent implements OnInit {
 
       this.date = new Date();
       this.test = this.date.toISOString()
+      console.log(this.test);
+      
       this.latest_date = this.datepipe.transform(this.productPayload.exDate, 'yyyy-MM-dd');
       this.productPayload.exprideDate = this.latest_date + this.test.slice(10)
-
-      this.productPayload.urlImg = this.fileName
-      this.http.pushFileToStorage("/upload", this.file).subscribe((res: any) => {
-        this.productPayload.fileId = res.id;
-        this.http.postRequest("/product/add", this.productPayload).subscribe(data => {
-          alert("Successful");
-          this.router.navigate(["/product/edit/detail-img"], { queryParams: { 'category': data.category_id, 'product': data.id } })
-        })
+      this.http.postRequestFileToStorage("/product/add", this.productPayload, this.file).subscribe(data => {
+        alert("Successful");
+        this.router.navigate(["/product/edit/detail-img"], { queryParams: { 'category': data.category_id, 'product': data.id } })
       }, error => {
         alert(error.error.message)
       })

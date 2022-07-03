@@ -45,13 +45,4 @@ public class FileUtil {
 		}
 		return -1;
 	}
-	
-	public static void fileUpdate(InputStream inputStream,Path uploadPath,String fileName) throws IOException {
-		 // Target directory		
-		if(!Files.exists(uploadPath)) {
-			throw new IOException("Not found");
-		}
-		Path filePath = uploadPath.resolve(fileName);
-		Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-	}
 }

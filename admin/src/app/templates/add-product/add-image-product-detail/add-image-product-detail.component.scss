@@ -1,6 +1,6 @@
 img {
-  width: 250px;
-  height: 340px;
+  display: block;
+  padding-top: 40px;
 }
 .b {
   color: rgb(15, 250, 238);
@@ -8,19 +8,27 @@ img {
 .b:hover {
   color: yellow;
 }
+.add-all {
+  color: yellow;
+}
+.add-all:hover {
+  color: rgb(15, 250, 238);
+}
+.delete-all {
+  color: rgb(255, 60, 0);
+}
+.delete-all:hover {
+  color: rgb(179, 250, 15);
+}
+.tm-block-title {
+  cursor: pointer;
+}
 
 .tm-delete-icon {
   font-size: 1.1rem;
   color: #dd2e0f;
 }
 
-.tm-avatar-container {
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
 .tm-delete-link {
   position: absolute;
   right: 4%;
@@ -35,9 +43,6 @@ img {
   display: block;
   background: rgb(150, 149, 149);
   transition: all 0.2s ease;
-}
-.tm-avatar-container:hover .tm-avatar-delete-link {
-  display: block;
 }
 
 .tm-delete-link:hover {
