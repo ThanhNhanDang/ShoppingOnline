@@ -40,7 +40,9 @@
                     <div class="img">
                       <a (click)="clickDetail(item.productId)"
                         ><img
-                          src="{{ baseUrl + item.fileId }}"
+                          src="{{
+                            baseUrl + '/' + item.productId + '/' + item.urlImg
+                          }}"
                           class="img-fluid d-block mx-auto"
                           alt="Image"
                       /></a>

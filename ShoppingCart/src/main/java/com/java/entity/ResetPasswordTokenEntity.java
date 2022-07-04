@@ -2,7 +2,6 @@ package com.java.entity;
 
 
 import java.time.Instant;
-import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

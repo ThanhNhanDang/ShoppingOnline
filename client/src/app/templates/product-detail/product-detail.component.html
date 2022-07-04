@@ -33,7 +33,9 @@
               >
                 <div ngxSlickItem *ngFor="let slide of productDetailUrlImg">
                   <img
-                    src="{{ baseUrl + slide.fileId }}"
+                    src="{{
+                      baseUrl + '/products/' + productId + '/' + slide.urlImg
+                    }}"
                     alt="Product Image"
                     class="img-fluid d-block mx-auto"
                   />
@@ -46,7 +48,9 @@
                 <div ngxSlickItem *ngFor="let slide of productDetailUrlImg">
                   <div class="slider-nav-img">
                     <img
-                      src="{{ baseUrl + slide.fileId }}"
+                      src="{{
+                        baseUrl + '/products/' + productId + '/' + slide.urlImg
+                      }}"
                       alt="Product Image"
                       width="100%"
                       height="100px"
@@ -193,7 +197,7 @@
                 <div class="reviews-submitted" *ngFor="let review of reviews">
                   <div class="reviewer">
                     <img
-                      src="{{ baseUrl + review.fileIdUser }}"
+                      src="{{ baseUrl + '/' + review.urlImg }}"
                       alt="{{ review.userName }}"
                       class="avatar"
                     />{{ review.userName }} -

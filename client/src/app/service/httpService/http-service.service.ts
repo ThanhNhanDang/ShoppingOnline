@@ -53,6 +53,12 @@ export class HttpServiceService {
   putRequest(url: String, param: {}) {
     return this.http.put<any>(this.baseUrl + url, param, this.httpOptions)
   }
+  putRequestFileToStorage(url: String, param: {}, file: File) {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file);
+    formdata.append('dto', JSON.stringify(param));
+    return this.http.put<any>(this.baseUrl + url, formdata)
+  }
   deleteRequest(url: String, param: {}) {
     return this.http.delete<any>(this.baseUrl + url, param)
   }

@@ -64,7 +64,7 @@ export class ProductDetailComponent implements OnInit {
       this.totalPrice = this.product.price;
       this.discountPrice = this.totalPrice + this.totalPrice * this.discount;
       this.discountPrice = this.http.getRoundingNumber(this.discountPrice);
-      
+
       this.getDetailUrlImg();
       this.getReviews()
       //lấy sản phẩm đồng thời lấy những sản phẩm có liên quan
@@ -118,7 +118,7 @@ export class ProductDetailComponent implements OnInit {
     this.handleRouding();
   }
 
-  handleRouding(){
+  handleRouding() {
     this.totalPrice = this.http.getRoundingNumber(this.totalPrice);
     this.discountPrice = this.http.getRoundingNumber(this.discountPrice);
   }
@@ -143,15 +143,14 @@ export class ProductDetailComponent implements OnInit {
 
     this.totalReview++;
     this.http.postRequest("/review/add", reviewPayload).subscribe(data => {
-
       this.reviews.unshift(data)
       this.reviews[0].starReview = starReview;
-      this.reviews[0].fileIdUser = this.user.fileId;
     }, error => {
       console.log(error.error.message)
     })
     this.review = "";
     this.ratting = [true, true, true, true, true]
+    this.numberStar = 5;
   }
   clickAddCart(item: any) {
     if (!this.http.checkLogin())

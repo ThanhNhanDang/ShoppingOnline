@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.java.dto.ChangePasswordDto;
 import com.java.dto.GenericResponseDto;
@@ -23,11 +25,13 @@ public interface UserService extends BaseService<Integer, UserDto, Long> {
 
 	User saveReturn(UserDto dto) throws Exception;
 
-	List<UserDto> deleteDtos(Long id, Long fileId) throws Exception;
+	List<UserDto> deleteDtos(Long id) throws Exception;
 
-	int editMyAccout(UserDto dto) throws Exception;
+	UserDto editMyAccount(UserDto dto) throws Exception;
+	UserDto editMyAccount(String dto, MultipartFile file) throws Exception;
 
 	int editMyAccoutByAdmin(UserDto dto) throws Exception;
+	void editMyAccoutFileByAdmin(String dto, MultipartFile file) throws Exception;
 
 	int updateActive(UserDto dto) throws Exception;
 
@@ -46,8 +50,6 @@ public interface UserService extends BaseService<Integer, UserDto, Long> {
 	GenericResponseDto resetPassword(HttpServletRequest request, String email);
 
 	void createPasswordResetTokenForUser(User entity, String token);
-
-	Integer delete(Long id, Long fileId) throws Exception;
 	
 	GenericResponseDto validatePasswordResetToken(String token);
 	GenericResponseDto passwordReset(ResetPasswordDto resetPasswordDto);

@@ -90,9 +90,8 @@ export class UserListComponent implements OnInit {
 
   delete(item:UserProfile){
     if(confirm("Are you sure you want to delete this account?")){
-      this.http.deleteRequest(`/user/delete?id=${item.id}&fileId=${item.fileId}`,"").subscribe(data=>{
+      this.http.deleteRequest(`/user/delete?id=${item.id}`,"").subscribe(data=>{
         this.users = data;
-        this.http.deleteRequest(`/upload/delete/${item.fileId}`,"");
       }, error=>{
         alert("Can't delete: "+error.error.message);
       });

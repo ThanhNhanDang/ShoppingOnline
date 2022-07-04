@@ -19,7 +19,7 @@ export class BottomBarComponent implements OnInit {
   checkIsEmptyWishlist = false;
   cartItem = 0;
   wishListItem = 0;
-  baseUrl = environment.urlServe;
+  baseUrl = environment.urlServe + "/products";
   visiblityState = 'hidden';
   cart!: CartPayload[];
   wishList!: WishListPayLoad[];

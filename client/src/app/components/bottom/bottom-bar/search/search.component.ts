@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class SearchComponent implements OnInit {
   products!:ProductPayload[];
   checkSearch= false;
-  baseUrl= environment.urlServe;
+  baseUrl= environment.urlServe + '/products';
   totalElements = 0;
   searchAndSort = new SearchAndSortPayload();
   constructor(private http :HttpServiceService, private router:Router) { }

@@ -19,7 +19,11 @@
             class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row"
           >
             <div class="mr-2 mb-3 mb-lg-0">
-              <img src="{{ baseUrl + item.fileId }}" class="img" alt="" />
+              <img
+                src="{{ baseUrl + '/' + item.id + '/' + item.urlImg }}"
+                class="img"
+                alt=""
+              />
             </div>
             <div class="media-body">
               <h6 class="media-title font-weight-semibold">

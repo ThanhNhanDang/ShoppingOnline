@@ -1,52 +1,76 @@
-
 <div class="col-md-12">
-    <div class="table-responsive my-custom-scrollbar">
-        <div class="my-custom-scrollbar">
-            <table class="table table-bordered">
-                <thead class="thead-dark table-fixed">
-                    <tr>
-                        <th>User</th>
-                        <th>Date</th>
-                        <th>Review</th>
-                        <th>Product</th>
-                        <th>Actions</th>
-                     </tr>
-                 </thead>
-                 <tbody>
-                     <tr *ngFor="let review of reviews">
-                         <td>
-                             <div class="user-info">
-                                 <div class="user-info__img">
-                                     <img src="{{baseUrl + review.fileIdUser}}" alt="User Img">
-                                 </div>
-                                 <div class="user-info__basic">
-                                     <h5 class="mb-0">{{review.email}}</h5>
-                                     <p class="text-muted mb-0">{{review.userName}}</p>
-                                 </div>
-                             </div>
-                         </td>
-                         <td>
-                             {{review.reviewDate}}
-                         </td>
-                         <td>{{review.message}}</td>
-                         <td>
-                            <div class="user-info">
-                                <div routerLink="/product-detail"(click)="clickDetail(review.productId)"  class="user-info__img">
-                                    <img src="{{baseUrl+review.fileIdProduct}}" alt="User Img">
-                                </div>
-                                <div class="user-info__basic">
-                                    <a routerLink="/product-detail"(click)="clickDetail(review.productId)" href="javaScript:void(0)"><h5 class="mb-0">{{review.productName}}</h5></a>
-                                  
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                             <button routerLink="/product-detail"(click)="clickDetail(review.productId)"  class="btn">View</button>
-                         </td>
-                     </tr>
-                     
-                 </tbody>
-            </table>
-        </div>
+  <div class="table-responsive my-custom-scrollbar">
+    <div class="my-custom-scrollbar">
+      <table class="table table-bordered">
+        <thead class="thead-dark table-fixed">
+          <tr>
+            <th>User</th>
+            <th>Date</th>
+            <th>Review</th>
+            <th>Product</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let review of reviews">
+            <td>
+              <div class="user-info">
+                <div class="user-info__img">
+                  <img
+                    src="{{ baseUrl + '/' + review.urlImg }}"
+                    alt="User Img"
+                  />
+                </div>
+                <div class="user-info__basic">
+                  <h5 class="mb-0">{{ review.email }}</h5>
+                  <p class="text-muted mb-0">{{ review.userName }}</p>
+                </div>
+              </div>
+            </td>
+            <td>
+              {{ review.reviewDateCustom }}
+            </td>
+            <td>{{ review.message }}</td>
+            <td>
+              <div class="user-info">
+                <div
+                  routerLink="/product-detail"
+                  (click)="clickDetail(review.productId)"
+                  class="user-info__img"
+                >
+                  <img
+                    src="{{
+                      baseUrl +
+                        '/products/' +
+                        review.productId +
+                        '/' +
+                        review.urlImgProduct
+                    }}"
+                    alt="Product Img"
+                  />
+                </div>
+                <div class="user-info__basic">
+                  <a
+                    routerLink="/product-detail"
+                    (click)="clickDetail(review.productId)"
+                    href="javaScript:void(0)"
+                    ><h5 class="mb-0">{{ review.productName }}</h5></a
+                  >
+                </div>
+              </div>
+            </td>
+            <td>
+              <button
+                routerLink="/product-detail"
+                (click)="clickDetail(review.productId)"
+                class="btn"
+              >
+                View
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>

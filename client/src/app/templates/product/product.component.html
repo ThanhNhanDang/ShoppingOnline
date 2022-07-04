@@ -21,7 +21,7 @@
   <a (click)="clickProductDetail(item.id)">
     <img
       class="img-fluid d-block mx-auto"
-      src="{{ baseUrl + item.fileId }}"
+      src="{{ baseUrl + '/' + item.id + '/' + item.urlImg }}"
       alt="Product Image"
     />
   </a>

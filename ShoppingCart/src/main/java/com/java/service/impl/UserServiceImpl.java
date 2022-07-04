@@ -28,12 +28,17 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.java.contants.ImageConstants;
 import com.java.contants.SecurityConstants;
 import com.java.dto.ChangePasswordDto;
 import com.java.dto.EmailDto;
@@ -45,7 +50,6 @@ import com.java.entity.ResetPasswordTokenEntity;
 import com.java.entity.User;
 import com.java.model.RegisterByAdmin;
 import com.java.repository.ResetPasswordRepository;
-import com.java.repository.RoleRepository;
 import com.java.repository.UserRepository;
 import com.java.service.FileService;
 import com.java.service.UserService;
@@ -58,20 +62,53 @@ public class UserServiceImpl implements UserService {
 
 	private AuthenticationManager authenticationManager;
 	private UserRepository userRepo;
-	private RoleRepository roleRepo;
 	private ResetPasswordRepository resetPassRepo;
 	private FileService fileService;
 	private Clock cl = Clock.systemDefaultZone();
 
 	public UserServiceImpl(ResetPasswordRepository resetPassRepo, AuthenticationManager authenticationManager,
-			UserRepository userRepo, RoleRepository roleRepo, FileService fileService) {
+			UserRepository userRepo, FileService fileService) {
 		this.authenticationManager = authenticationManager;
 		this.userRepo = userRepo;
-		this.roleRepo = roleRepo;
 		this.fileService = fileService;
 		this.resetPassRepo = resetPassRepo;
 
 	}
+	
+	private UserDto jsonMapper (String dto) throws JsonMappingException, JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		return objectMapper.readValue(dto, UserDto.class); 
+	}
+	
+	private User mapperEntity(UserDto dto) throws Exception {
+		if (!userRepo.existsById(dto.getId()))
+			throw new Exception("User not found");
+		User entityTemp = userRepo.checkEmail(dto.getEmail());
+
+		// nếu entityTemp có tồn tại nhưng id lại khác với id của người update thì => đã
+		// có người đăng ký email này r
+		if (entityTemp != null && entityTemp.getId() != dto.getId()) {
+			throw new Exception("This email already exists");
+		}
+		User entity = userRepo.findById(dto.getId()).get();
+		entity.setEmail(dto.getEmail());
+		entity.setMobile(dto.getMobile());
+		entity.setName(dto.getName());
+		entity.setAddress(dto.getAddress());
+		entity.setGender(dto.getGender());
+		entity.setIs_email_verfied(dto.getIs_email_verfied());
+		return entity;
+	}
+	private UserDto mapperDto(User entity) {
+		UserDto dto = new UserDto(entity.getId(), entity.getName(), entity.getEmail(), "***",
+				entity.getCreated_at(), entity.getLogin_token(), entity.getType(), entity.getAddress(),
+				entity.getIs_email_verfied(), entity.getMobile(), entity.getImage_url(), entity.getRole_id(),
+				entity.getDeliveryAddressId());
+		dto.setNameRole(entity.getRole().getDescription());
+		dto.setGender(entity.getGender());
+		return dto;
+	}
+	
 
 	@Override
 	public List<UserDto> findAll() {
@@ -79,12 +116,7 @@ public class UserServiceImpl implements UserService {
 		List<UserDto> dtos = new ArrayList<UserDto>();
 
 		for (User entity : list) {
-			UserDto dto = new UserDto(entity.getId(), entity.getName(), entity.getEmail(), "***",
-					entity.getCreated_at(), entity.getLogin_token(), entity.getType(), entity.getAddress(),
-					entity.getIs_email_verfied(), entity.getMobile(), entity.getImage_url(), entity.getRole_id(),
-					entity.getDeliveryAddressId());
-			dto.setNameRole(entity.getRole().getDescription());
-			dto.setGender(entity.getGender());
+			UserDto dto = this.mapperDto(entity);
 			dtos.add(dto);
 		}
 
@@ -96,11 +128,8 @@ public class UserServiceImpl implements UserService {
 		if (!userRepo.existsById(id))
 			return null;
 		User entity = userRepo.findById(id).get();
-		UserDto dto = new UserDto(entity.getId(), entity.getName(), entity.getEmail(), "***", entity.getCreated_at(),
-				entity.getLogin_token(), entity.getType(), entity.getAddress(), entity.getIs_email_verfied(),
-				entity.getMobile(), entity.getImage_url(), entity.getRole_id(), entity.getDeliveryAddressId());
-		dto.setNameRole(entity.getRole().getDescription());
-		dto.setGender(entity.getGender());
+		UserDto dto = this.mapperDto(entity);
+		dto.setCreated_at(null);
 		return dto;
 	}
 
@@ -136,38 +165,38 @@ public class UserServiceImpl implements UserService {
 			throw new Exception("User not found");
 		if (!entity.getIs_email_verfied())
 			throw new Exception("Account has not been activated!");
-		UserDto dto = new UserDto(entity.getId(), entity.getName(), entity.getEmail(), "***", entity.getCreated_at(),
-				entity.getLogin_token(), entity.getType(), entity.getAddress(), entity.getIs_email_verfied(),
-				entity.getMobile(), entity.getImage_url(), entity.getRole_id(), entity.getDeliveryAddressId());
-		dto.setNameRole(roleRepo.findById(entity.getRole_id()).get().getDescription());
-		dto.setGender(entity.getGender());
+		UserDto dto = this.mapperDto(entity);
 		return dto;
 	}
-
+	@Transactional
+	@Modifying
 	@Override
-	public int editMyAccout(UserDto dto) throws Exception {
-		if (!userRepo.existsById(dto.getId()))
-			throw new Exception("User not found");
-		User entityTemp = userRepo.checkEmail(dto.getEmail());
-
-		// nếu entityTemp có tồn tại nhưng id lại khác với id của người update thì => đã
-		// có người đăng ký email này r
-		if (entityTemp != null && entityTemp.getId() != dto.getId()) {
-			throw new Exception("This email already exists");
-		}
-		User entity = userRepo.findById(dto.getId()).get();
-		entity.setEmail(dto.getEmail());
-		entity.setMobile(dto.getMobile());
-		entity.setName(dto.getName());
-		entity.setAddress(dto.getAddress());
+	public UserDto editMyAccount(UserDto dto) throws Exception {
+		User entity = this.mapperEntity(dto);
 		entity.setDeliveryAddressId(dto.getDeliveryAddressId());
-		entity.setImage_url(dto.getImage_url());
-		entity.setGender(dto.getGender());
 		if (userRepo.save(entity) == null)
-			throw new Exception("Unable to update");
-		return 0;
+			throw new Exception("Unable to register an account, please contact the administrator for assistance.");
+		dto.setImage_url(entity.getImage_url());
+		return dto;
 	}
-
+	@Transactional
+	@Modifying
+	@Override
+	public UserDto editMyAccount(String dto, MultipartFile file) throws Exception {
+		UserDto jsonDto = this.jsonMapper(dto);
+		String fileName = UUID.randomUUID()+".png";
+		User enUser = this.mapperEntity(jsonDto);
+		enUser.setDeliveryAddressId(jsonDto.getDeliveryAddressId());
+		fileService.delefile(enUser.getId(), ImageConstants.URL_IMAGE_AVATAR, enUser.getImage_url());
+		enUser.setImage_url("avatars"+"/"+jsonDto.getId()+"/"+ fileName);
+		fileService.store(file, fileName, 3, enUser.getId());
+		if (userRepo.save(enUser) == null)
+			throw new Exception("Unable to update");
+		jsonDto.setImage_url(enUser.getImage_url());
+		return jsonDto;
+	}
+	@Transactional
+	@Modifying
 	@Override
 	public int updateActive(UserDto dto) throws Exception {
 		userRepo.updateActive(dto.getId(), dto.getIs_email_verfied());
@@ -179,18 +208,11 @@ public class UserServiceImpl implements UserService {
 		List<UserDto> dtos = userRepo.search(key);
 		return dtos;
 	}
-
 	@Transactional
 	@Modifying
 	@Override
-	public Integer delete(Long id, Long idFile) throws Exception {
-		this.userRepo.deleteById(id);
-		return 0;
-	}
-
-	@Override
-	public List<UserDto> deleteDtos(Long id, Long fileId) throws Exception {
-		this.delete(id, fileId);
+	public List<UserDto> deleteDtos(Long id) throws Exception {
+		this.delete(id);
 		List<UserDto> dtos = userRepo.FindAllByDelete();
 		return dtos;
 	}
@@ -199,27 +221,26 @@ public class UserServiceImpl implements UserService {
 	@Modifying
 	@Override
 	public int editMyAccoutByAdmin(UserDto dto) throws Exception {
-		if (!userRepo.existsById(dto.getId()))
-			throw new Exception("User not found");
-		User entityTemp = userRepo.checkEmail(dto.getEmail());
-
-		// nếu entityTemp có tồn tại nhưng id lại khác với id của người update thì => đã
-		// có người đăng ký email này r
-		if (entityTemp != null && entityTemp.getId() != dto.getId()) {
-			throw new Exception("This email already exists");
-		}
-		User entity = userRepo.findById(dto.getId()).get();
-		entity.setEmail(dto.getEmail());
-		entity.setMobile(dto.getMobile());
-		entity.setName(dto.getName());
-		entity.setAddress(dto.getAddress());
-		entity.setImage_url(dto.getImage_url());
-		entity.setGender(dto.getGender());
+		User entity = this.mapperEntity(dto);
 		entity.setRole_id(dto.getRole_id());
-		entity.setIs_email_verfied(dto.getIs_email_verfied());
 		if (userRepo.save(entity) == null)
 			throw new Exception("Unable to update");
 		return 0;
+	}
+	@Transactional
+	@Modifying
+	@Override
+	public void editMyAccoutFileByAdmin(String dto, MultipartFile file) throws Exception {
+		UserDto jsonDto = this.jsonMapper(dto);
+		String fileName = UUID.randomUUID()+".png";
+		User enUser = this.mapperEntity(jsonDto);
+		enUser.setRole_id(jsonDto.getRole_id());
+		fileService.delefile(enUser.getId(), ImageConstants.URL_IMAGE_AVATAR, enUser.getImage_url());
+		enUser.setImage_url("avatars"+"/"+jsonDto.getId()+"/"+ fileName);
+		fileService.store(file, fileName, 3, enUser.getId());
+		if (userRepo.save(enUser) == null)
+			throw new Exception("Unable to update");
+		
 	}
 
 	@Transactional
@@ -376,7 +397,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Integer delete(Long id) throws Exception {
-		// TODO Auto-generated method stub
+		if (!userRepo.existsById(id))
+			throw new Exception("User not found");
+		fileService.deleFolder(id, ImageConstants.URL_IMAGE_AVATAR);
+		userRepo.deleteById(id);
 		return null;
 	}
 

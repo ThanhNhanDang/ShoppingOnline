@@ -40,9 +40,8 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public int delefile(long id) throws IOException {
-		String realPath = Paths.get("./static/" + ImageConstants.URL_IMAGE_PRODUCT + "/" + id + "/")
-				.toString();
+	public int deleFolder(long id, String location) throws IOException {
+		String realPath = Paths.get("." + location + "/" + id + "/").toString();
 		return FileUtil.deleteFile(realPath);
 	}
 
@@ -63,12 +62,6 @@ public class FileServiceImpl implements FileService {
 		FileUtil.fileupload(file.getInputStream(), uploadPath, fileName);
 
 		return 0;
-	}
-
-	@Override
-	public int delefileUser(long id) throws IOException {
-		String realPath = Paths.get("./static/" + ImageConstants.URL_IMAGE_AVATAR + "/" + id + "/").toString();
-		return FileUtil.deleteFile(realPath);
 	}
 
 	@Override
@@ -100,11 +93,19 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public int delefile (long id, String urlImg) throws IOException {
-		
-		String realPath = Paths.get("." + ImageConstants.URL_IMAGE_PRODUCT + "/" + id + "/")
-				.toString();
-		String imagePath = Paths.get("." + ImageConstants.URL_IMAGE_PRODUCT + "/" + id + "/" + urlImg).toString();
+	public int delefile(long id, String location, String urlImg) throws IOException {
+		if (urlImg.equals("userDefault.png")) {
+			return 0;
+		}
+		String realPath;
+		String imagePath;
+		if (location.equals(ImageConstants.URL_IMAGE_AVATAR)) {
+			realPath = Paths.get("." + location + "/" + id + "/").toString();
+			imagePath = Paths.get("./static/images/" + urlImg).toString();
+		} else {
+			realPath = Paths.get("." + location + "/" + id + "/").toString();
+			imagePath = Paths.get("." + location + "/" + id + "/" + urlImg).toString();
+		}
 		return FileUtil.deleteImgDetail(realPath, imagePath);
 	}
 
@@ -130,22 +131,22 @@ public class FileServiceImpl implements FileService {
 	public void store(MultipartFile file, String fileName, int type, long id) throws IOException {
 		Path dir = null;
 		switch (type) {
-			case 1:
-			case 2: 
-				dir = Paths.get("."+ImageConstants.URL_IMAGE_BASE);
-				break;
-			case 3:
-				dir = Paths.get("."+ImageConstants.URL_IMAGE_AVATAR+"/"+id);
-				break;
-			case 4: 
-				dir = Paths.get("."+ImageConstants.URL_IMAGE_PRODUCT+"/"+id);
-				break;
-			default:
-				break;
+		case 1:
+		case 2:
+			dir = Paths.get("." + ImageConstants.URL_IMAGE_BASE);
+			break;
+		case 3:
+			dir = Paths.get("." + ImageConstants.URL_IMAGE_AVATAR + "/" + id);
+			break;
+		case 4:
+			dir = Paths.get("." + ImageConstants.URL_IMAGE_PRODUCT + "/" + id);
+			break;
+		default:
+			break;
 		}
-		
+
 		FileUtil.fileupload(file.getInputStream(), dir, fileName);
-		
+
 	}
 
 	@Override
@@ -153,7 +154,5 @@ public class FileServiceImpl implements FileService {
 		// TODO Auto-generated method stub
 
 	}
-
-	
 
 }

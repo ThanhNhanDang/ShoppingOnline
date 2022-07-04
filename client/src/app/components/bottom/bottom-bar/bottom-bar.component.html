@@ -12,7 +12,7 @@
         <app-search></app-search>
       </div>
       <div *ngIf="!http.isLogin()" class="col-md-3">
-        <div class="user" >
+        <div class="user">
           <div class="dropdown">
             <button type="button" class="btn" data-toggle="dropdown">
               <i class="fa fa-heart" aria-hidden="true"></i> Wishlist
@@ -41,7 +41,9 @@
                     class="col-lg-4 col-sm-4 col-4"
                   >
                     <img
-                      src="{{ baseUrl + item.fileId }}"
+                      src="{{
+                        baseUrl + '/' + item.productId + '/' + item.urlImg
+                      }}"
                       class="img-fluid d-block mx-auto"
                     />
                   </div>
@@ -113,7 +115,9 @@
                     class="col-lg-4 col-sm-4 col-4"
                   >
                     <img
-                      src="{{ baseUrl + item.fileId }}"
+                      src="{{
+                        baseUrl + '/' + item.product_id + '/' + item.urlImg
+                      }}"
                       class="img-fluid d-block mx-auto"
                     />
                   </div>

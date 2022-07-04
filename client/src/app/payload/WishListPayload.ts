@@ -6,5 +6,4 @@ export class WishListPayLoad{
     userId!:string;
     productName!:string;
     urlImg!:string;
-    fileId!: number;
 }

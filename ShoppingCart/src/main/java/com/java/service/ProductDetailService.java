@@ -16,5 +16,6 @@ public interface ProductDetailService {
 	void updateProductDetail(String dto, MultipartFile file) throws Exception;
 	void updateAllProductDetail(String listDto, List<MultipartFile> files) throws Exception;
 	void delete(long id) throws Exception;
-	void deleteAllByProductId(long productId) throws Exception;
+	void deleteAllByProductIdAndFile(long productId) throws Exception;
+	void deleteAllByProductId(long productId);
 }

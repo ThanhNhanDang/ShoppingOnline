@@ -14,7 +14,6 @@ export class ProductPayload {
     description!: string;
     totalReview!: number;
     totalReview5Star!: number;
-    fileId!: number
 
     constructor() {
 

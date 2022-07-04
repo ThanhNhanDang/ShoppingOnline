@@ -76,7 +76,7 @@ export class MyAccountComponent implements OnInit {
     this.http.postRequest("/user/profile", { userId: this.userId }).subscribe(data => {
       this.userPayload = data;
       this.deliveryAddressId = this.userPayload.deliveryAddressId;
-      this.avatar = this.baseUrl + this.userPayload.fileId
+      this.avatar = this.baseUrl + "/" + this.userPayload.image_url
       if (data.role_id == 1)
         this.active = true;
 
@@ -124,10 +124,8 @@ export class MyAccountComponent implements OnInit {
     this.deliveryAddress.forEach(value => {
       this.http.postRequest("/Vietnamese-Administrative-Unit/districts/get-all-by-province-id", { provinceId: value.provinceId }).subscribe(data => {
         value.districts = data;
-        console.log(value.districts)
         this.http.postRequest("/Vietnamese-Administrative-Unit/wards/get-all-by-district-id", { districtId: value.districtId }).subscribe(data => {
           value.wards = data
-          console.log(value.wards)
         }, error => {
           alert("Ward not found")
         })
@@ -165,26 +163,25 @@ export class MyAccountComponent implements OnInit {
 
   updateMyAccount() {
     if (this.file != null) {
-      this.userPayload.image_url = this.fileName
-      this.http.updateFileToStorage(`/upload/update/image/${this.userPayload.fileId}`, this.file).subscribe((res: any) => {
-        this.userPayload.fileId = res.id;
-        this.http.putRequest("/user/update", this.userPayload).subscribe(() => {
-          alert("Update successful.")
-        }, error => {
-          alert(error.error.message);
-        })
-      }, error => {
-        alert(error.error.message)
-      })
-    }
-    else {
-      this.http.putRequest("/user/update", this.userPayload).subscribe(() => {
+      this.http.putRequestFileToStorage("/user/update/file", this.userPayload, this.file).subscribe((data) => {
+        this.userPayload.image_url = data.image_url;
+        this.http.setUpdate(this.userPayload);
         alert("Update successful.")
       }, error => {
         alert(error.error.message)
       })
     }
-    this.http.setUpdate(this.userPayload);
+    else {
+      this.http.putRequest("/user/update", this.userPayload).subscribe((data) => {
+        this.userPayload.image_url = data.image_url;
+        this.http.setUpdate(this.userPayload);
+        alert("Update successful.")
+      }, error => {
+        console.log(error);
+
+        alert(error.error.message)
+      })
+    }
   }
 
   updateDeliveryAddress(item: DeliveryAddress) {

@@ -72,11 +72,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				"/api/role/**", 
 				
 				"/api/user/add/by-admin",
-				"/api/user/all",
+				"/api/user/all**",
 				"/api/user/add-by-admin",
 				"/api/user/update/active-admin",
-				"/api/user/update/admin",
-				"/api/user/delete/**",
+				"/api/user/update/admin**",
+				"/api/user/delete**",
 				"/api/user/delete-not-return/**",
 				"/api/user/search",
 				
@@ -87,15 +87,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				"/api/category/add",
 				
 				"/api/product/add",
-				"/api/product/delete/**",
-				"/api/product/update",
+				"/api/product/delete**",
+				"/api/product/update**",
 				"/api/product/search/admin",
 				
 				"/api/product-detail/add",
 				"/api/product-detail/add/image",
-				"/api/product-detail/update/image",
-				"/api/product-detail/update",
-				"/api/product-detail/delete",
+				"/api/product-detail/update**",
+				"/api/product-detail/delete**",
 				
 				"/api/Vietnamese-Administrative-Unit/provinces/save",
 				"/api/Vietnamese-Administrative-Unit/provinces/save-all",

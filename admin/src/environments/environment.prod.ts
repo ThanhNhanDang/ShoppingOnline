@@ -2,8 +2,8 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-// export const url = "https://thanhnhandev.top"
-export const url = "http://localhost:8081"
+export const url = "https://thanhnhandev.top"
+// export const url = "http://localhost:8081"
 
 export const urlVerify = "https://thanhnhandev.xyz"
 
@@ -14,6 +14,7 @@ export const environment = {
   baseUrl: url + "/api",
   urlServe: url + "/images",
   urlEmail: "https://doan1.thanhnhandev.xyz"
+
 };
 
 /*

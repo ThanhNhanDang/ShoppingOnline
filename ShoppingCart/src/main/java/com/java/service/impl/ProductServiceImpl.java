@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.java.contants.ImageConstants;
 import com.java.dto.ProductsDto;
 import com.java.entity.Products;
 import com.java.repository.ProductRepository;
@@ -26,63 +27,51 @@ import com.java.service.ProductService;
 
 @Service
 @Scope("prototype")
-public class ProductServiceImpl implements ProductService{
-	
+public class ProductServiceImpl implements ProductService {
+
 	private ProductRepository repository;
 	private FileService fileService;
 	private Clock cl = Clock.systemDefaultZone();
-	private final DateTimeFormatter formatter =
-			DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss")
-            .withZone(ZoneId.systemDefault());
-	
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss")
+			.withZone(ZoneId.systemDefault());
+
 	public ProductServiceImpl(ProductRepository repository, FileService fileService) {
 		this.repository = repository;
 		this.fileService = fileService;
 	}
 
 	@Override
-	public List<ProductsDto> findAll()  {
+	public List<ProductsDto> findAll() {
 		List<Products> list = repository.findAllReverse();
 		List<ProductsDto> dtos = new ArrayList<ProductsDto>();
-		
-		for(Products entity : list) {
-		
-			ProductsDto dto = new ProductsDto(entity.getId(), entity.getCategory_id(),
-					entity.getName(), entity.getPrice(), formatter.format( entity.getExprideDate() ), entity.getInStock(), entity.getUnitSold(), entity.getUrlImg(),entity.getDescription(), false, entity.getTotalReview(), entity.getTotalReview5Star());
-			
+
+		for (Products entity : list) {
+
+			ProductsDto dto = new ProductsDto(entity.getId(), entity.getCategory_id(), entity.getName(),
+					entity.getPrice(), formatter.format(entity.getExprideDate()), entity.getInStock(),
+					entity.getUnitSold(), entity.getUrlImg(), entity.getDescription(), false, entity.getTotalReview(),
+					entity.getTotalReview5Star());
+
 			dtos.add(dto);
 		}
 		return dtos;
 	}
 
-
 	@Override
 	public Integer save(ProductsDto dto) {
 		return 0;
 	}
-	
-	@Modifying
-	@Transactional
-	@Override
-	public Integer delete(Long id) {
-		if(!this.isExits(id))
-			return -1;
-		repository.deleteById(id);
-		return 0;
-	}
-	
-	
 
 	@Override
 	public ProductsDto findById(Long id) {
-		if(!this.isExits(id)) {
+		if (!this.isExits(id)) {
 			return null;
 		}
 		ProductsDto dto = repository.getProductById(id);
-		
-		String output = formatter.format( dto.getExprideDate2() );
+
+		String output = formatter.format(dto.getExprideDate2());
 		dto.setExprideDate2(null);
-		dto.setExDate(output);	
+		dto.setExDate(output);
 		return dto;
 	}
 
@@ -97,20 +86,23 @@ public class ProductServiceImpl implements ProductService{
 		Page<ProductsDto> dtos = repository.getAllProducts(pageable);
 		return dtos;
 	}
+
 	@Modifying
 	@Transactional
 	@Override
-	public boolean updateInSockAndUnitSold(long productId, int quan) throws Exception{
-		if(!this.isExits(productId))
+	public boolean updateInSockAndUnitSold(long productId, int quan) throws Exception {
+		if (!this.isExits(productId))
 			throw new Exception("Unable to pay. Product not found.");
 		Products entity = repository.findById(productId).get();
 		long inStock = entity.getInStock();
-		//check xem trong kho còn hàng không
+		// check xem trong kho còn hàng không
 		if (inStock == 0)
-			throw new Exception("Unable to pay. The product \""+ entity.getName() + "\" is currently out of stock. Please wait for the admin to update.");
-		//check xem số lượng đặt hàng có vượi quá số lượng trong kho không
-		if((inStock - quan) < 0)
-			throw new Exception("Unable to pay. The order quantity of the product \""+ entity.getName() + "\" exceeds the quantity in stock. Please update your cart again.");
+			throw new Exception("Unable to pay. The product \"" + entity.getName()
+					+ "\" is currently out of stock. Please wait for the admin to update.");
+		// check xem số lượng đặt hàng có vượi quá số lượng trong kho không
+		if ((inStock - quan) < 0)
+			throw new Exception("Unable to pay. The order quantity of the product \"" + entity.getName()
+					+ "\" exceeds the quantity in stock. Please update your cart again.");
 		entity.setInStock(entity.getInStock() - quan);
 		entity.setUnitSold(entity.getUnitSold() + quan);
 		repository.save(entity);
@@ -121,12 +113,12 @@ public class ProductServiceImpl implements ProductService{
 	@Transactional
 	@Override
 	public int edit(ProductsDto dto) throws Exception {
-		if(dto.getInStock() < 0)
+		if (dto.getInStock() < 0)
 			throw new Exception("Invalid unit in stock.");
-		if(dto.getPrice() <= 0)
+		if (dto.getPrice() <= 0)
 			throw new Exception("Invalid price.");
 		long id = dto.getId();
-		if(!this.isExits(id))
+		if (!this.isExits(id))
 			return -1;
 		Products entity = repository.findById(id).get();
 		entity.setCategory_id(dto.getCategory_id());
@@ -139,6 +131,7 @@ public class ProductServiceImpl implements ProductService{
 		repository.save(entity);
 		return 0;
 	}
+
 	@Modifying
 	@Transactional
 	@Override
@@ -146,57 +139,68 @@ public class ProductServiceImpl implements ProductService{
 		ProductsDto dtoJson = new ProductsDto();
 		ObjectMapper objectMapper = new ObjectMapper();
 		dtoJson = objectMapper.readValue(dto, ProductsDto.class);
-		
+
 		if (dtoJson.getInStock() < 0) {
 			throw new Exception("Invalid unit in stock.");
 		}
-	
+
 		UUID uuid = UUID.randomUUID();
 		dtoJson.setUrlImg(uuid + ".png");
-		Products entity = new Products(dtoJson.getCategory_id(), dtoJson.getName(), dtoJson.getPrice(), Instant.now(cl), Instant.parse(dtoJson.getExprideDate()), dtoJson.getInStock(), dtoJson.getUnitSold(), dtoJson.getUrlImg(), dtoJson.getDescription(), 0, 5);
+		Products entity = new Products(dtoJson.getCategory_id(), dtoJson.getName(), dtoJson.getPrice(), Instant.now(cl),
+				Instant.parse(dtoJson.getExprideDate()), dtoJson.getInStock(), dtoJson.getUnitSold(),
+				dtoJson.getUrlImg(), dtoJson.getDescription(), 0, 5);
 		entity = repository.save(entity);
 		this.fileService.store(file, dtoJson.getUrlImg(), 4, entity.getId());
 		return entity;
 	}
 
-	
 	@Override
 	public List<ProductsDto> deleteAllBySelect(List<ProductsDto> dtos) throws Exception {
-		if(dtos.size() == 1) {
-			if(this.delete(dtos.get(0).getId())==-1)
+		if (dtos.size() == 1) {
+			if (this.delete(dtos.get(0).getId()) == -1)
 				return null;
-//			this.fileService.deleteFileDB(dtos.get(0).getFileId());
 			return this.findAll();
-			
+
 		}
-		for(ProductsDto dto : dtos) {
+		for (ProductsDto dto : dtos) {
 			this.delete(dto.getId());
-//			this.fileService.deleteFileDB(dto.getFileId());
 		}
 		return this.findAll();
+	}
+
+	@Modifying
+	@Transactional
+	@Override
+	public Integer delete(Long id) throws Exception {
+		System.out.println(id);
+		if (!this.isExits(id))
+			return -1;
+		this.fileService.deleFolder(id, ImageConstants.URL_IMAGE_PRODUCT);
+		repository.deleteById(id);
+		return 0;
 	}
 
 	@Override
 	public Page<ProductsDto> getProductsSearch(Pageable pageable, String key, long cateId) {
 		Page<ProductsDto> dtos;
-		//Nếu người dùng không search và không chọn vào category thì chỉ sắp xếp thôi
-		if((key.equals("") || key == null) && (cateId == 0)) {
+		// Nếu người dùng không search và không chọn vào category thì chỉ sắp xếp thôi
+		if ((key.equals("") || key == null) && (cateId == 0)) {
 			dtos = repository.getAllProductsSort(pageable);
 			return dtos;
 		}
-		
-		//có category nhưng không search
-		if(cateId != 0 && (key == "" || key == null)) {
+
+		// có category nhưng không search
+		if (cateId != 0 && (key == "" || key == null)) {
 			dtos = repository.getAllProductsSortWithCateId(pageable, cateId);
 			return dtos;
 		}
-		
-		//không có category nhưng có seach
-		if((!key.equals("") && key != null) && cateId == 0) {
+
+		// không có category nhưng có seach
+		if ((!key.equals("") && key != null) && cateId == 0) {
 			dtos = repository.getAllProductsSearch(pageable, key);
 			return dtos;
 		}
-		System.out.println("4");	
+		System.out.println("4");
 		dtos = repository.getAllProductsSearchSortWithCateId(pageable, key, cateId);
 		return dtos;
 	}
@@ -205,17 +209,17 @@ public class ProductServiceImpl implements ProductService{
 	@Transactional
 	@Override
 	public boolean updateReviewOfProduct(long id, long numberStar, int average) throws Exception {
-		if(!this.isExits(id))
+		if (!this.isExits(id))
 			throw new Exception("Can't review. Product not found.");
-		
-		//đã check số sao ở bước thêm review rồi nên không cần check ở đây
-		
+
+		// đã check số sao ở bước thêm review rồi nên không cần check ở đây
+
 		Products entity = repository.findById(id).get();
-		entity.setTotalReview(entity.getTotalReview()+1);
+		entity.setTotalReview(entity.getTotalReview() + 1);
 		entity.setTotalReview5Star(average);
-		if(numberStar == 5)
-			entity.setTotalReview5Star(entity.getTotalReview5Star()+1);
-		
+		if (numberStar == 5)
+			entity.setTotalReview5Star(entity.getTotalReview5Star() + 1);
+
 		repository.save(entity);
 		return true;
 	}
@@ -223,16 +227,17 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<ProductsDto> searchAdmin(String key) {
 		List<ProductsDto> dtos = new ArrayList<>();
-		repository.searchAdmin(key).forEach(item->{
+		repository.searchAdmin(key).forEach(item -> {
 			item.setExDate(formatter.format(item.getExprideDate2()));
 			dtos.add(item);
-		});;
+		});
+		;
 		return dtos;
 	}
 
 	@Override
 	public boolean isExits(long id) {
-		
+
 		return repository.existsById(id);
 	}
 
@@ -247,16 +252,16 @@ public class ProductServiceImpl implements ProductService{
 		ProductsDto dtoJson = new ProductsDto();
 		ObjectMapper objectMapper = new ObjectMapper();
 		dtoJson = objectMapper.readValue(dto, ProductsDto.class);
-		
-		if(dtoJson.getInStock() < 0)
+
+		if (dtoJson.getInStock() < 0)
 			throw new Exception("Invalid unit in stock.");
-		if(dtoJson.getPrice() <= 0)
+		if (dtoJson.getPrice() <= 0)
 			throw new Exception("Invalid price.");
 		long id = dtoJson.getId();
-		if(!this.isExits(id))
+		if (!this.isExits(id))
 			return -1;
 		Products entity = repository.findById(id).get();
-		this.fileService.delefile(id, entity.getUrlImg());
+		this.fileService.delefile(id, ImageConstants.URL_IMAGE_PRODUCT, entity.getUrlImg());
 		entity.setCategory_id(dtoJson.getCategory_id());
 		entity.setName(dtoJson.getName());
 		entity.setPrice(dtoJson.getPrice());
@@ -267,7 +272,7 @@ public class ProductServiceImpl implements ProductService{
 		entity.setUrlImg(uuid + ".png");
 		this.fileService.store(file, entity.getUrlImg(), 4, entity.getId());
 		repository.save(entity);
-		
+
 		return 0;
 	}
 

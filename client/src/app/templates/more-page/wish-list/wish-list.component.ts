@@ -13,7 +13,7 @@ export class WishListComponent implements OnInit {
   wishList!: WishListPayLoad[];
   message= "Your wishlist has no products.";
   checkIsEmpty= false;
-  baseUrl= environment.urlServe;
+  baseUrl= environment.urlServe + "/products";
 
   changeProductWhenCartMiniDelete! : Subscription;
   constructor(private http:HttpServiceService) {

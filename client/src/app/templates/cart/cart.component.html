@@ -46,7 +46,9 @@
                         (click)="clickDetail(item.product_id)"
                         href="javaScript:void(0)"
                         ><img
-                          src="{{ baseUrl + item.fileId }}"
+                          src="{{
+                            baseUrl + '/' + item.product_id + '/' + item.urlImg
+                          }}"
                           class="img-fluid d-block mx-auto"
                           alt="Image"
                       /></a>

@@ -173,7 +173,7 @@ export class ProductsComponent implements OnInit {
     this.sortPriceRangeId = item.id;
     item.end == null ? this.sortKeyPrice = "more than " + item.start : this.sortKeyPrice = item.start + "-" + item.end;
     this.reset()
-    this.router.navigate(['/products'], { queryParamsHandling: "merge", queryParams: { 'page': this.previousNext, 'priceStart': item.start, 'priceEnd': item.end == null ? "more than" : item.end, sortPriceId: this.sortPriceRangeId } });
+    // this.router.navigate(['/products'], { queryParamsHandling: "merge", queryParams: { 'page': this.previousNext, 'priceStart': item.start, 'priceEnd': item.end == null ? "more than" : item.end, sortPriceId: this.sortPriceRangeId } });
   }
 
   search() {

@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class CartComponent implements OnInit {
   quantity!: number
   checkBtn = false;
-  baseUrl = environment.urlServe;
+  baseUrl = environment.urlServe + "/products";
   itemInCart!: CartPayload;
   cart!: CartPayload[]
   message = "Your cart has no products."

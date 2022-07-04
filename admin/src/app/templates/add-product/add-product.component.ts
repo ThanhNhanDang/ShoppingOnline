@@ -68,7 +68,6 @@ export class AddProductComponent implements OnInit {
 
       this.date = new Date();
       this.test = this.date.toISOString()
-      console.log(this.test);
       
       this.latest_date = this.datepipe.transform(this.productPayload.exDate, 'yyyy-MM-dd');
       this.productPayload.exprideDate = this.latest_date + this.test.slice(10)

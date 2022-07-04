@@ -26,15 +26,18 @@ import com.java.dto.ProductsDto;
 import com.java.entity.Products;
 import com.java.model.Message;
 import com.java.model.SearchAndSort;
+import com.java.service.ProductDetailService;
 import com.java.service.ProductService;
 
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
 	private ProductService productService;
+	private ProductDetailService productDetailService;
 
-	public ProductController(ProductService productService) {
+	public ProductController(ProductService productService, ProductDetailService productDetailService) {
 		this.productService = productService;
+		this.productDetailService = productDetailService;
 
 	}
 
@@ -77,7 +80,7 @@ public class ProductController {
 			Products entity = productService.saveReturn(dto, file);
 			if (entity == null)
 				throw new Exception("Can't Add");
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<>(entity,HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
 					new Message(e.getMessage(), Instant.now(), "400", "Bad request", "/api/product/add"),
@@ -137,9 +140,11 @@ public class ProductController {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	@PostMapping("/delete/all-by-select")
 	public ResponseEntity<?> delete(@RequestBody List<ProductsDto> dtos) {
 		try {
+			this.productDetailService.deleteAllByProductId(dtos.get(0).getId());
 			List<ProductsDto> dtos2 = productService.deleteAllBySelect(dtos);
 			if (dtos == null)
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

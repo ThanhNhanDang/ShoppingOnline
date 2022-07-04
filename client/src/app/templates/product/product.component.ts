@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   @Input() item !: ProductPayload;
-  baseUrl = environment.urlServe;
+  baseUrl = environment.urlServe + "/products";
 
   constructor(private router: Router, private http: HttpServiceService, private productService: ProductService) { }
 

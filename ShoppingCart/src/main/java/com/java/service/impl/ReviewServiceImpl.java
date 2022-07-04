@@ -30,6 +30,19 @@ public class ReviewServiceImpl implements ReviewService {
 		this.reviewRepo = reviewRepo;
 		this.productService = productService;
 	}
+	
+	private ReviewDtoSize dtoSize(List<ReviewDto> dtos) {
+		if (dtos.isEmpty())
+			return null;
+		List<ReviewDto> dtos2 = new ArrayList<ReviewDto>();
+		for (int i = dtos.size() - 1; i >= 0; i--) {
+			ReviewDto dto = dtos.get(i);
+			dto.setReviewDateCustom(formatter.format(dto.getReviewDate()));
+			dtos2.add(dto);
+		}
+		ReviewDtoSize dtoSize = new ReviewDtoSize(dtos2, dtos2.size());
+		return dtoSize;
+	}
 
 	@Modifying
 	@Transactional
@@ -62,14 +75,8 @@ public class ReviewServiceImpl implements ReviewService {
 	@Override
 	public ReviewDtoSize findAllReviewByUser(long userId) {
 		List<ReviewDto> dtos = reviewRepo.findAllReviewByUser(userId);
-		if (dtos.isEmpty())
-			return null;
-		List<ReviewDto> dtos2 = new ArrayList<ReviewDto>();
-		for (int i = dtos.size() - 1; i >= 0; i--) {
-			ReviewDto dto = dtos.get(i);
-			dtos2.add(dto);
-		}
-		ReviewDtoSize dtoSize = new ReviewDtoSize(dtos2, dtos2.size());
+		
+		ReviewDtoSize dtoSize = this.dtoSize(dtos);
 		return dtoSize;
 	}
 
@@ -77,15 +84,7 @@ public class ReviewServiceImpl implements ReviewService {
 	public ReviewDtoSize findAllReviewByProduct(long productId) {
 
 		List<ReviewDto> dtos = reviewRepo.findAllReviewByProduct(productId);
-		if (dtos.isEmpty())
-			return null;
-		List<ReviewDto> dtos2 = new ArrayList<ReviewDto>();
-		for (int i = dtos.size() - 1; i >= 0; i--) {
-			ReviewDto dto = dtos.get(i);
-			dto.setReviewDateCustom(formatter.format(dto.getReviewDate()));
-			dtos2.add(dto);
-		}
-		ReviewDtoSize dtoSize = new ReviewDtoSize(dtos2, dtos2.size());
+		ReviewDtoSize dtoSize = this.dtoSize(dtos);
 		return dtoSize;
 	}
 

@@ -1,6 +1,5 @@
 package com.java.controller;
 
-import java.io.IOException;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -86,18 +86,21 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/update/image/{id}")
-	public Object uploadImage(@RequestParam("file") MultipartFile file, @PathVariable("id") long id)
-			throws IOException {
-//		fileService.store(file, id);
-		return new ResponseEntity<>(HttpStatus.CREATED);
-	}
-
 	@PutMapping("/update")
 	public Object upload(@RequestBody UserDto dto) {
 		try {
-			service.editMyAccout(dto);
-			return new ResponseEntity<Object>(HttpStatus.OK);
+			return new ResponseEntity<Object>(service.editMyAccount(dto), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update"),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping(value = "/update/file", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	public Object updateFile(@RequestParam String dto, @RequestParam MultipartFile file) {
+		try {
+			return new ResponseEntity<Object>(service.editMyAccount(dto, file), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<Object>(
 					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update"),
@@ -129,6 +132,18 @@ public class UserController {
 					HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PutMapping(value = "/update/admin/file", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	public Object updateAdminFile(@RequestParam String dto, @RequestParam MultipartFile file) {
+		try {
+			service.editMyAccoutFileByAdmin(dto, file);
+			return new ResponseEntity<Object>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<Object>(
+					new Message(e.getMessage(), Instant.now(), "400", "Bad Request", "/api/user/update/admin"),
+					HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@GetMapping("/search")
 	public @ResponseBody List<UserDto> search(@RequestParam String key) {
@@ -137,9 +152,9 @@ public class UserController {
 	}
 
 	@DeleteMapping("/delete-not-return")
-	public ResponseEntity<?> deleteNotReturn(@RequestParam("id") long id, @RequestParam("fileId") long fileId) {
+	public ResponseEntity<?> deleteNotReturn(@RequestParam("id") long id) {
 		try {
-			service.delete(id, fileId);
+			service.delete(id);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
@@ -150,9 +165,9 @@ public class UserController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<?> delete(@RequestParam("id") long id, @RequestParam("fileId") long fileId) {
+	public ResponseEntity<?> delete(@RequestParam("id") long id) {
 		try {
-			List<UserDto> dtos = service.deleteDtos(id, fileId);
+			List<UserDto> dtos = service.deleteDtos(id);
 			return new ResponseEntity<>(dtos, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(

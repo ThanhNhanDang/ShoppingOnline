@@ -116,7 +116,7 @@ public class ProductDetailController {
 	@DeleteMapping("/delete/all")
 	public ResponseEntity<?> deleteAllByProductId(@RequestParam long productId) {
 		try {
-			service.deleteAllByProductId(productId);
+			service.deleteAllByProductIdAndFile(productId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(
