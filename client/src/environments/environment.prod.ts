@@ -10,7 +10,6 @@ export const environment = {
   urlServe: url + "/images",
   title: "E Store",
   urlEmail: "https://doan1.thanhnhandev.xyz"
-
 };
 
 /*
