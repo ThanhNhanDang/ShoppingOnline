@@ -17,6 +17,10 @@ export class MyOrderComponent implements OnInit {
     this.userId = this.http.getLoginDataByKey("id");
     this.http.postRequest("/order/get-my-orders", {userId: this.userId}).subscribe(data=>{
       this.orders = data;
+      this.orders.forEach(item => {
+        item.orderDate = new Date((+item.orderDate*1000)).toString().split("GM")[0];
+        item.price = this.http.getRoundingNumber(item.price);
+      })
     }, error=>{
       console.log(error.error.message);
     })

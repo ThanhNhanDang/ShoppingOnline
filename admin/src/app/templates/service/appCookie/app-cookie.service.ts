@@ -4,25 +4,25 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AppCookieService {
-  cookieStore!:any;
+  cookieStore!: any;
 
   constructor() {
-      this.parseCookies(document.cookie);
+    this.parseCookies(document.cookie);
   }
 
   public parseCookies(cookies = document.cookie) {
-      this.cookieStore = {};
-      if (!!cookies === false) { return; }
-      const cookiesArr = cookies.split(';');
-      for (const cookie of cookiesArr) {
-          const cookieArr = cookie.split('=');
-          this.cookieStore[cookieArr[0].trim()] = cookieArr[1];
-      }
+    this.cookieStore = {};
+    if (!!cookies === false) { return; }
+    const cookiesArr = cookies.split(';');
+    for (const cookie of cookiesArr) {
+      const cookieArr = cookie.split('=');
+      this.cookieStore[cookieArr[0].trim()] = cookieArr[1];
+    }
   }
 
   get(key: string) {
-      this.parseCookies();
-      return !!this.cookieStore[key] ? this.cookieStore[key] : null;
+    this.parseCookies();
+    return !!this.cookieStore[key] ? this.cookieStore[key] : null;
   }
 
   remove(key: string) {
@@ -30,6 +30,10 @@ export class AppCookieService {
   }
 
   set(key: string, value: string) {
-      document.cookie = key + '=' + (value || '');
+    var date = new Date();
+    var days = 9 // Set cooki trong vong 9 ngay
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    var expires = "; expires=" + date.toUTCString();
+    document.cookie = key + '=' + (value || '') + expires + "; path=/";
   }
 }
